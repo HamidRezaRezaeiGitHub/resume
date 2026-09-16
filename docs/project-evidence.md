@@ -5,20 +5,35 @@ per project, using the available sub-agents in successive rounds. Source paths
 below are relative to `/Users/hamid/Documents/Coding/`. No sibling files were
 changed and no sibling test suites were run.
 
+## Current publication scope
+
+The user selected **BuyOrRent, man-agent-ment, and Buildean only**. The other
+project sections below are retained as research records, not website entries.
+BuyOrRent's public copy focuses on its new backend and MCP tools, with the
+Flutter frontend explicitly in progress. Its September 2025 project date stays;
+the backend milestones start in August 2026.
+
+The latest user-supplied resume image confirms that the platform proof of
+concept, in-product assistant, and agent adoption work belong to the current
+Agency Securities Lending role. It supplies January–December 2019 for the
+master's degree and September 2013–December 2017 for the bachelor's degree.
+The website retains the previously established functional-team transitions
+within the earlier HSBC period, which the one-page resume groups together.
+
 ## How dates are used
 
 The current HSBC role remains first through `currentRoleId`. Other timeline
-entries sort by start date. Personal project dates carry `dateBasis: repository`
-and a visible **From repository history** label. They describe recorded work,
-not a claimed date of conception. README-only and generated scaffold commits
+entries sort by start date. Date provenance is documented here only, with no
+research labels or metadata in the website content. These dates describe
+recorded work, not a claimed date of conception. README-only and scaffold commits
 are distinguished from substantive work. A historical end date means the last
 recorded implementation period, not a formal abandonment date. Documentation
 updates alone do not extend that period.
 
 Existing user-supplied career facts remain the source for HSBC roles and the
 Buildean co-founder/beta status. Git history is not evidence of employer work,
-real user counts, business impact, or project launch. Unconfirmed HSBC platform
-and AI work remains undated.
+real user counts, business impact, or project launch. The user has now confirmed
+the current role as the parent for the HSBC platform and AI achievements.
 
 ## Buildean
 
@@ -95,7 +110,7 @@ and AI work remains undated.
   infrastructure and tests. This is meaningful infrastructure, not product work.
 - `wiki/overview.md:11-19`: product domain undefined, example concept only.
 - `wiki/operations/ci-cd-and-deployment.md:11-12,40-48`: deployments disabled.
-- Included as a compact **Sep 2026 · Early foundation** entry, describing only
+- Research supports **Sep 2026 · Early foundation**, describing only
   the custom infrastructure work. No recall-monitoring or notification
   capability is inferred from the name, and no ongoing/product-launch claim.
 
@@ -136,7 +151,7 @@ and AI work remains undated.
   strategy, bankroll tracking, rounds, and repeated simulations.
 - `configuration/BettingStrategyConfig.java:22-30` leaves Flat betting
   unsupported. No multiple-strategy comparison, financial advice, or validated
-  profitability claim. Included as a compact experiment.
+  profitability claim. An experiment, excluded from the current website.
 
 ## Obsidian-Zip — excluded
 

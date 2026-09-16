@@ -1,13 +1,13 @@
 import type { TimelineEntry } from '@/data/resume'
 
-/** Lead with the current role, then reverse chronology; unknown dates go last. */
+/** Lead with the current role, then reverse chronology. */
 export function sortTimeline(
   entries: readonly TimelineEntry[],
   currentRoleId?: string,
 ) {
   return [...entries].sort((a, b) => {
-    if (a.id === currentRoleId) return -1
-    if (b.id === currentRoleId) return 1
-    return (b.startDate ?? '').localeCompare(a.startDate ?? '')
+    const priority =
+      Number(b.id === currentRoleId) - Number(a.id === currentRoleId)
+    return priority || b.startDate.localeCompare(a.startDate)
   })
 }

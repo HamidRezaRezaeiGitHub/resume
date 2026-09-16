@@ -88,14 +88,14 @@
       "title": "Full-Stack Engineer",
       "organization": "HSBC",
       "location": "Toronto, ON",
-      "summary": "I work on the services and data workflows behind post-trade operations in Agency Securities Lending.",
+      "summary": "I build services, analytics, and internal tools for Agency Securities Lending, from secure APIs to React interfaces and AI-assisted workflows.",
       "tags": [
-        "Java 17",
+        "Java",
         "Spring Boot",
+        "React",
+        "Spring AI",
         "Spring Security",
-        "Angular",
         "BigQuery",
-        "Looker Studio",
         "Jenkins"
       ],
       "team": "Agency Securities Lending",
@@ -104,21 +104,57 @@
       "highlights": [
         {
           "id": "lending-services",
-          "title": "Services and integrations",
-          "body": "I build Java/Spring services and secure APIs, with authentication and authorization across endpoints. I also connect internal bank services and legacy Perl processing so the workflow can run through one application.",
-          "tags": ["Java 17", "Spring Security", "REST APIs"]
+          "title": "Secure services and integrations",
+          "body": "I develop Java/Spring Boot microservices and REST APIs that integrate with other bank services. I implemented Spring Security and JWT authorization, with JPA for access to a cloud-hosted relational database.",
+          "tags": ["Java", "Spring Boot", "Spring Security", "JWT", "JPA"]
+        },
+        {
+          "id": "platform-poc",
+          "title": "A multi-service platform proof of concept",
+          "body": "I co-architected a multi-service proof of concept with an Active Directory authentication service, an API gateway, and a React frontend.",
+          "tags": [
+            "React",
+            "Spring Boot",
+            "Spring Security",
+            "Active Directory"
+          ],
+          "details": [
+            "Built configuration-driven APIs for datasets with 100+ columns, with filtering and sorting."
+          ],
+          "metric": {
+            "value": "100% output parity",
+            "label": "One selected trade type · defined evaluation period"
+          }
+        },
+        {
+          "id": "ai-assistant",
+          "title": "An assistant inside the product",
+          "body": "I designed and built a React and Spring AI assistant that uses active filters, table metadata, and displayed results to answer questions in context.",
+          "tags": ["Spring AI", "React", "SSE Streaming", "Enterprise LLM"],
+          "details": [
+            "Supported JSON and streamed SSE responses, then extracted components for reuse by other teams."
+          ]
+        },
+        {
+          "id": "ai-enablement",
+          "title": "Helping teams use coding agents",
+          "body": "I built script-backed skills connecting GitHub, Jira, Confluence, Jenkins, and logs. I introduced the workflows across teams through hands-on training and knowledge-sharing sessions.",
+          "tags": ["Agent Skills", "MCP", "Developer Tools"]
         },
         {
           "id": "lending-analytics",
-          "title": "Making operational data useful",
-          "body": "I work with product and business users on BigQuery and Looker Studio analytics, including the data-query logic and workflows behind them.",
-          "tags": ["BigQuery", "Looker Studio"]
+          "title": "Revenue and balance analytics",
+          "body": "I build SQL-based Looker Studio dashboards over BigQuery for revenue and balance analysis, working with product and business users.",
+          "tags": ["SQL", "BigQuery", "Looker Studio"]
         },
         {
           "id": "lending-delivery",
           "title": "Replacing the old release scripts",
-          "body": "I led the move to configurable Jenkins/Groovy pipelines. They automate builds, tests, security scans, versioning, and deployments.",
-          "tags": ["Jenkins", "Groovy", "CI/CD"]
+          "body": "I led the migration from legacy scripts to Jenkins/Groovy pipelines covering builds, tests, security scans, artifact versioning, and deployments across environments.",
+          "tags": ["Jenkins", "Groovy", "CI/CD"],
+          "details": [
+            "Integrated Sonatype, Checkmarx, Jira, and Confluence into the release workflow."
+          ]
         }
       ],
       "stage": "Current role"
@@ -126,7 +162,7 @@
     {
       "id": "hsbc-data-service-layer",
       "category": "experience",
-      "title": "Full-Stack Engineer",
+      "title": "Software & DevOps Engineer",
       "organization": "HSBC",
       "location": "Toronto, ON",
       "summary": "I worked on data synchronization, real-time processing, and internal tools used to support trading systems.",
@@ -139,14 +175,14 @@
         "React",
         "Grafana"
       ],
-      "team": "Data Service Layer",
+      "team": "Trade Reporting · Data Service Layer",
       "startDate": "2023-06",
       "endDate": "2025-06",
       "highlights": [
         {
           "id": "sync-product",
           "title": "A reusable synchronization product",
-          "body": "I owned the architecture of a Spring Batch product for data transfer and synchronization. New use cases could be configured without duplicating the implementation. I also mentored a developer joining the project.",
+          "body": "I owned the architecture, code reviews, and delivery roadmap for a modular Spring Batch product for data transfer and synchronization. New use cases could be configured without duplicating the implementation.",
           "tags": ["Spring Batch", "Java", "Modular Design", "Architecture"]
         },
         {
@@ -209,12 +245,13 @@
       "id": "edu-western",
       "category": "education",
       "title": "Master of Engineering",
-      "organization": "Western University",
+      "organization": "University of Western Ontario",
       "location": "London, ON",
       "summary": "I used mathematical modeling and R to study hydrological and spatial problems, turning domain concepts into equations and statistical analysis.",
       "tags": ["R", "Statistical Modeling", "Applied Mathematics"],
       "team": "Environmental Engineering",
-      "startDate": "2019"
+      "startDate": "2019-01",
+      "endDate": "2019-12"
     },
     {
       "id": "teaching",
@@ -235,57 +272,8 @@
       "summary": "I studied civil engineering, with a strong grounding in mathematics and quantitative analysis.",
       "tags": ["Engineering", "Mathematics"],
       "team": "Civil Engineering",
-      "startDate": "2013",
-      "endDate": "2017"
-    },
-    {
-      "id": "hsbc-platform-ai",
-      "category": "experience",
-      "title": "Platform & AI projects",
-      "organization": "HSBC",
-      "summary": "I’ve also worked on a platform proof of concept, an in-product assistant, and AI tools for engineering teams.",
-      "highlights": [
-        {
-          "id": "platform-poc",
-          "title": "A multi-service platform proof of concept",
-          "body": "I co-architected a working proof of concept under a limited timeline. My work included the React frontend, configuration-driven REST APIs, an Active Directory authentication gateway, and an in-product assistant.",
-          "tags": [
-            "React",
-            "shadcn/ui",
-            "Spring Boot",
-            "Spring Security",
-            "Active Directory",
-            "Spring AI"
-          ],
-          "details": [
-            "The query API exposed datasets with 100+ columns as filterable, sortable endpoints without writing each endpoint separately.",
-            "Components were identified for reuse by other teams. The data-query logic was also adapted for BigQuery and Looker Studio dashboards."
-          ],
-          "metric": {
-            "value": "100% output parity",
-            "label": "One selected trade type · defined evaluation period"
-          }
-        },
-        {
-          "id": "ai-assistant",
-          "title": "An assistant inside the product",
-          "body": "I built a Spring AI and React assistant that could use the active filters, table metadata, and displayed results. Users could ask questions about what they were looking at without copying data into another tool.",
-          "tags": ["Spring AI", "React", "SSE Streaming", "Enterprise LLM"],
-          "details": [
-            "The service supported JSON and streamed SSE responses. I selected the context sent to the model to avoid unnecessary token use.",
-            "I extracted the frontend and backend components for reuse and shared them with an interested partner team."
-          ]
-        },
-        {
-          "id": "ai-enablement",
-          "title": "Helping teams use coding agents",
-          "body": "I built reusable agent instructions and script-backed skills connecting source control, work tracking, documentation, delivery, and logs. I helped my team and nearby teams get started through hands-on training.",
-          "tags": ["MCP", "Agent Skills", "CI/CD", "Developer Productivity"],
-          "details": [
-            "Training covered prompting, models, tokens, context windows, agent skills, and MCP."
-          ]
-        }
-      ]
+      "startDate": "2013-09",
+      "endDate": "2017-12"
     },
     {
       "id": "man-agent-ment",
@@ -301,7 +289,6 @@
         }
       ],
       "startDate": "2026-04",
-      "dateBasis": "repository",
       "stage": "Workflow kit",
       "highlights": [
         {
@@ -322,22 +309,18 @@
       "id": "buy-or-rent",
       "category": "project",
       "title": "BuyOrRent",
-      "organization": "Creator · Software engineer",
-      "summary": "I’m building a way to compare the long-term costs of renting and buying a home. It started as a React prototype, grew into a Flutter app, and now includes a separate financial API for apps and AI assistants.",
+      "organization": "Creator · Backend engineer",
+      "summary": "I’m building a financial-calculation backend for housing-cost comparisons, with HTTP APIs and MCP tools for AI assistants. The Flutter frontend is in progress.",
       "stage": "In development",
       "tags": [
         "TypeScript",
-        "React",
-        "Flutter",
-        "Dart",
+        "Hono",
         "Cloudflare Workers",
-        "MCP"
+        "MCP",
+        "Zod",
+        "OpenAPI"
       ],
       "links": [
-        {
-          "label": "Web app",
-          "url": "https://www.buyorrent.app"
-        },
         {
           "label": "API docs",
           "url": "https://api.buyorrent.app/api/v1/docs"
@@ -349,29 +332,30 @@
       ],
       "startDate": "2025-09",
       "endDate": "present",
-      "dateBasis": "repository",
       "highlights": [
-        {
-          "id": "buy-or-rent-prototype",
-          "date": "2025-09",
-          "title": "Starting with the numbers",
-          "body": "Built a React prototype for housing scenarios, rent projections, and mortgage calculations. It gave me a place to work through the assumptions behind the comparison."
-        },
-        {
-          "id": "buy-or-rent-flutter",
-          "date": "2026-04",
-          "title": "From inputs to a comparison",
-          "body": "Built a Flutter questionnaire and results dashboard for net worth, housing costs, home equity, and investments, with charts and CSV exports."
-        },
         {
           "id": "buy-or-rent-api",
           "date": "2026-08",
-          "title": "Calculations that apps and agents can use",
-          "body": "Started a TypeScript/Hono backend on Cloudflare Workers. HTTP endpoints and MCP tools share the same financial logic, with separate APIs for rent, loans, mortgages, property values, investments, and expenses.",
+          "title": "A shared calculation engine",
+          "body": "Built a TypeScript/Hono backend on Cloudflare Workers. HTTP endpoints and MCP tools use the same financial logic for rent, loans, mortgages, property values, investments, and expenses.",
+          "tags": ["TypeScript", "Hono", "Cloudflare Workers"]
+        },
+        {
+          "id": "buy-or-rent-mcp",
+          "date": "2026-09",
+          "title": "Financial tools for AI assistants",
+          "body": "Added MCP tools for projecting cash flows, mortgage balances, and investment growth. They return structured results, with validation and calculations shared with the HTTP API.",
+          "tags": ["MCP", "Zod", "Cash-flow Projections"]
+        },
+        {
+          "id": "buy-or-rent-results",
+          "date": "2026-09",
+          "title": "Results you can inspect",
+          "body": "Added dated cash-flow breakdowns and temporary CSV downloads backed by private Cloudflare R2 storage. The HTTP API is documented with OpenAPI.",
           "details": [
-            "The Flutter app still calculates locally. Connecting it to the backend and assembling the backend’s full comparison are next."
+            "The full buy-versus-rent comparison and Flutter integration are still in progress."
           ],
-          "tags": ["Hono", "Zod", "OpenAPI", "MCP"]
+          "tags": ["Cloudflare R2", "OpenAPI", "CSV"]
         }
       ]
     },
@@ -392,7 +376,6 @@
       ],
       "startDate": "2025-07",
       "endDate": "present",
-      "dateBasis": "repository",
       "highlights": [
         {
           "id": "buildean-estimation",
@@ -413,110 +396,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": "team-keeper",
-      "category": "project",
-      "title": "TeamKeeper",
-      "organization": "Creator · Backend developer",
-      "startDate": "2024-09",
-      "dateBasis": "repository",
-      "stage": "Prototype",
-      "summary": "An early Java/Spring project for organizing recreational sports teams. I modeled players, coaches, leagues, matches, and payment records, with REST endpoints around the team workflows.",
-      "tags": ["Java", "Spring Boot", "Spring Data JPA", "H2"]
-    },
-    {
-      "id": "query-fusion",
-      "category": "project",
-      "title": "QueryFusion",
-      "organization": "Creator · Frontend developer",
-      "startDate": "2023-10",
-      "endDate": "2023-12",
-      "dateBasis": "repository",
-      "stage": "Prototype",
-      "summary": "Built a browser workspace for inspecting JSON and XML, with file uploads, formatting, validation, and light/dark themes. I also wrote JSONPath and XPath query services; connecting them to the editor is unfinished.",
-      "tags": ["React", "TypeScript", "Ace Editor", "JSONPath", "XPath"]
-    },
-    {
-      "id": "xml-sorter",
-      "category": "project",
-      "title": "XML Sorter",
-      "organization": "Creator · Backend developer",
-      "startDate": "2024-10",
-      "dateBasis": "repository",
-      "stage": "Developer utility",
-      "summary": "Built a Java/Spring utility that puts XML elements and attributes into a consistent order for easier comparison. It accepts XML text or file uploads, with tests for nested content, namespaces, and repeatable output.",
-      "tags": ["Java", "Spring Boot", "XML", "JUnit"]
-    },
-    {
-      "id": "html-cleaner",
-      "category": "project",
-      "title": "HTML Cleaner",
-      "organization": "Creator · Developer tools",
-      "startDate": "2026-01",
-      "dateBasis": "repository",
-      "stage": "Command-line utility",
-      "summary": "A small Python tool for simplifying saved HTML before extracting data. It removes scripts, styles, media, noisy attributes, and empty elements using Python’s standard library.",
-      "tags": ["Python", "HTML parsing", "Data extraction"]
-    },
-    {
-      "id": "recall-watch",
-      "category": "project",
-      "title": "RecallWatch",
-      "organization": "Creator · Backend developer",
-      "startDate": "2026-09",
-      "dateBasis": "repository",
-      "stage": "Early foundation",
-      "summary": "Started a TypeScript backend with HTTP and MCP interfaces, strict input validation, and shared error handling. The product workflows are still to be built.",
-      "tags": ["TypeScript", "Hono", "Cloudflare Workers", "MCP"]
-    },
-    {
-      "id": "blackjack-simulation",
-      "category": "project",
-      "title": "Blackjack Simulation",
-      "organization": "Creator · Simulation experiment",
-      "startDate": "2024-12",
-      "dateBasis": "repository",
-      "stage": "Experiment",
-      "summary": "Built a configurable Java simulation to explore how a capped betting strategy changes a bankroll over repeated rounds. The model samples outcomes from set probabilities and exports round-by-round CSV reports.",
-      "tags": ["Java", "Spring Boot", "Simulation", "CSV"]
-    },
-    {
-      "id": "spring-service-blueprint",
-      "category": "project",
-      "title": "Spring Service Blueprint",
-      "organization": "Creator · Backend developer",
-      "startDate": "2026-08",
-      "dateBasis": "repository",
-      "stage": "Reusable template",
-      "summary": "Built a starting point for Java services so I don’t have to rebuild persistence, API errors, and delivery setup each time. REST and MCP interfaces share service logic, with optional Firebase and AI integrations.",
-      "tags": [
-        "Java 25",
-        "Spring Boot 4",
-        "PostgreSQL",
-        "Flyway",
-        "MCP",
-        "Testcontainers"
-      ],
-      "highlights": [
-        {
-          "id": "spring-blueprint-boundaries",
-          "date": "2026-08",
-          "title": "Defaults I can carry into the next service",
-          "body": "Added database migrations, integration tests, architecture checks, and dependency scanning. External providers stay disabled until configured, and an adoption guide covers what to change for a new service."
-        }
-      ]
-    },
-    {
-      "id": "react-common",
-      "category": "project",
-      "title": "React Common",
-      "organization": "Creator · Frontend developer",
-      "startDate": "2025-09",
-      "dateBasis": "repository",
-      "stage": "Reusable components",
-      "summary": "Built reusable React forms, navigation, and theme controls on top of shadcn/ui and Radix. Added configurable validation and component tests, then reused the collection in the original BuyOrRent app.",
-      "tags": ["React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Jest"]
     }
   ],
   "skillGroups": [
@@ -530,7 +409,10 @@
         "Spring Integration",
         "REST APIs",
         "SQL",
-        "Hibernate"
+        "Hibernate",
+        "Hono",
+        "Spring Data JPA",
+        "LDAP"
       ]
     },
     {
@@ -565,7 +447,10 @@
         "Solace",
         "Looker Studio",
         "MongoDB",
-        "Cloudflare R2"
+        "Cloudflare R2",
+        "H2",
+        "GCP Cloud SQL",
+        "Firebase Storage"
       ]
     },
     {
@@ -578,8 +463,16 @@
         "GitHub Actions",
         "Maven",
         "Groovy",
-        "Bash"
+        "Bash",
+        "Git",
+        "NPM",
+        "Vite",
+        "Nexus"
       ]
+    },
+    {
+      "title": "Testing",
+      "skills": ["JUnit", "Mockito", "Vitest", "Testcontainers"]
     },
     {
       "title": "Observability",
@@ -593,7 +486,9 @@
         "Agent Skills",
         "LLM Integration",
         "Streaming Responses",
-        "Context-Aware Assistants"
+        "Context-Aware Assistants",
+        "GitHub Copilot",
+        "Claude Code"
       ]
     }
   ],

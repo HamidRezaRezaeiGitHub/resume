@@ -37,20 +37,51 @@ describe('resume experience', () => {
       'id',
       resume.currentRoleId,
     )
-    for (const entry of resume.timeline.filter((item) => item.dateBasis))
-      expect(
-        within(document.getElementById(entry.id)!).getByText(
-          'From repository history',
-        ),
-      ).toBeInTheDocument()
     const education = document.getElementById('edu-western')!
     expect(
-      within(education).getByText('2019', { selector: 'time' }),
-    ).toHaveAttribute('datetime', '2019')
+      within(education).getByText('Jan 2019', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2019-01')
+    expect(
+      within(education).getByText('Dec 2019', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2019-12')
+    expect(
+      within(document.getElementById('teaching')!).getByText('2013', {
+        selector: 'time',
+      }),
+    ).toHaveAttribute('datetime', '2013')
     expect(
       within(document.getElementById('hsbc-data-service-layer')!).getByText(
         'Jun 2023',
         { selector: 'time' },
+      ),
+    ).toBeInTheDocument()
+  })
+
+  it('shows only selected projects and nests platform work under the current role', () => {
+    render(<App />)
+    expect(
+      Array.from(
+        document.querySelectorAll('.timeline-chapter.category-project'),
+      )
+        .map((entry) => entry.id)
+        .sort(),
+    ).toEqual(['buildean', 'buy-or-rent', 'man-agent-ment'])
+    for (const id of ['platform-poc', 'ai-assistant', 'ai-enablement'])
+      expect(document.getElementById(resume.currentRoleId)).toContainElement(
+        document.getElementById(id),
+      )
+    expect(document.getElementById('hsbc-platform-ai')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('From repository history'),
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText('Date not listed')).not.toBeInTheDocument()
+    for (const chapter of document.querySelectorAll('.timeline-chapter'))
+      expect(chapter.querySelector('.chapter-date time')).toHaveAttribute(
+        'datetime',
+      )
+    expect(
+      within(document.getElementById('buy-or-rent')!).getByText(
+        /The Flutter frontend is in progress/,
       ),
     ).toBeInTheDocument()
   })

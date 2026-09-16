@@ -35,19 +35,15 @@ describe('unified resume content', () => {
       expect(resumeContentSchema.safeParse(content).success).toBe(false)
     },
   )
-  it('allows an unknown date without assigning one', () => {
-    const content = editableCopy()
-    delete content.timeline[1].startDate
-    delete content.timeline[1].endDate
-    expect(
-      resumeContentSchema.parse(content).timeline[1].startDate,
-    ).toBeUndefined()
-  })
-  it('requires a start date if an end date is supplied', () => {
-    const content = editableCopy()
-    delete content.timeline[0].startDate
-    expect(resumeContentSchema.safeParse(content).success).toBe(false)
-  })
+  it.each([undefined, 'present'])(
+    'requires a chapter start date when the end date is %s',
+    (endDate) => {
+      const content = editableCopy()
+      Reflect.deleteProperty(content.timeline[1], 'startDate')
+      content.timeline[1].endDate = endDate
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
   it('rejects periods that end before they start', () => {
     const content = editableCopy()
     content.timeline[0].endDate = '2024-06'
@@ -66,20 +62,6 @@ describe('unified resume content', () => {
       expect(resumeContentSchema.safeParse(content).success).toBe(false)
     },
   )
-  it('requires a dated project for repository date provenance', () => {
-    const content = editableCopy()
-    const project = content.timeline.find(
-      (entry) => entry.category === 'project',
-    )!
-    delete project.startDate
-    delete project.endDate
-    project.dateBasis = 'repository'
-    expect(resumeContentSchema.safeParse(content).success).toBe(false)
-    project.startDate = '2025-09'
-    expect(resumeContentSchema.safeParse(content).success).toBe(true)
-    content.timeline[0].dateBasis = 'repository'
-    expect(resumeContentSchema.safeParse(content).success).toBe(false)
-  })
   it('requires a readable qualification alongside achievement metrics', () => {
     const content = editableCopy()
     const metric = content.timeline

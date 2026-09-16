@@ -103,37 +103,28 @@ export function TimelineItem({
         <header className="chapter-heading">
           <div className="chapter-date-row">
             <p className="chapter-date mono">
-              {entry.startDate ? (
+              <time dateTime={entry.startDate}>
+                {formatCareerDate(entry.startDate)}
+              </time>
+              {entry.endDate && (
                 <>
-                  <time dateTime={entry.startDate}>
-                    {formatCareerDate(entry.startDate)}
-                  </time>
-                  {entry.endDate && (
-                    <>
-                      <span aria-hidden="true"> — </span>
-                      {entry.endDate === 'present' ? (
-                        <span>Present</span>
-                      ) : (
-                        <time dateTime={entry.endDate}>
-                          {formatCareerDate(entry.endDate)}
-                        </time>
-                      )}
-                    </>
+                  <span aria-hidden="true"> — </span>
+                  {entry.endDate === 'present' ? (
+                    <span>Present</span>
+                  ) : (
+                    <time dateTime={entry.endDate}>
+                      {formatCareerDate(entry.endDate)}
+                    </time>
                   )}
                 </>
-              ) : (
-                'Date not listed'
               )}
             </p>
             <span className="chapter-index mono" aria-hidden="true">
               / {String(index + 1).padStart(2, '0')}
             </span>
           </div>
-          {entry.dateBasis === 'repository' && (
-            <p className="chapter-date-note">From repository history</p>
-          )}
           <span className="chapter-year" aria-hidden="true">
-            {entry.startDate?.slice(0, 4) ?? '—'}
+            {entry.startDate.slice(0, 4)}
           </span>
           <div className="chapter-category">
             <span className="chapter-marker">

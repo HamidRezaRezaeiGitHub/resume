@@ -3,7 +3,7 @@ import { z } from 'zod'
 const text = z.string().trim().min(1)
 const texts = z.array(text).min(1)
 const careerDate = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, {
-  error: 'Use YYYY or YYYY-MM; omit unknown dates',
+  error: 'Use YYYY or YYYY-MM',
 })
 const link = z.strictObject({ label: text, url: z.url() })
 const heading = z.strictObject({
@@ -37,9 +37,8 @@ const timelineEntry = z
     organization: text.optional(),
     team: text.optional(),
     location: text.optional(),
-    startDate: careerDate.optional(),
+    startDate: careerDate,
     endDate: z.union([careerDate, z.literal('present')]).optional(),
-    dateBasis: z.literal('repository').optional(),
     stage: text.optional(),
     summary: text,
     highlights: z.array(highlight).min(1).optional(),
@@ -47,19 +46,7 @@ const timelineEntry = z
     links: z.array(link).min(1).optional(),
   })
   .superRefine((entry, context) => {
-    if (entry.dateBasis && (entry.category !== 'project' || !entry.startDate))
-      context.addIssue({
-        code: 'custom',
-        message: 'Repository dates require a dated personal project',
-        path: ['dateBasis'],
-      })
-    if (entry.endDate && !entry.startDate)
-      context.addIssue({
-        code: 'custom',
-        message: 'An end date requires a start date',
-        path: ['endDate'],
-      })
-    if (entry.startDate && entry.endDate && entry.endDate !== 'present') {
+    if (entry.endDate && entry.endDate !== 'present') {
       const start =
         entry.startDate.length === 4 ? `${entry.startDate}-01` : entry.startDate
       const end =

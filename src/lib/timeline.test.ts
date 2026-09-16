@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sortTimeline } from '@/lib/timeline'
 import type { TimelineEntry } from '@/data/resume'
-const entry = (id: string, startDate?: string): TimelineEntry => ({
+const entry = (id: string, startDate: string): TimelineEntry => ({
   id,
   category: 'project',
   title: id,
@@ -15,20 +15,17 @@ describe('timeline ordering', () => {
       { ...entry('current-role', '2025-06'), category: 'experience' as const },
       entry('project-2025', '2025-09'),
       entry('older-role', '2023-06'),
-      entry('undated'),
     ]
     expect(sortTimeline(input, 'current-role').map((item) => item.id)).toEqual([
       'current-role',
       'project-2026',
       'project-2025',
       'older-role',
-      'undated',
     ])
     expect(input[0].id).toBe('project-2026')
   })
-  it('sorts mixed categories by date and leaves unknown dates explicitly last', () => {
+  it('sorts mixed categories by date while preserving year-only precision', () => {
     const input = [
-      entry('undated'),
       entry('older', '2021-04'),
       entry('recent', '2025-06'),
       entry('year-only', '2019'),
@@ -37,9 +34,8 @@ describe('timeline ordering', () => {
       'recent',
       'older',
       'year-only',
-      'undated',
     ])
-    expect(input[0].id).toBe('undated')
+    expect(input[0].id).toBe('older')
   })
   it('preserves supplied order when dates have equal precision', () => {
     expect(

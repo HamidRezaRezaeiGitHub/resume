@@ -45,15 +45,13 @@ hero, experience, toolkit, and contact. All roles, projects, education, and
 teaching records belong in the single `timeline` array.
 
 - `category` is `experience`, `project`, `education`, or `teaching`.
-- `startDate` and optional `endDate` accept `YYYY-MM` or `YYYY`. Use `"present"`
-  for an ongoing entry. If a start date is unknown, omit both dates: the entry
-  displays **Date not listed** after the dated entries. Never invent a month.
+- Required `startDate` and optional `endDate` accept `YYYY-MM` or `YYYY`. Use
+  `"present"` for an ongoing entry. Use year-only precision when the month is
+  unknown. Work examples without their own dates belong under their confirmed
+  role as `highlights`.
 - `currentRoleId` references an ongoing professional entry and keeps it first.
   Everything else sorts by start date, newest first. Overlapping dates are
-  retained; equal dates and undated records keep their supplied order.
-- Set `dateBasis: "repository"` for project dates established from meaningful
-  Git history. The page labels these as **From repository history**, rather
-  than claiming they are confirmed project inception dates.
+  retained; equal dates keep their supplied order.
 - `title`, `organization`, `team`, and `summary` describe the entry. `stage`,
   `location`, `tags`, and external `links` are optional.
 - Nested `highlights` hold a role's work examples. Each has a unique `id`, a
@@ -72,12 +70,14 @@ and production builds. It checks dates, navigation, categories, links, metrics,
 skill membership, and globally unique entry/achievement IDs. Validation is kept
 out of the browser bundle.
 
-Project records can be positioned using confirmed dates or clearly identified
-repository evidence. Platform/AI work remains its own undated HSBC entry until its parent role
-is confirmed; its highlights can then be moved into that role's `highlights`.
+The personal-project selection is BuyOrRent, man-agent-ment, and Buildean.
+BuyOrRent emphasizes the backend and MCP tools; its Flutter frontend remains
+in progress. Platform/AI achievements belong under the current Agency
+Securities Lending role, as confirmed by the user and supplied resume.
 
 [Project evidence](docs/project-evidence.md) records the sibling repository
 sources, commit dates, scope limits, and exclusions behind the project entries.
+Research provenance stays in that document and is not website content.
 
 ## Interaction and accessibility
 

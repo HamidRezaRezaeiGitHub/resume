@@ -1,51 +1,40 @@
-# Project research and timeline enrichment
+# Resume content refinement
 
-## Current revision
+## Requested changes
 
-Research the sibling projects under `/Users/hamid/Documents/Coding` with a
-separate sub-agent for each project. Read their wiki, implementation, and Git
-history without changing those repositories. Record the evidence for useful
-project details and dates, distinguishing starter commits from substantive work.
+Keep only BuyOrRent, man-agent-ment, and Buildean as personal projects. Focus
+BuyOrRent on the new backend and MCP tools, with Flutter explicitly in progress.
+Remove repository-history labels from the website. Move the platform/AI work
+under the current HSBC role, as confirmed by the user and supplied resume image.
+Use that image to refine professional content, skills, and education dates.
 
-1. Inventory and research the sibling projects. Identify owned projects,
-   templates, experiments, and any repositories that should not be presented as
-   original work.
-2. Make the current HSBC role the explicit first timeline entry. Sort the other
-   entries chronologically, and label project dates derived from repository
-   history. Validate and commit the ordering/content contract.
-3. Enrich project content with short, specific descriptions and supported
-   milestones. Keep research evidence in the repository and avoid presenting
-   unfinished functionality as shipped. Commit the content update.
-4. Run the complete CI gate and mobile/desktop browser checks. Push master and
-   verify the UAT workflow before handing the result back for phone review.
+## Implementation order
 
-## Completed implementation
+1. Update the JSON and content contract. Require dates for timeline chapters;
+   work examples without separate dates belong within their confirmed role.
+   Remove the provenance field and UI, keeping research evidence in docs only.
+2. Refine the three project entries, current HSBC achievements, skill groups,
+   and month/year education dates. Preserve the established functional-team
+   chronology and the qualified scope of the platform proof-of-concept result.
+3. Validate the content, CI checks, production build, and responsive scrolling.
+   Commit the coherent revision, push master, and verify CI/UAT before review.
 
-- Researched all sibling project folders using sub-agent assignments, including
-  both reusable templates. Preserved every sibling working tree.
-- Committed explicit current-role ordering and visible repository-date
-  provenance after its independent validation gate passed.
-- Expanded the existing three projects and added eight project/template entries.
-  Smaller tools use compact entries; larger projects have scrolling highlights.
-- Added optional month/year milestone dates and kept all content in the JSON.
-- Recorded source paths, commit dates, unfinished work, and exclusions in
-  `docs/project-evidence.md`.
-- Typecheck, lint, formatting, all 34 tests, and the production build pass.
-- Production-browser checks pass at 320, 375, 390, 430, 768, 1024, and 1440px
-  across every timeline entry. Role and project headings pin and release,
-  dates render, both themes persist, and reduced motion and navigation work.
-  No horizontal overflow or browser errors; phone/desktop screenshots reviewed.
+## Verification
 
-## Final release checks
+Only the three selected personal projects render; every chapter has a date;
+platform/AI highlights appear once under the current role; no research labels
+appear in the UI. Check the longer current-role chapter on phones and desktop,
+light/dark mode, sticky release, navigation, and reduced motion. Run typecheck,
+lint, formatting, tests, and build, then confirm the deployed UAT content.
 
-Commit the content, push master, and confirm GitHub CI plus UAT deployment
-before phone review. Release status is recorded by the GitHub Actions run for
-the pushed commit.
+## Completed local verification
 
-## Remaining content uncertainty
-
-Dates from Git establish recorded development, not a confirmed date of project
-inception. The separate HSBC platform/AI work still needs its parent role and
-period confirmed. No dates or employer details were inferred from personal
-repositories. Existing month/year career dates and the September 2023
-FDM-to-permanent conversion remain as supplied.
+- Only three selected projects render; all nine timeline chapters are dated.
+- Platform/AI highlights render under the current HSBC role, with no duplicate
+  standalone entry or public research label.
+- Typecheck, lint, formatting, 34 tests, and the production build pass.
+- Browser checks pass at 320, 375, 390, 430, 768, 1024, and 1440px: no overflow,
+  correct sticky pin/release through the moved AI content, both themes,
+  navigation, every skill filter, reduced motion, and no JavaScript errors.
+- Phone and desktop screenshots reviewed. Release status is tracked in the
+  GitHub Actions run for the pushed commit.
