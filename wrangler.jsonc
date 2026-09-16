@@ -1,0 +1,45 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ *
+ * This is a static-assets Worker: the built SPA in ./dist is served directly
+ * by Cloudflare with SPA fallback (unknown routes return index.html).
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "resume",
+  "compatibility_date": "2026-09-16",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  // ENVIRONMENT identifies which deployment this is at build/runtime. Named
+  // environments below override it; the top-level value is used by local dev.
+  "vars": { "ENVIRONMENT": "local" },
+  // Named environments. Deploy with `wrangler deploy --env <name>`.
+  // Each hostname is provisioned as a Cloudflare custom domain (DNS + TLS)
+  // on first deploy.
+  "env": {
+    "dev": {
+      "name": "resume-dev",
+      "routes": [{ "pattern": "dev.hamid-rezaei.com", "custom_domain": true }],
+      "vars": { "ENVIRONMENT": "dev" },
+    },
+    "uat": {
+      "name": "resume-uat",
+      "routes": [{ "pattern": "uat.hamid-rezaei.com", "custom_domain": true }],
+      "vars": { "ENVIRONMENT": "uat" },
+    },
+    "production": {
+      "name": "resume",
+      "routes": [
+        { "pattern": "hamid-rezaei.com", "custom_domain": true },
+        { "pattern": "www.hamid-rezaei.com", "custom_domain": true },
+      ],
+      "vars": { "ENVIRONMENT": "production" },
+    },
+  },
+}

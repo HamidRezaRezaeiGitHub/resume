@@ -105,7 +105,10 @@ export const timeline: TimelineEntry[] = [
     startYear: 2025,
     summary:
       'A scroll-driven single-page resume built with React, Vite, Tailwind, and Motion, deployed on Cloudflare Pages.',
-    highlights: ['Scroll-linked timeline animations.', 'Color-coded categories.'],
+    highlights: [
+      'Scroll-linked timeline animations.',
+      'Color-coded categories.',
+    ],
     tags: ['React', 'Vite', 'Tailwind', 'Motion'],
     link: {
       label: 'Source',

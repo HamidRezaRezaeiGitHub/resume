@@ -1,75 +1,78 @@
-# React + TypeScript + Vite
+# Resume — hamid-rezaei.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive, scroll-driven single-page resume. As you scroll, a color-coded
+timeline reveals professional experience, personal projects, education, and
+more.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Area        | Choice                                                            |
+| ----------- | ---------------------------------------------------------------- |
+| Build tool  | [Vite](https://vite.dev/) + React 19 + TypeScript                |
+| Styling     | [Tailwind CSS v4](https://tailwindcss.com/) (shadcn-style tokens)|
+| Animation   | [Motion](https://motion.dev/) (scroll-linked timeline)           |
+| UI          | Custom components + shadcn/ui primitives                         |
+| Testing     | [Vitest](https://vitest.dev/) + Testing Library                  |
+| Lint/Format | ESLint + Prettier                                                |
+| Hosting     | Cloudflare Workers (static assets)                               |
 
-## React Compiler
+## Local development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+nvm use            # Node 24.19.0 (see .nvmrc)
+npm install
+npm run dev        # start Vite dev server
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Useful scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm run typecheck      # tsc -b
+npm run lint           # eslint
+npm run format         # prettier --write
+npm run format:check   # prettier --check (used in CI)
+npm run test           # vitest watch
+npm run test:ci        # vitest run
+npm run build          # type-check + production build to dist/
+npm run preview        # preview the production build
 ```
+
+Editing content: update `src/data/resume.ts` (profile + timeline entries).
+Categories and their colors are defined in `CATEGORIES` there and in
+`src/index.css` (the `--cat-*` tokens).
+
+## Deployment (Cloudflare)
+
+Hosted as a static-assets Worker. Environments are defined in `wrangler.jsonc`:
+
+| Env  | Command               | Domain                 |
+| ---- | --------------------- | ---------------------- |
+| DEV  | `npm run deploy:dev`  | dev.hamid-rezaei.com   |
+| UAT  | `npm run deploy:uat`  | uat.hamid-rezaei.com   |
+| PROD | `npm run deploy:prod` | hamid-rezaei.com / www |
+
+Custom domains (DNS + TLS) are provisioned automatically by Cloudflare on the
+first deploy of each environment.
+
+## CI/CD
+
+GitHub Actions mirrors a trunk-based flow:
+
+- **CI** (`ci.yml`) — reusable verify job (typecheck, lint, format:check,
+  test). Runs on PRs into `master` and is called by every deploy workflow.
+- **Deploy DEV** (`deploy-dev.yml`) — every push to a non-`master` branch → DEV.
+- **Deploy UAT** (`deploy-uat.yml`) — every push to `master` → UAT.
+- **Deploy PROD** (`deploy-prod.yml`) — manual (`workflow_dispatch`), gated by
+  the GitHub `production` environment.
+
+### Required GitHub configuration
+
+Repository **secrets** (Settings → Secrets and variables → Actions):
+
+- `CLOUDFLARE_API_TOKEN` — a Cloudflare API token with Workers + DNS edit
+  permissions.
+- `CLOUDFLARE_ACCOUNT_ID` — `b7a7b0eabf80b4f605f87632d460a229`.
+
+Repository **environments** (Settings → Environments) — create `dev`, `uat`,
+and `production`. Add required reviewers / protection rules to `production` for
+a manual approval gate before prod deploys.

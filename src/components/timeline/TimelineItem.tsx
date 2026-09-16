@@ -26,10 +26,16 @@ export function TimelineItem({ entry, side, index }: TimelineItemProps) {
       <div
         className={cn(
           'hidden md:block',
-          side === 'left' ? 'md:pr-10 md:text-right' : 'md:col-start-3 md:pl-10',
+          side === 'left'
+            ? 'md:pr-10 md:text-right'
+            : 'md:col-start-3 md:pl-10',
         )}
       >
-        <Card entry={entry} meta={meta} align={side === 'left' ? 'right' : 'left'} />
+        <Card
+          entry={entry}
+          meta={meta}
+          align={side === 'left' ? 'right' : 'left'}
+        />
       </div>
 
       {/* Center node */}

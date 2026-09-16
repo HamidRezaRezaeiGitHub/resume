@@ -15,7 +15,9 @@ describe('App', () => {
     expect(
       screen.getByRole('heading', { name: /^timeline$/i }),
     ).toBeInTheDocument()
-    expect(screen.getAllByText(/professional experience/i).length).toBeGreaterThan(0)
+    expect(
+      screen.getAllByText(/professional experience/i).length,
+    ).toBeGreaterThan(0)
     expect(screen.getAllByText(/personal projects/i).length).toBeGreaterThan(0)
     expect(screen.getAllByText(/education/i).length).toBeGreaterThan(0)
   })
