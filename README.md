@@ -69,6 +69,16 @@ and production builds. It checks dates, navigation, categories, links, metrics,
 skill membership, and globally unique entry/achievement IDs. Validation is kept
 out of the browser bundle.
 
+Anchor IDs use lowercase hyphenated names. Generated heading IDs and navigation
+IDs are reserved too. External content links must use HTTP(S). Skill filters have
+unique titles (`Overview` is reserved), and lists cannot repeat the same item.
+
+The application uses strict TypeScript checking. The timeline section owns
+content selection and ordering; chapter headings and animated achievements
+receive typed props. Shared category icons and technology lists keep repeated
+presentation consistent. See [the code review](docs/code-review.md) for the
+review scope, fixes, and validation.
+
 The personal-project selection is BuyOrRent, man-agent-ment, and Buildean.
 BuyOrRent emphasizes the backend and MCP tools; its Flutter frontend remains
 in progress. Platform/AI achievements belong under the current Agency

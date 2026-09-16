@@ -1,14 +1,7 @@
-import { BriefcaseBusiness, Code2, GraduationCap, BookOpen } from 'lucide-react'
-import { resume } from '@/data/resume'
+import { categories, resume } from '@/data/resume'
 import { TimelineItem } from '@/components/timeline/TimelineItem'
+import { categoryIcons } from '@/components/timeline/category-icons'
 import { sortTimeline } from '@/lib/timeline'
-
-const categoryIcons = {
-  experience: BriefcaseBusiness,
-  project: Code2,
-  education: GraduationCap,
-  teaching: BookOpen,
-}
 
 export function Timeline() {
   const entries = sortTimeline(resume.timeline, resume.currentRoleId)
@@ -46,6 +39,7 @@ export function Timeline() {
               entry={entry}
               index={index}
               isCurrent={entry.id === resume.currentRoleId}
+              categoryLabel={categories[entry.category].label}
             />
           ))}
         </ol>

@@ -156,8 +156,7 @@
             "Integrated Sonatype, Checkmarx, Jira, and Confluence into the release workflow."
           ]
         }
-      ],
-      "stage": "Current role"
+      ]
     },
     {
       "id": "hsbc-data-service-layer",

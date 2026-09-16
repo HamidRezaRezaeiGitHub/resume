@@ -3,12 +3,13 @@ import { Asterisk } from 'lucide-react'
 import { resume } from '@/data/resume'
 import { Section } from '@/components/Section'
 
+const skillOptions = [
+  { title: 'Overview', skills: resume.skillOverview },
+  ...resume.skillGroups,
+]
+
 export function Skills() {
-  const [selected, setSelected] = useState('Overview')
-  const skills =
-    selected === 'Overview'
-      ? resume.skillOverview
-      : resume.skillGroups.find((group) => group.title === selected)!.skills
+  const [selected, setSelected] = useState(skillOptions[0])
   return (
     <Section id="skills" className="skills-section" {...resume.sections.skills}>
       <div
@@ -16,20 +17,18 @@ export function Skills() {
         role="group"
         aria-label="Filter skills by discipline"
       >
-        {['Overview', ...resume.skillGroups.map((group) => group.title)].map(
-          (title) => (
-            <button
-              type="button"
-              key={title}
-              className={selected === title ? 'selected' : ''}
-              aria-pressed={selected === title}
-              aria-controls="skill-cloud"
-              onClick={() => setSelected(title)}
-            >
-              {title}
-            </button>
-          ),
-        )}
+        {skillOptions.map((option) => (
+          <button
+            type="button"
+            key={option.title}
+            className={selected === option ? 'selected' : ''}
+            aria-pressed={selected === option}
+            aria-controls="skill-cloud"
+            onClick={() => setSelected(option)}
+          >
+            {option.title}
+          </button>
+        ))}
       </div>
       <div className="skill-cloud-wrap">
         <span className="skill-cross skill-cross-top" aria-hidden="true">
@@ -41,10 +40,10 @@ export function Skills() {
         <ul
           className="skill-cloud"
           id="skill-cloud"
-          aria-label={`${selected} skills`}
+          aria-label={`${selected.title} skills`}
           aria-live="polite"
         >
-          {skills.map((skill, i) => (
+          {selected.skills.map((skill, i) => (
             <li
               key={skill}
               className={`cloud-word cloud-word-${i % 5}`}

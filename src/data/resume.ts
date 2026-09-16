@@ -6,7 +6,7 @@ import type { Category, ResumeContent } from '@/data/resume.schema'
  * and as part of CI. This cast keeps build-only validation code out of the
  * browser bundle.
  */
-export const resume = rawResumeContent as unknown as ResumeContent
+export const resume = rawResumeContent as ResumeContent
 
 export const categories = Object.fromEntries(
   resume.categories.map((category) => [category.id, category]),
@@ -16,4 +16,5 @@ export type {
   Category,
   ResumeContent,
   TimelineEntry,
+  TimelineHighlight,
 } from '@/data/resume.schema'

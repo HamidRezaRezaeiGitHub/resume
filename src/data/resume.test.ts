@@ -27,6 +27,41 @@ describe('unified resume content', () => {
       content.timeline[0].highlights![0].id
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
+  it('rejects entry IDs that collide with generated heading anchors', () => {
+    const content = editableCopy()
+    content.timeline[1].id = `${content.timeline[0].id}-title`
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it.each(['skills-title', 'mobile-navigation', 'skill-cloud'])(
+    'reserves the page anchor %s',
+    (id) => {
+      const content = editableCopy()
+      content.timeline[0].highlights![0].id = id
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
+  it('rejects anchors that cannot be used consistently in fragment selectors', () => {
+    const content = editableCopy()
+    content.timeline[1].id = 'role with spaces#fragment'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it.each([
+    'javascript:alert(1)',
+    'data:text/html,example',
+    'ftp://example.com',
+  ])('rejects non-web external link %s', (url) => {
+    const content = editableCopy()
+    content.profile.links[0].url = url
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it.each(['label', 'url'] as const)(
+    'rejects repeated link %s values',
+    (key) => {
+      const content = editableCopy()
+      content.profile.links[1][key] = content.profile.links[0][key]
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
   it.each(['2025-00', '2025-13', 'June 2025', '2025-06-01'])(
     'rejects unsupported date %s',
     (date) => {
@@ -85,6 +120,19 @@ describe('unified resume content', () => {
   it('keeps overview skills in the editable skill groups', () => {
     const content = editableCopy()
     content.skillOverview[0] = 'Unlisted skill'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it.each(['Backend', 'Overview'])(
+    'rejects ambiguous skill filter title %s',
+    (title) => {
+      const content = editableCopy()
+      content.skillGroups[1].title = title
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
+  it('rejects repeated skills within a filter', () => {
+    const content = editableCopy()
+    content.skillGroups[0].skills.push(content.skillGroups[0].skills[0])
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
 })

@@ -1,89 +1,21 @@
 import { useRef } from 'react'
-import { motion, useScroll, useReducedMotion, useTransform } from 'motion/react'
-import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Code2,
-  GraduationCap,
-  BookOpen,
-} from 'lucide-react'
-import { categories, type TimelineEntry } from '@/data/resume'
-import type { TimelineHighlight } from '@/data/resume.schema'
-import { formatCareerDate } from '@/lib/dates'
-
-const icons = {
-  experience: BriefcaseBusiness,
-  project: Code2,
-  education: GraduationCap,
-  teaching: BookOpen,
-}
-
-function Achievement({
-  item,
-  index,
-}: {
-  item: TimelineHighlight
-  index: number
-}) {
-  const ref = useRef<HTMLLIElement>(null)
-  const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.18, 0.72, 1],
-    [0.3, 1, 1, 0.3],
-  )
-  const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [18, 0, 0, -12])
-  return (
-    <li ref={ref} id={item.id} className="chapter-story">
-      <motion.div
-        className="story-content"
-        style={reduced ? undefined : { opacity, y }}
-      >
-        <p className="story-number mono">
-          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-          {item.date && (
-            <time dateTime={item.date}>{formatCareerDate(item.date)}</time>
-          )}
-        </p>
-        {item.metric && (
-          <div className="story-metric">
-            <strong>{item.metric.value}</strong>
-            <span>{item.metric.label}</span>
-          </div>
-        )}
-        <h4>{item.title}</h4>
-        <p className="story-body">{item.body}</p>
-        {item.details && (
-          <ul className="story-details">
-            {item.details.map((detail) => (
-              <li key={detail}>{detail}</li>
-            ))}
-          </ul>
-        )}
-        {item.tags && (
-          <ul className="inline-tags" aria-label="Technologies">
-            {item.tags.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-        )}
-      </motion.div>
-    </li>
-  )
-}
+import { motion, useScroll, useReducedMotion } from 'motion/react'
+import { ArrowUpRight } from 'lucide-react'
+import type { TimelineEntry } from '@/data/resume'
+import { TimelineHeading } from '@/components/timeline/TimelineHeading'
+import { TimelineAchievement } from '@/components/timeline/TimelineAchievement'
+import { TechnologyList } from '@/components/timeline/TechnologyList'
 
 export function TimelineItem({
   entry,
   index,
   isCurrent,
+  categoryLabel,
 }: {
   entry: TimelineEntry
   index: number
   isCurrent: boolean
+  categoryLabel: string
 }) {
   const ref = useRef<HTMLLIElement>(null)
   const reduced = useReducedMotion()
@@ -91,7 +23,6 @@ export function TimelineItem({
     target: ref,
     offset: ['start center', 'end center'],
   })
-  const Icon = icons[entry.category]
   return (
     <li
       ref={ref}
@@ -102,61 +33,16 @@ export function TimelineItem({
         <motion.div style={{ scaleY: reduced ? 1 : scrollYProgress }} />
       </div>
       <article className="chapter-grid" aria-labelledby={`${entry.id}-title`}>
-        <header className="chapter-heading">
-          <div className="chapter-date-row">
-            <p className="chapter-date mono">
-              <time dateTime={entry.startDate}>
-                {formatCareerDate(entry.startDate)}
-              </time>
-              {entry.endDate && (
-                <>
-                  <span aria-hidden="true"> — </span>
-                  {entry.endDate === 'present' ? (
-                    <span>Present</span>
-                  ) : (
-                    <time dateTime={entry.endDate}>
-                      {formatCareerDate(entry.endDate)}
-                    </time>
-                  )}
-                </>
-              )}
-            </p>
-            <span className="chapter-index mono" aria-hidden="true">
-              / {String(index + 1).padStart(2, '0')}
-            </span>
-          </div>
-          <span
-            className={`chapter-year${isCurrent ? ' chapter-current' : ''}`}
-            aria-hidden="true"
-          >
-            {isCurrent ? 'Current' : entry.startDate.slice(0, 4)}
-          </span>
-          <div className="chapter-category">
-            <span className="chapter-marker">
-              <Icon size={18} aria-hidden="true" />
-            </span>
-            <span>{categories[entry.category].label}</span>
-            {entry.stage && (
-              <span className="chapter-stage">{entry.stage}</span>
-            )}
-          </div>
-          <p className="chapter-organization">{entry.organization}</p>
-          <h3 id={`${entry.id}-title`}>{entry.title}</h3>
-          {entry.team && <p className="chapter-team">{entry.team}</p>}
-          {entry.location && (
-            <p className="chapter-location">{entry.location}</p>
-          )}
-        </header>
+        <TimelineHeading
+          entry={entry}
+          index={index}
+          isCurrent={isCurrent}
+          categoryLabel={categoryLabel}
+        />
         <div className="chapter-body">
           <div className="chapter-overview">
             <p>{entry.summary}</p>
-            {entry.tags && (
-              <ul className="inline-tags" aria-label="Technologies">
-                {entry.tags.map((tag) => (
-                  <li key={tag}>{tag}</li>
-                ))}
-              </ul>
-            )}
+            {entry.tags && <TechnologyList items={entry.tags} />}
             {entry.links && (
               <div className="chapter-links">
                 {entry.links.map((link) => (
@@ -181,7 +67,7 @@ export function TimelineItem({
               aria-label={`${entry.team ?? entry.title} achievements`}
             >
               {entry.highlights.map((item, i) => (
-                <Achievement item={item} index={i} key={item.id} />
+                <TimelineAchievement item={item} index={i} key={item.id} />
               ))}
             </ul>
           )}

@@ -34,3 +34,22 @@ Keep the three selected personal projects and established role chronology.
 - Typecheck, lint, formatting, 34 tests, and build pass. Browser checks pass at
   seven widths from 320–1440px, including sticky pin/release, light/dark modes,
   reduced motion, navigation, and skill filters. Screenshots reviewed.
+
+## Review improvements implemented
+
+- Strict TypeScript for app/build config; focused timeline components with
+  explicit props; shared category icons and technology lists.
+- Current status has one source, and skill selection avoids a forced lookup.
+- Content validation covers generated/reserved anchors, external link schemes,
+  duplicate links/list values, and skill-filter collisions.
+- Added meaningful regression coverage for content failures, denied clipboard
+  access, system-theme updates, and listener cleanup. Review recorded in
+  `docs/code-review.md`; final full checks and deployment verification follow.
+
+## Final local verification
+
+Strict typecheck, lint, formatting, 49 tests, and production build pass. Browser
+checks passed again after the refactor and CSS source-scan change, including
+all seven widths, Current/date labels, sticky headings, themes, every skill
+filter, navigation, and reduced motion. Commit the review changes, push both
+logical commits, and verify the resulting GitHub CI/UAT run and live page.

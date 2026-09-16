@@ -168,4 +168,19 @@ describe('resume experience', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Email copied.')
     copy.mockRestore()
   })
+  it('keeps contact usable when clipboard access is denied', async () => {
+    const user = userEvent.setup()
+    const copy = vi
+      .spyOn(navigator.clipboard, 'writeText')
+      .mockRejectedValueOnce(new Error('Clipboard access denied'))
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: 'Copy email address' }))
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'You can select the email address or tap it to get in touch.',
+    )
+    expect(
+      screen.getByRole('link', { name: resume.profile.email }),
+    ).toHaveAttribute('href', `mailto:${resume.profile.email}`)
+    copy.mockRestore()
+  })
 })

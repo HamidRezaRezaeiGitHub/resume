@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -51,5 +51,40 @@ describe('theme selection', () => {
     render(<ThemeToggle />)
     await user.click(screen.getByRole('button', { name: 'Dark mode' }))
     expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+  })
+  it('follows system changes until an explicit choice, then cleans up the listener', async () => {
+    const user = userEvent.setup()
+    let prefersDark = false
+    let onChange: (() => void) | undefined
+    const query = {
+      get matches() {
+        return prefersDark
+      },
+      addEventListener: vi.fn((_type: string, listener: () => void) => {
+        onChange = listener
+      }),
+      removeEventListener: vi.fn(),
+    }
+    vi.spyOn(window, 'matchMedia').mockReturnValue(
+      query as unknown as MediaQueryList,
+    )
+    const view = render(<ThemeToggle />)
+    act(() => {
+      prefersDark = true
+      onChange?.()
+    })
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+    await user.click(screen.getByRole('button', { name: 'Light mode' }))
+    act(() => {
+      prefersDark = false
+      onChange?.()
+    })
+    act(() => {
+      prefersDark = true
+      onChange?.()
+    })
+    expect(document.documentElement).toHaveAttribute('data-theme', 'light')
+    view.unmount()
+    expect(query.removeEventListener).toHaveBeenCalledWith('change', onChange)
   })
 })
