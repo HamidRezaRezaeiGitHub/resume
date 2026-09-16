@@ -29,3 +29,19 @@ explicitly undated rather than assigning a speculative date or role.
 TypeScript, ESLint, Prettier, Vitest, production build, theme persistence and
 storage fallback, unified timeline coverage, structured date validation,
 scroll chapter behavior, and successful GitHub CI/UAT deployment.
+
+## Implementation and local verification completed
+
+- Theme selection, saved preference, system default, and blocked-storage fallback.
+- One timeline containing every role, work example, education record, teaching
+  role, and personal project; direct copy replaces the previous section slogans.
+- Chapter headings pin and release correctly at 390px and 1440px. Layout checks
+  pass at 320, 375, 390, 430, 768, 1024, and 1440 pixels without overflow.
+- Production-browser checks pass for theme persistence, navigation, skill
+  filters, reduced motion, and JavaScript errors.
+- Typecheck, lint, formatting, 28 tests, and the production build pass.
+- Project start dates and the role for the platform/AI examples remain
+  unconfirmed. Those records are explicitly undated, ready for JSON updates.
+
+The UAT release result is recorded by the GitHub Actions run for the pushed
+commit at `https://uat.hamid-rezaei.com`.
