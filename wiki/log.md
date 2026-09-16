@@ -1,5 +1,13 @@
 # Wiki log
 
+## [2026-09-16] update | DEV highlight animation and terminology
+
+Documented the feature-branch experiment with staggered slide/tilt reveals,
+an accent stroke, static scroll measurement, and reduced-motion/print fallback.
+Added a page anatomy and JSON glossary so design requests can distinguish
+timeline entries, highlights, supporting details, metrics, tags, and sections.
+The experiment is for DEV review; the accepted master/UAT design is preserved.
+
 ## [2026-09-16] ingest | Resume site and AI pack
 
 Adopted the reusable man-agent-ment pack from BuyOrRent and tailored routing,

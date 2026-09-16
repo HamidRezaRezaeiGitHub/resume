@@ -44,6 +44,13 @@ release at the end of their chapter and remain usable on short screens.
 Use content-driven spacing; do not add viewport-height padding to make effects
 last longer. Scroll motion should not trap navigation or gate access to copy.
 
+On the `codex/timeline-highlight-motion` DEV experiment, highlights slide and
+tilt into place, with the heading leading the supporting text and an accent
+rule drawing across the row. A static list item measures scroll progress;
+only its children transform. All layers settle before the main reading area,
+reverse naturally with scrolling, and become static for reduced motion/print.
+This experiment does not imply approval to merge into the accepted UAT design.
+
 ## Accessibility and phone review
 
 Use semantic headings, lists, buttons, links, labels, and visible keyboard focus.
