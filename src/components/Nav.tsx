@@ -1,17 +1,8 @@
-import { profile } from '@/data/resume'
+import { resume } from '@/data/resume'
 import { ThemeToggle } from '@/components/ThemeToggle'
 
-const NAV_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Work', href: '#work' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contact', href: '#contact' },
-]
-
 /** Initials for the compact brand mark. */
-const initials = profile.name
+const initials = resume.profile.name
   .split(' ')
   .map((part) => part[0])
   .join('')
@@ -27,10 +18,10 @@ export function Nav() {
         </a>
 
         <ul className="hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
+          {resume.navigation.map((link) => (
+            <li key={link.sectionId}>
               <a
-                href={link.href}
+                href={`#${link.sectionId}`}
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.label}

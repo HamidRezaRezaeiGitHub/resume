@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useSpring } from 'motion/react'
-import { employmentNote, timeline } from '@/data/resume'
+import { resume } from '@/data/resume'
 import { CategoryLegend } from '@/components/CategoryLegend'
 import { TimelineItem } from '@/components/timeline/TimelineItem'
 
@@ -16,19 +16,19 @@ export function Timeline() {
     restDelta: 0.001,
   })
 
-  const entries = [...timeline].sort((a, b) => b.startYear - a.startYear)
+  const entries = [...resume.timeline].sort((a, b) => b.startYear - a.startYear)
 
   return (
     <section id="experience" className="mx-auto max-w-5xl px-6 py-20">
       <div className="mb-12 text-center">
         <p className="mb-2 text-sm font-medium uppercase tracking-[0.25em] text-muted-foreground">
-          Career
+          {resume.sections.timeline.eyebrow}
         </p>
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Experience &amp; Education
+          {resume.sections.timeline.title}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
-          {employmentNote}
+          {resume.sections.timeline.description}
         </p>
         <CategoryLegend className="mt-6" />
       </div>

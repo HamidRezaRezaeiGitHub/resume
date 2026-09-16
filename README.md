@@ -37,9 +37,19 @@ npm run build          # type-check + production build to dist/
 npm run preview        # preview the production build
 ```
 
-Editing content: update `src/data/resume.ts` (profile + timeline entries).
-Categories and their colors are defined in `CATEGORIES` there and in
-`src/index.css` (the `--cat-*` tokens).
+## Editing resume content
+
+All editable resume copy and records live in `src/data/resume.json`. This
+includes the profile, navigation labels, section headings, timeline, case
+studies, projects, skills, links, and footer text. Content changes do not
+require editing a React component.
+
+The JSON document is validated before local development and production builds
+by the Zod contract in `src/data/resume.schema.ts`. The same contract is
+exercised in CI, including checks for required fields, valid email/URL values,
+supported categories, and unique record IDs. Validation stays out of the
+browser bundle. Presentation-only category colors remain in `src/data/resume.ts`
+and `src/index.css` (the `--cat-*` tokens).
 
 ## Deployment (Cloudflare)
 

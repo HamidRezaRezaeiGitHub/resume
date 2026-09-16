@@ -1,4 +1,4 @@
-import { CATEGORIES, type Category } from '@/data/resume'
+import { categories, resume } from '@/data/resume'
 import { cn } from '@/lib/utils'
 
 export function CategoryLegend({ className }: { className?: string }) {
@@ -9,10 +9,10 @@ export function CategoryLegend({ className }: { className?: string }) {
         className,
       )}
     >
-      {(Object.keys(CATEGORIES) as Category[]).map((key) => {
-        const meta = CATEGORIES[key]
+      {resume.categories.map(({ id }) => {
+        const meta = categories[id]
         return (
-          <li key={key} className="flex items-center gap-2 text-sm">
+          <li key={id} className="flex items-center gap-2 text-sm">
             <span
               className={cn('size-3 rounded-full', meta.bgClass)}
               aria-hidden="true"

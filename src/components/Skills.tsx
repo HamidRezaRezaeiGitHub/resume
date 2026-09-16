@@ -1,17 +1,17 @@
 import { motion } from 'motion/react'
-import { skillGroups } from '@/data/resume'
+import { resume } from '@/data/resume'
 import { Section } from '@/components/Section'
 
 export function Skills() {
   return (
     <Section
       id="skills"
-      eyebrow="Toolbox"
-      title="Skills & technologies"
-      description="Areas I actively work in and the tools I reach for."
+      eyebrow={resume.sections.skills.eyebrow}
+      title={resume.sections.skills.title}
+      description={resume.sections.skills.description}
     >
       <div className="grid gap-6 sm:grid-cols-2">
-        {skillGroups.map((group, i) => (
+        {resume.skillGroups.map((group, i) => (
           <motion.div
             key={group.title}
             initial={{ opacity: 0, y: 20 }}

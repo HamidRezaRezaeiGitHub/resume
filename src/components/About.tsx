@@ -1,17 +1,21 @@
 import { motion } from 'motion/react'
 import { Check } from 'lucide-react'
-import { about } from '@/data/resume'
+import { resume } from '@/data/resume'
 import { Section } from '@/components/Section'
 
 export function About() {
   return (
-    <Section id="about" eyebrow="About" title="Who I am">
+    <Section
+      id="about"
+      eyebrow={resume.sections.about.eyebrow}
+      title={resume.sections.about.title}
+    >
       <div className="grid gap-10 md:grid-cols-[1.2fr_1fr]">
         <p className="text-lg leading-relaxed text-muted-foreground">
-          {about.intro}
+          {resume.sections.about.intro}
         </p>
         <ul className="space-y-3">
-          {about.themes.map((theme, i) => (
+          {resume.sections.about.themes.map((theme, i) => (
             <motion.li
               key={theme}
               initial={{ opacity: 0, x: 16 }}

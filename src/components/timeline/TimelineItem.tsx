@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { CATEGORIES, type TimelineEntry } from '@/data/resume'
+import { categories, type TimelineEntry } from '@/data/resume'
 import { cn } from '@/lib/utils'
 
 interface TimelineItemProps {
@@ -10,7 +10,7 @@ interface TimelineItemProps {
 }
 
 export function TimelineItem({ entry, side, index }: TimelineItemProps) {
-  const meta = CATEGORIES[entry.category]
+  const meta = categories[entry.category]
 
   return (
     <motion.li
@@ -75,7 +75,7 @@ function Card({
   align,
 }: {
   entry: TimelineEntry
-  meta: (typeof CATEGORIES)[keyof typeof CATEGORIES]
+  meta: (typeof categories)[keyof typeof categories]
   align: 'left' | 'right'
 }) {
   return (

@@ -1,18 +1,18 @@
 import { motion } from 'motion/react'
 import { ExternalLink } from 'lucide-react'
-import { projects } from '@/data/resume'
+import { resume } from '@/data/resume'
 import { Section } from '@/components/Section'
 
 export function Projects() {
   return (
     <Section
       id="projects"
-      eyebrow="Beyond Work"
-      title="Personal & open-source"
-      description="Products and open-source tools I build outside of my day job."
+      eyebrow={resume.sections.projects.eyebrow}
+      title={resume.sections.projects.title}
+      description={resume.sections.projects.description}
     >
       <div className="grid gap-6 md:grid-cols-3">
-        {projects.map((p, i) => (
+        {resume.projects.map((p, i) => (
           <motion.article
             key={p.id}
             initial={{ opacity: 0, y: 24 }}

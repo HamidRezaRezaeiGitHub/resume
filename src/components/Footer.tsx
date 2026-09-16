@@ -1,14 +1,14 @@
-import { profile } from '@/data/resume'
+import { resume } from '@/data/resume'
 
 export function Footer() {
   return (
     <footer className="border-t border-border px-6 py-12 text-center">
       <p className="text-sm text-muted-foreground">
-        © {new Date().getFullYear()} {profile.name}. Built with React, Vite &
-        Motion.
+        © {new Date().getFullYear()} {resume.profile.name}.{' '}
+        {resume.footer.builtWith}
       </p>
       <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-        {profile.links.map((link) => (
+        {resume.profile.links.map((link) => (
           <a
             key={link.label}
             href={link.url}

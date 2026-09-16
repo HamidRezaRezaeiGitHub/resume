@@ -1,17 +1,17 @@
 import { motion } from 'motion/react'
-import { caseStudies } from '@/data/resume'
+import { resume } from '@/data/resume'
 import { Section } from '@/components/Section'
 
 export function CaseStudies() {
   return (
     <Section
       id="work"
-      eyebrow="Selected Work"
-      title="Professional case studies"
-      description="Public-safe highlights from my work delivering secure, data-intensive systems and developer tooling in a regulated financial environment."
+      eyebrow={resume.sections.caseStudies.eyebrow}
+      title={resume.sections.caseStudies.title}
+      description={resume.sections.caseStudies.description}
     >
       <div className="grid gap-6 md:grid-cols-2">
-        {caseStudies.map((cs, i) => (
+        {resume.caseStudies.map((cs, i) => (
           <motion.article
             key={cs.id}
             initial={{ opacity: 0, y: 24 }}
