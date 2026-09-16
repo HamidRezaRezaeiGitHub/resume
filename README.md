@@ -57,7 +57,8 @@ teaching records belong in the single `timeline` array.
 - `title`, `organization`, `team`, and `summary` describe the entry. `stage`,
   `location`, `tags`, and external `links` are optional.
 - Nested `highlights` hold a role's work examples. Each has a unique `id`, a
-  plain-language `title`, and `body`. Optional `details` add short bullets, and
+  plain-language `title`, and `body`. An optional `date` marks a verified
+  milestone with the same year/month precision. Optional `details` add short bullets, and
   `tags` identify the technologies involved.
 - An achievement's optional `metric` has both `value` and `label`. Keep any
   qualification with the result, such as one selected trade type during a
@@ -74,6 +75,9 @@ out of the browser bundle.
 Project records can be positioned using confirmed dates or clearly identified
 repository evidence. Platform/AI work remains its own undated HSBC entry until its parent role
 is confirmed; its highlights can then be moved into that role's `highlights`.
+
+[Project evidence](docs/project-evidence.md) records the sibling repository
+sources, commit dates, scope limits, and exclusions behind the project entries.
 
 ## Interaction and accessibility
 

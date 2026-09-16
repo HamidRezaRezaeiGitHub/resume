@@ -72,6 +72,11 @@ describe('resume experience', () => {
         expect(
           screen.getByRole('heading', { name: item.title, level: 4 }),
         ).toBeInTheDocument()
+        if (item.date)
+          expect(document.querySelector(`#${item.id} time`)).toHaveAttribute(
+            'datetime',
+            item.date,
+          )
       }
     }
     expect(document.querySelectorAll('details')).toHaveLength(0)

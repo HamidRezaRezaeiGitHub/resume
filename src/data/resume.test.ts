@@ -88,6 +88,13 @@ describe('unified resume content', () => {
     metric.label = ''
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
+  it('validates milestone dates with the same precision as timeline entries', () => {
+    const content = editableCopy()
+    content.timeline[0].highlights![0].date = '2025-13'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    content.timeline[0].highlights![0].date = '2025-06'
+    expect(resumeContentSchema.safeParse(content).success).toBe(true)
+  })
   it('rejects duplicate navigation destinations', () => {
     const content = editableCopy()
     content.navigation[1].sectionId = content.navigation[0].sectionId

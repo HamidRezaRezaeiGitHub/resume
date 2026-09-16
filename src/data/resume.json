@@ -120,7 +120,8 @@
           "body": "I led the move to configurable Jenkins/Groovy pipelines. They automate builds, tests, security scans, versioning, and deployments.",
           "tags": ["Jenkins", "Groovy", "CI/CD"]
         }
-      ]
+      ],
+      "stage": "Current role"
     },
     {
       "id": "hsbc-data-service-layer",
@@ -290,13 +291,30 @@
       "id": "man-agent-ment",
       "category": "project",
       "title": "man-agent-ment",
-      "organization": "Creator · Open source",
-      "summary": "I made this open-source framework to give AI coding agents a consistent way to plan work, check changes, and hand work over between sessions.",
-      "tags": ["AI Agents", "MCP", "Developer Experience", "Automation"],
+      "organization": "Creator · Developer tools",
+      "summary": "I built a reusable set of workflows for the coding agents I use across projects. It gives them a consistent way to plan changes, check their work, and leave useful context for the next session.",
+      "tags": ["AI coding agents", "Shell", "Git", "Documentation"],
       "links": [
         {
           "label": "GitHub",
           "url": "https://github.com/HamidRezaRezaeiGitHub/man-agent-ment"
+        }
+      ],
+      "startDate": "2026-04",
+      "dateBasis": "repository",
+      "stage": "Workflow kit",
+      "highlights": [
+        {
+          "id": "agent-workflow-adapters",
+          "date": "2026-04",
+          "title": "One workflow across coding tools",
+          "body": "Packaged shared instructions with small adapters for Codex, Claude Code, Copilot, and Gemini. Install and audit scripts preserve existing project files and show where a migration needs review."
+        },
+        {
+          "id": "agent-workflow-handoff",
+          "date": "2026-05",
+          "title": "Leaving context for the next session",
+          "body": "Added project wikis, requirement notes, and handoff workflows so the next session can pick up from recorded decisions. Reminder hooks help keep that context up to date."
         }
       ]
     },
@@ -304,25 +322,56 @@
       "id": "buy-or-rent",
       "category": "project",
       "title": "BuyOrRent",
-      "organization": "Backend engineer",
-      "summary": "I’m building a financial-calculation service in TypeScript and Hono on Cloudflare Workers. The HTTP APIs and MCP tools share the same calculation logic. The broader buy-versus-rent comparison is still in development.",
+      "organization": "Creator · Software engineer",
+      "summary": "I’m building a way to compare the long-term costs of renting and buying a home. It started as a React prototype, grew into a Flutter app, and now includes a separate financial API for apps and AI assistants.",
       "stage": "In development",
       "tags": [
         "TypeScript",
-        "Hono",
+        "React",
+        "Flutter",
+        "Dart",
         "Cloudflare Workers",
-        "Zod",
-        "OpenAPI",
         "MCP"
       ],
       "links": [
         {
-          "label": "API Docs",
+          "label": "Web app",
+          "url": "https://www.buyorrent.app"
+        },
+        {
+          "label": "API docs",
           "url": "https://api.buyorrent.app/api/v1/docs"
         },
         {
-          "label": "GitHub",
+          "label": "Backend on GitHub",
           "url": "https://github.com/HamidRezaRezaeiGitHub/buy-or-rent-backend"
+        }
+      ],
+      "startDate": "2025-09",
+      "endDate": "present",
+      "dateBasis": "repository",
+      "highlights": [
+        {
+          "id": "buy-or-rent-prototype",
+          "date": "2025-09",
+          "title": "Starting with the numbers",
+          "body": "Built a React prototype for housing scenarios, rent projections, and mortgage calculations. It gave me a place to work through the assumptions behind the comparison."
+        },
+        {
+          "id": "buy-or-rent-flutter",
+          "date": "2026-04",
+          "title": "From inputs to a comparison",
+          "body": "Built a Flutter questionnaire and results dashboard for net worth, housing costs, home equity, and investments, with charts and CSV exports."
+        },
+        {
+          "id": "buy-or-rent-api",
+          "date": "2026-08",
+          "title": "Calculations that apps and agents can use",
+          "body": "Started a TypeScript/Hono backend on Cloudflare Workers. HTTP endpoints and MCP tools share the same financial logic, with separate APIs for rent, loans, mortgages, property values, investments, and expenses.",
+          "details": [
+            "The Flutter app still calculates locally. Connecting it to the backend and assembling the backend’s full comparison are next."
+          ],
+          "tags": ["Hono", "Zod", "OpenAPI", "MCP"]
         }
       ]
     },
@@ -331,7 +380,7 @@
       "category": "project",
       "title": "Buildean",
       "organization": "Co-founder · Backend engineer",
-      "summary": "I co-founded this construction-management product, which is in beta. I own the Java/Spring backend, PostgreSQL data model, Firebase security, and GCP infrastructure.",
+      "summary": "I co-founded Buildean, a construction-estimation app in beta. I own the backend and cloud infrastructure, turning task lists and regional prices into estimates that builders can adjust.",
       "stage": "Beta",
       "tags": [
         "Java 25",
@@ -340,7 +389,134 @@
         "PostgreSQL",
         "Firebase",
         "Docker"
+      ],
+      "startDate": "2025-07",
+      "endDate": "present",
+      "dateBasis": "repository",
+      "highlights": [
+        {
+          "id": "buildean-estimation",
+          "title": "Keeping estimates useful as plans change",
+          "body": "Built the Java/Spring estimation engine around task trees, regional quotes, and manual prices. Users can compare scenarios or update the task list while keeping compatible pricing edits."
+        },
+        {
+          "id": "buildean-delivery",
+          "date": "2026-05",
+          "title": "A repeatable path to the cloud",
+          "body": "Set up PostgreSQL migrations, Firebase authentication, and container deployments to Google Cloud Run. GitHub Actions tests changes and promotes the same image between environments.",
+          "tags": [
+            "PostgreSQL",
+            "Flyway",
+            "Firebase",
+            "Cloud Run",
+            "GitHub Actions"
+          ]
+        }
       ]
+    },
+    {
+      "id": "team-keeper",
+      "category": "project",
+      "title": "TeamKeeper",
+      "organization": "Creator · Backend developer",
+      "startDate": "2024-09",
+      "dateBasis": "repository",
+      "stage": "Prototype",
+      "summary": "An early Java/Spring project for organizing recreational sports teams. I modeled players, coaches, leagues, matches, and payment records, with REST endpoints around the team workflows.",
+      "tags": ["Java", "Spring Boot", "Spring Data JPA", "H2"]
+    },
+    {
+      "id": "query-fusion",
+      "category": "project",
+      "title": "QueryFusion",
+      "organization": "Creator · Frontend developer",
+      "startDate": "2023-10",
+      "endDate": "2023-12",
+      "dateBasis": "repository",
+      "stage": "Prototype",
+      "summary": "Built a browser workspace for inspecting JSON and XML, with file uploads, formatting, validation, and light/dark themes. I also wrote JSONPath and XPath query services; connecting them to the editor is unfinished.",
+      "tags": ["React", "TypeScript", "Ace Editor", "JSONPath", "XPath"]
+    },
+    {
+      "id": "xml-sorter",
+      "category": "project",
+      "title": "XML Sorter",
+      "organization": "Creator · Backend developer",
+      "startDate": "2024-10",
+      "dateBasis": "repository",
+      "stage": "Developer utility",
+      "summary": "Built a Java/Spring utility that puts XML elements and attributes into a consistent order for easier comparison. It accepts XML text or file uploads, with tests for nested content, namespaces, and repeatable output.",
+      "tags": ["Java", "Spring Boot", "XML", "JUnit"]
+    },
+    {
+      "id": "html-cleaner",
+      "category": "project",
+      "title": "HTML Cleaner",
+      "organization": "Creator · Developer tools",
+      "startDate": "2026-01",
+      "dateBasis": "repository",
+      "stage": "Command-line utility",
+      "summary": "A small Python tool for simplifying saved HTML before extracting data. It removes scripts, styles, media, noisy attributes, and empty elements using Python’s standard library.",
+      "tags": ["Python", "HTML parsing", "Data extraction"]
+    },
+    {
+      "id": "recall-watch",
+      "category": "project",
+      "title": "RecallWatch",
+      "organization": "Creator · Backend developer",
+      "startDate": "2026-09",
+      "dateBasis": "repository",
+      "stage": "Early foundation",
+      "summary": "Started a TypeScript backend with HTTP and MCP interfaces, strict input validation, and shared error handling. The product workflows are still to be built.",
+      "tags": ["TypeScript", "Hono", "Cloudflare Workers", "MCP"]
+    },
+    {
+      "id": "blackjack-simulation",
+      "category": "project",
+      "title": "Blackjack Simulation",
+      "organization": "Creator · Simulation experiment",
+      "startDate": "2024-12",
+      "dateBasis": "repository",
+      "stage": "Experiment",
+      "summary": "Built a configurable Java simulation to explore how a capped betting strategy changes a bankroll over repeated rounds. The model samples outcomes from set probabilities and exports round-by-round CSV reports.",
+      "tags": ["Java", "Spring Boot", "Simulation", "CSV"]
+    },
+    {
+      "id": "spring-service-blueprint",
+      "category": "project",
+      "title": "Spring Service Blueprint",
+      "organization": "Creator · Backend developer",
+      "startDate": "2026-08",
+      "dateBasis": "repository",
+      "stage": "Reusable template",
+      "summary": "Built a starting point for Java services so I don’t have to rebuild persistence, API errors, and delivery setup each time. REST and MCP interfaces share service logic, with optional Firebase and AI integrations.",
+      "tags": [
+        "Java 25",
+        "Spring Boot 4",
+        "PostgreSQL",
+        "Flyway",
+        "MCP",
+        "Testcontainers"
+      ],
+      "highlights": [
+        {
+          "id": "spring-blueprint-boundaries",
+          "date": "2026-08",
+          "title": "Defaults I can carry into the next service",
+          "body": "Added database migrations, integration tests, architecture checks, and dependency scanning. External providers stay disabled until configured, and an adoption guide covers what to change for a new service."
+        }
+      ]
+    },
+    {
+      "id": "react-common",
+      "category": "project",
+      "title": "React Common",
+      "organization": "Creator · Frontend developer",
+      "startDate": "2025-09",
+      "dateBasis": "repository",
+      "stage": "Reusable components",
+      "summary": "Built reusable React forms, navigation, and theme controls on top of shadcn/ui and Radix. Added configurable validation and component tests, then reused the collection in the original BuyOrRent app.",
+      "tags": ["React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Jest"]
     }
   ],
   "skillGroups": [
@@ -365,7 +541,9 @@
         "JavaScript",
         "Angular",
         "HTML & CSS",
-        "shadcn/ui"
+        "shadcn/ui",
+        "Flutter",
+        "Dart"
       ]
     },
     {

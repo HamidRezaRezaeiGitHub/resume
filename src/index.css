@@ -747,6 +747,9 @@ h1 > span {
   width: 100%;
 }
 .story-number {
+  display: flex;
+  align-items: center;
+  gap: 18px;
   color: var(--category);
   font-size: 11px;
   margin-bottom: 22px;

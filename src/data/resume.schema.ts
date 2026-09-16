@@ -21,6 +21,7 @@ const sectionId = z.enum(['experience', 'skills', 'contact'])
 
 const highlight = z.strictObject({
   id: text,
+  date: careerDate.optional(),
   title: text,
   body: text,
   metric: z.strictObject({ value: text, label: text }).optional(),

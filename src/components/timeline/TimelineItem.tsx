@@ -43,8 +43,11 @@ function Achievement({
         className="story-content"
         style={reduced ? undefined : { opacity, y }}
       >
-        <p className="story-number mono" aria-hidden="true">
-          {String(index + 1).padStart(2, '0')}
+        <p className="story-number mono">
+          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          {item.date && (
+            <time dateTime={item.date}>{formatCareerDate(item.date)}</time>
+          )}
         </p>
         {item.metric && (
           <div className="story-metric">
