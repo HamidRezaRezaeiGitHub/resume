@@ -33,6 +33,16 @@ describe('resume experience', () => {
     expect(within(journey).getAllByRole('article')).toHaveLength(
       resume.timeline.length,
     )
+    expect(document.querySelector('.career-timeline > li')).toHaveAttribute(
+      'id',
+      resume.currentRoleId,
+    )
+    for (const entry of resume.timeline.filter((item) => item.dateBasis))
+      expect(
+        within(document.getElementById(entry.id)!).getByText(
+          'From repository history',
+        ),
+      ).toBeInTheDocument()
     const education = document.getElementById('edu-western')!
     expect(
       within(education).getByText('2019', { selector: 'time' }),

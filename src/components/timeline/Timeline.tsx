@@ -11,7 +11,7 @@ const categoryIcons = {
 }
 
 export function Timeline() {
-  const entries = sortTimeline(resume.timeline)
+  const entries = sortTimeline(resume.timeline, resume.currentRoleId)
   return (
     <section
       id="experience"

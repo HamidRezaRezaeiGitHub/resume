@@ -9,6 +9,23 @@ const entry = (id: string, startDate?: string): TimelineEntry => ({
   startDate,
 })
 describe('timeline ordering', () => {
+  it('keeps the current job first while sorting overlapping projects by date', () => {
+    const input = [
+      entry('project-2026', '2026-08'),
+      { ...entry('current-role', '2025-06'), category: 'experience' as const },
+      entry('project-2025', '2025-09'),
+      entry('older-role', '2023-06'),
+      entry('undated'),
+    ]
+    expect(sortTimeline(input, 'current-role').map((item) => item.id)).toEqual([
+      'current-role',
+      'project-2026',
+      'project-2025',
+      'older-role',
+      'undated',
+    ])
+    expect(input[0].id).toBe('project-2026')
+  })
   it('sorts mixed categories by date and leaves unknown dates explicitly last', () => {
     const input = [
       entry('undated'),

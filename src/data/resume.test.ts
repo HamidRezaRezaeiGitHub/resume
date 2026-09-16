@@ -37,10 +37,10 @@ describe('unified resume content', () => {
   )
   it('allows an unknown date without assigning one', () => {
     const content = editableCopy()
-    delete content.timeline[0].startDate
-    delete content.timeline[0].endDate
+    delete content.timeline[1].startDate
+    delete content.timeline[1].endDate
     expect(
-      resumeContentSchema.parse(content).timeline[0].startDate,
+      resumeContentSchema.parse(content).timeline[1].startDate,
     ).toBeUndefined()
   })
   it('requires a start date if an end date is supplied', () => {
@@ -55,8 +55,30 @@ describe('unified resume content', () => {
   })
   it('allows year-only end dates without inventing a month', () => {
     const content = editableCopy()
-    content.timeline[0].endDate = '2025'
+    content.timeline[1].endDate = '2025'
     expect(resumeContentSchema.safeParse(content).success).toBe(true)
+  })
+  it.each(['missing-role', 'buildean', 'hsbc-data-service-layer'])(
+    'rejects %s as the current professional role',
+    (id) => {
+      const content = editableCopy()
+      content.currentRoleId = id
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
+  it('requires a dated project for repository date provenance', () => {
+    const content = editableCopy()
+    const project = content.timeline.find(
+      (entry) => entry.category === 'project',
+    )!
+    delete project.startDate
+    delete project.endDate
+    project.dateBasis = 'repository'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    project.startDate = '2025-09'
+    expect(resumeContentSchema.safeParse(content).success).toBe(true)
+    content.timeline[0].dateBasis = 'repository'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
   it('requires a readable qualification alongside achievement metrics', () => {
     const content = editableCopy()

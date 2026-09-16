@@ -1,8 +1,13 @@
 import type { TimelineEntry } from '@/data/resume'
 
-/** Unknown dates are explicitly undated, never treated as a recent start. */
-export function sortTimeline(entries: readonly TimelineEntry[]) {
-  return [...entries].sort((a, b) =>
-    (b.startDate ?? '').localeCompare(a.startDate ?? ''),
-  )
+/** Lead with the current role, then reverse chronology; unknown dates go last. */
+export function sortTimeline(
+  entries: readonly TimelineEntry[],
+  currentRoleId?: string,
+) {
+  return [...entries].sort((a, b) => {
+    if (a.id === currentRoleId) return -1
+    if (b.id === currentRoleId) return 1
+    return (b.startDate ?? '').localeCompare(a.startDate ?? '')
+  })
 }

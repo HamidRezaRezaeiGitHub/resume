@@ -48,8 +48,12 @@ teaching records belong in the single `timeline` array.
 - `startDate` and optional `endDate` accept `YYYY-MM` or `YYYY`. Use `"present"`
   for an ongoing entry. If a start date is unknown, omit both dates: the entry
   displays **Date not listed** after the dated entries. Never invent a month.
-- Dated entries sort by start date, newest first. Overlapping dates are retained;
-  equal dates and undated records keep their supplied order.
+- `currentRoleId` references an ongoing professional entry and keeps it first.
+  Everything else sorts by start date, newest first. Overlapping dates are
+  retained; equal dates and undated records keep their supplied order.
+- Set `dateBasis: "repository"` for project dates established from meaningful
+  Git history. The page labels these as **From repository history**, rather
+  than claiming they are confirmed project inception dates.
 - `title`, `organization`, `team`, and `summary` describe the entry. `stage`,
   `location`, `tags`, and external `links` are optional.
 - Nested `highlights` hold a role's work examples. Each has a unique `id`, a
@@ -67,8 +71,8 @@ and production builds. It checks dates, navigation, categories, links, metrics,
 skill membership, and globally unique entry/achievement IDs. Validation is kept
 out of the browser bundle.
 
-The undated project records can be positioned by adding their confirmed start
-dates. Platform/AI work remains its own undated HSBC entry until its parent role
+Project records can be positioned using confirmed dates or clearly identified
+repository evidence. Platform/AI work remains its own undated HSBC entry until its parent role
 is confirmed; its highlights can then be moved into that role's `highlights`.
 
 ## Interaction and accessibility

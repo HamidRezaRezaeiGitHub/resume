@@ -38,6 +38,7 @@ const timelineEntry = z
     location: text.optional(),
     startDate: careerDate.optional(),
     endDate: z.union([careerDate, z.literal('present')]).optional(),
+    dateBasis: z.literal('repository').optional(),
     stage: text.optional(),
     summary: text,
     highlights: z.array(highlight).min(1).optional(),
@@ -45,6 +46,12 @@ const timelineEntry = z
     links: z.array(link).min(1).optional(),
   })
   .superRefine((entry, context) => {
+    if (entry.dateBasis && (entry.category !== 'project' || !entry.startDate))
+      context.addIssue({
+        code: 'custom',
+        message: 'Repository dates require a dated personal project',
+        path: ['dateBasis'],
+      })
     if (entry.endDate && !entry.startDate)
       context.addIssue({
         code: 'custom',
@@ -93,11 +100,25 @@ export const resumeContentSchema = z
       .array(z.strictObject({ id: categorySchema, label: text }))
       .length(4),
     timeline: z.array(timelineEntry).min(1),
+    currentRoleId: text,
     skillOverview: texts,
     skillGroups: z.array(z.strictObject({ title: text, skills: texts })).min(1),
     footer: z.strictObject({ builtWith: text }),
   })
   .superRefine((content, context) => {
+    const currentRole = content.timeline.find(
+      (entry) => entry.id === content.currentRoleId,
+    )
+    if (
+      currentRole?.category !== 'experience' ||
+      currentRole.endDate !== 'present'
+    )
+      context.addIssue({
+        code: 'custom',
+        message:
+          'The current role must reference an ongoing professional experience',
+        path: ['currentRoleId'],
+      })
     const ids = new Set<string>([
       'top',
       'main',

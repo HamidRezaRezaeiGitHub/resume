@@ -126,6 +126,9 @@ export function TimelineItem({
               / {String(index + 1).padStart(2, '0')}
             </span>
           </div>
+          {entry.dateBasis === 'repository' && (
+            <p className="chapter-date-note">From repository history</p>
+          )}
           <span className="chapter-year" aria-hidden="true">
             {entry.startDate?.slice(0, 4) ?? '—'}
           </span>

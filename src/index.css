@@ -621,6 +621,11 @@ h1 > span {
   outline: 1px solid var(--category);
   background: var(--category);
 }
+.chapter-date-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
 .chapter-date-row {
   display: flex;
   align-items: center;
