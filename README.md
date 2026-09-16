@@ -63,7 +63,6 @@ teaching records belong in the single `timeline` array.
   defined evaluation period.
 - `skillOverview` selects the opening skill cloud. Every value must also appear
   in `skillGroups`, which supply the discipline filters.
-- `careerNote` keeps the FDM-to-HSBC employment change separate from team moves.
 
 The schema in `src/data/resume.schema.ts` validates the JSON before development
 and production builds. It checks dates, navigation, categories, links, metrics,
@@ -85,6 +84,9 @@ Each timeline entry contains its own sticky heading. On desktop, it stays beside
 the achievements; on phones, it stays below the navigation. The heading leaves
 with its entry, letting the next one take its place. Achievements move and fade
 as they pass through the viewport, while their content remains in the document.
+Their height follows the content, without extra viewport-based spacing. The
+current role uses a large **Current** label instead of its start year while
+retaining its full date range. Other entries keep their year labels.
 Short landscape screens use normal headings to leave room for reading.
 
 Theme buttons in the header expose light and dark modes. The initial theme uses

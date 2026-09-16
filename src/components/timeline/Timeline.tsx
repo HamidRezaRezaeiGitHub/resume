@@ -38,11 +38,15 @@ export function Timeline() {
               )
             })}
           </ul>
-          <p className="career-note">{resume.careerNote}</p>
         </div>
         <ol className="career-timeline">
           {entries.map((entry, index) => (
-            <TimelineItem key={entry.id} entry={entry} index={index} />
+            <TimelineItem
+              key={entry.id}
+              entry={entry}
+              index={index}
+              isCurrent={entry.id === resume.currentRoleId}
+            />
           ))}
         </ol>
       </div>

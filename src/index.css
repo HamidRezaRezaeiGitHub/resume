@@ -571,13 +571,6 @@ h1 > span {
 .category-key svg {
   color: var(--category);
 }
-.career-note {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 650px;
-  margin-top: 28px;
-}
 .timeline-chapter {
   position: relative;
   border-top: 1px solid color-mix(in srgb, var(--category) 35%, var(--line));
@@ -587,7 +580,7 @@ h1 > span {
   display: grid;
   grid-template-columns: 0.95fr 1.2fr;
   gap: 100px;
-  padding: 48px 0 85px 42px;
+  padding: 32px 0 52px 42px;
 }
 .chapter-rail {
   position: absolute;
@@ -654,6 +647,10 @@ h1 > span {
   font-size: 11px;
   margin-bottom: 23px;
 }
+.chapter-current {
+  font-size: clamp(48px, 5.5vw, 76px);
+  letter-spacing: -0.055em;
+}
 .chapter-marker {
   height: 33px;
   width: 33px;
@@ -696,7 +693,7 @@ h1 > span {
   padding-top: 10px;
 }
 .chapter-overview {
-  padding-block: 10px 40px;
+  padding-block: 10px 28px;
 }
 .chapter-overview > p {
   font-size: 20px;
@@ -731,10 +728,7 @@ h1 > span {
   color: var(--category);
 }
 .chapter-story {
-  min-height: clamp(340px, 48svh, 560px);
-  display: flex;
-  align-items: center;
-  padding-block: 58px;
+  padding-block: 28px;
   border-top: 1px solid var(--line);
   scroll-margin-top: calc(var(--nav-height) + 40px);
 }
@@ -747,7 +741,7 @@ h1 > span {
   gap: 18px;
   color: var(--category);
   font-size: 11px;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 .story-content h4 {
   font-size: clamp(25px, 2.5vw, 34px);
@@ -757,11 +751,11 @@ h1 > span {
 .story-body {
   color: var(--muted);
   font-size: 16px;
-  line-height: 1.8;
-  margin-top: 20px;
+  line-height: 1.7;
+  margin-top: 14px;
 }
 .story-metric {
-  margin-bottom: 30px;
+  margin-bottom: 18px;
 }
 .story-metric strong {
   display: block;
@@ -777,27 +771,23 @@ h1 > span {
   font-size: 13px;
   line-height: 1.65;
   color: var(--muted);
-  margin-top: 12px;
+  margin-top: 8px;
 }
 .story-details {
-  margin-top: 21px;
+  margin-top: 14px;
   list-style: disc;
   padding-left: 17px;
   display: grid;
-  gap: 12px;
+  gap: 8px;
   color: var(--muted);
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.7;
 }
 .story-details li::marker {
   color: var(--category);
 }
-.compact-chapter .chapter-grid {
-  min-height: 490px;
-  padding-block: 48px 90px;
-}
-.compact-chapter .chapter-body {
-  align-self: center;
+.story-content .inline-tags {
+  margin-top: 16px;
 }
 .career-timeline {
   padding-bottom: 60px;
@@ -1139,7 +1129,7 @@ h1 > span {
   }
   .chapter-grid {
     display: block;
-    padding: 0 0 60px 28px;
+    padding: 0 0 36px 28px;
   }
   .chapter-heading {
     top: var(--nav-height);
@@ -1187,15 +1177,14 @@ h1 > span {
     padding-top: 0;
   }
   .chapter-overview {
-    padding-block: 30px;
+    padding-block: 24px;
   }
   .chapter-overview > p {
     font-size: 18px;
     line-height: 1.7;
   }
   .chapter-story {
-    min-height: 48svh;
-    padding-block: 46px;
+    padding-block: 24px;
     scroll-margin-top: calc(var(--nav-height) + 210px);
   }
   .story-content h4 {
@@ -1208,13 +1197,7 @@ h1 > span {
     font-size: 42px;
   }
   .compact-chapter .chapter-grid {
-    min-height: 0;
-    padding-block: 0 50px;
-  }
-  .compact-chapter .chapter-body {
-    min-height: 270px;
-    display: flex;
-    align-items: center;
+    padding-block: 0 32px;
   }
   .skill-cloud-wrap {
     padding-inline: 10px;
@@ -1299,9 +1282,6 @@ h1 > span {
   .category-key li {
     font-size: 11px;
   }
-  .career-note {
-    font-size: 12px;
-  }
   .chapter-heading h3 {
     font-size: 25px;
   }
@@ -1318,15 +1298,14 @@ h1 > span {
     font-size: 10px;
   }
   .chapter-story {
-    min-height: 45svh;
-    padding-block: 42px;
+    padding-block: 24px;
   }
   .story-content h4 {
     font-size: 26px;
   }
   .story-body {
     font-size: 15px;
-    line-height: 1.8;
+    line-height: 1.7;
   }
   .story-details {
     font-size: 13px;

@@ -1,40 +1,36 @@
-# Resume content refinement
-
-## Requested changes
-
-Keep only BuyOrRent, man-agent-ment, and Buildean as personal projects. Focus
-BuyOrRent on the new backend and MCP tools, with Flutter explicitly in progress.
-Remove repository-history labels from the website. Move the platform/AI work
-under the current HSBC role, as confirmed by the user and supplied resume image.
-Use that image to refine professional content, skills, and education dates.
+# Timeline clarity, reading pace, and code review
 
 ## Implementation order
 
-1. Update the JSON and content contract. Require dates for timeline chapters;
-   work examples without separate dates belong within their confirmed role.
-   Remove the provenance field and UI, keeping research evidence in docs only.
-2. Refine the three project entries, current HSBC achievements, skill groups,
-   and month/year education dates. Preserve the established functional-team
-   chronology and the qualified scope of the platform proof-of-concept result.
-3. Validate the content, CI checks, production build, and responsive scrolling.
-   Commit the coherent revision, push master, and verify CI/UAT before review.
+1. Replace the current role's oversized year with “Current,” keeping its exact
+   date range. Rewrite the hero around personal strengths and remove the
+   employment-conversion note from public content. Remove forced achievement
+   heights and tighten spacing while preserving sticky headings and motion.
+   Measure and verify phone/desktop layout, then commit this presentation change.
+2. Review the current React components, hooks, content validation, accessibility,
+   configuration, and delivery setup. Apply concrete maintainability and
+   correctness improvements guided by single responsibility, typed interfaces,
+   composition, and a clear data boundary. Avoid speculative abstraction.
+3. Run the complete CI gate and production-browser checks, commit review fixes,
+   push master, and verify GitHub CI and UAT before phone review.
 
-## Verification
+## Checks
 
-Only the three selected personal projects render; every chapter has a date;
-platform/AI highlights appear once under the current role; no research labels
-appear in the UI. Check the longer current-role chapter on phones and desktop,
-light/dark mode, sticky release, navigation, and reduced motion. Run typecheck,
-lint, formatting, tests, and build, then confirm the deployed UAT content.
+Measure timeline height at fixed phone and desktop sizes before/after the
+spacing change. Verify Current appears only on the selected role, date ranges
+and chronology remain accurate, employer text is absent from hero metadata and
+copy, and the conversion note is gone. Check all breakpoints, role/project pin
+and release, themes, skill filters, navigation, and reduced motion.
 
-## Completed local verification
+Review code against actual behavior and add tests for meaningful gaps found.
+Keep the three selected personal projects and established role chronology.
 
-- Only three selected projects render; all nine timeline chapters are dated.
-- Platform/AI highlights render under the current HSBC role, with no duplicate
-  standalone entry or public research label.
-- Typecheck, lint, formatting, 34 tests, and the production build pass.
-- Browser checks pass at 320, 375, 390, 430, 768, 1024, and 1440px: no overflow,
-  correct sticky pin/release through the moved AI content, both themes,
-  navigation, every skill filter, reduced motion, and no JavaScript errors.
-- Phone and desktop screenshots reviewed. Release status is tracked in the
-  GitHub Actions run for the pushed commit.
+## Presentation phase verified
+
+- Current label, employer-independent hero/metadata, and removal of the note.
+- Content-driven achievement spacing and shorter animation travel.
+- Timeline height at 390×900: 13,372 → 10,784px (19.4% shorter); at 1440×900:
+  12,905 → 8,841px (31.5% shorter). No achievement content removed.
+- Typecheck, lint, formatting, 34 tests, and build pass. Browser checks pass at
+  seven widths from 320–1440px, including sticky pin/release, light/dark modes,
+  reduced motion, navigation, and skill filters. Screenshots reviewed.

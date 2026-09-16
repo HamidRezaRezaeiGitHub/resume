@@ -17,7 +17,7 @@
   "profile": {
     "name": "Hamid R. Rezaei",
     "headline": "Full-Stack Software Engineer",
-    "tagline": "I’m a software engineer at HSBC in Toronto. I build Java/Spring services, data pipelines, and web applications, and I like making the work around them easier for other engineers.",
+    "tagline": "I’m a full-stack software engineer who builds Java/Spring services, secure APIs, and React interfaces. I enjoy solving data-heavy problems and turning repetitive work into useful tools and automation.",
     "location": "Toronto, Ontario, Canada",
     "email": "hamidreza74hrr@yahoo.com",
     "links": [
@@ -495,7 +495,6 @@
   "footer": {
     "builtWith": "React · TypeScript · Motion"
   },
-  "careerNote": "Joined HSBC through FDM in 2021. Became a permanent HSBC employee in September 2023, continuing on the Data Service Layer team.",
   "skillOverview": [
     "Java",
     "Spring Boot",

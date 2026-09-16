@@ -36,7 +36,7 @@ function Achievement({
     [0, 0.18, 0.72, 1],
     [0.3, 1, 1, 0.3],
   )
-  const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [45, 0, 0, -25])
+  const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [18, 0, 0, -12])
   return (
     <li ref={ref} id={item.id} className="chapter-story">
       <motion.div
@@ -79,9 +79,11 @@ function Achievement({
 export function TimelineItem({
   entry,
   index,
+  isCurrent,
 }: {
   entry: TimelineEntry
   index: number
+  isCurrent: boolean
 }) {
   const ref = useRef<HTMLLIElement>(null)
   const reduced = useReducedMotion()
@@ -123,8 +125,11 @@ export function TimelineItem({
               / {String(index + 1).padStart(2, '0')}
             </span>
           </div>
-          <span className="chapter-year" aria-hidden="true">
-            {entry.startDate.slice(0, 4)}
+          <span
+            className={`chapter-year${isCurrent ? ' chapter-current' : ''}`}
+            aria-hidden="true"
+          >
+            {isCurrent ? 'Current' : entry.startDate.slice(0, 4)}
           </span>
           <div className="chapter-category">
             <span className="chapter-marker">

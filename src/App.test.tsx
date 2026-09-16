@@ -17,6 +17,10 @@ describe('resume experience', () => {
       }),
     ).toBeInTheDocument()
     expect(screen.getByText(resume.profile.headline)).toBeInTheDocument()
+    expect(document.querySelector('.hero-intro')).not.toHaveTextContent('HSBC')
+    expect(
+      screen.queryByText(/Joined HSBC through FDM/),
+    ).not.toBeInTheDocument()
     for (const { sectionId } of resume.navigation)
       expect(document.getElementById(sectionId)).toBeInTheDocument()
     for (const section of [resume.sections.timeline, resume.sections.skills])
@@ -37,6 +41,13 @@ describe('resume experience', () => {
       'id',
       resume.currentRoleId,
     )
+    expect(document.querySelector('.chapter-current')).toHaveTextContent(
+      'Current',
+    )
+    expect(document.querySelectorAll('.chapter-current')).toHaveLength(1)
+    expect(
+      document.querySelector(`#${resume.currentRoleId} .chapter-date`),
+    ).toHaveTextContent('Jun 2025 — Present')
     const education = document.getElementById('edu-western')!
     expect(
       within(education).getByText('Jan 2019', { selector: 'time' }),

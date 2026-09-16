@@ -78,7 +78,6 @@ export const resumeContentSchema = z
       contactLabel: text,
       scrollLabel: text,
     }),
-    careerNote: text,
     sections: z.strictObject({
       timeline: heading,
       skills: heading,
