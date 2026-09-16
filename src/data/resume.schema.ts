@@ -1,258 +1,149 @@
 import { z } from 'zod'
 
-const requiredText = z.string().trim().min(1)
-const stringList = z.array(requiredText).min(1)
+const text = z.string().trim().min(1)
+const texts = z.array(text).min(1)
 const careerDate = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, {
-  error: 'Use YYYY or YYYY-MM; omit unknown months',
+  error: 'Use YYYY or YYYY-MM; omit unknown dates',
 })
-
-const linkSchema = z.strictObject({
-  label: requiredText,
-  url: z.url(),
+const link = z.strictObject({ label: text, url: z.url() })
+const heading = z.strictObject({
+  eyebrow: text,
+  title: text,
+  description: text,
 })
-
 export const categorySchema = z.enum([
   'experience',
   'project',
   'education',
-  'other',
+  'teaching',
 ])
+const sectionId = z.enum(['experience', 'skills', 'contact'])
 
-const sectionIdSchema = z.enum([
-  'about',
-  'experience',
-  'work',
-  'projects',
-  'skills',
-  'contact',
-])
-
-const categoryDefinitionSchema = z.strictObject({
-  id: categorySchema,
-  label: requiredText,
+const highlight = z.strictObject({
+  id: text,
+  title: text,
+  body: text,
+  metric: z.strictObject({ value: text, label: text }).optional(),
+  details: texts.optional(),
+  tags: texts.optional(),
 })
 
-const sectionHeadingSchema = z.strictObject({
-  eyebrow: requiredText,
-  title: requiredText,
-  description: requiredText,
-})
-
-const timelineEntrySchema = z.strictObject({
-  id: requiredText,
-  category: categorySchema,
-  title: requiredText,
-  organization: requiredText.optional(),
-  location: requiredText.optional(),
-  team: requiredText.optional(),
-  startDate: careerDate,
-  endDate: z.union([careerDate, z.literal('present')]).optional(),
-  summary: requiredText,
-  highlights: stringList.optional(),
-  tags: stringList.optional(),
-  link: linkSchema.optional(),
-})
-
-const caseStudySchema = z.strictObject({
-  id: requiredText,
-  title: requiredText,
-  context: requiredText,
-  preview: requiredText,
-  outcome: requiredText.optional(),
-  outcomeLabel: requiredText.optional(),
-  description: requiredText,
-  highlights: stringList.optional(),
-  tags: stringList,
-})
-
-const projectSchema = z.strictObject({
-  id: requiredText,
-  name: requiredText,
-  role: requiredText,
-  description: requiredText,
-  stage: requiredText.optional(),
-  tags: stringList,
-  links: z.array(linkSchema).min(1).optional(),
-})
-
-function requireUniqueValues(
-  values: readonly string[],
-  field: string,
-  context: z.RefinementCtx,
-) {
-  const seen = new Set<string>()
-
-  values.forEach((value, index) => {
-    if (seen.has(value)) {
+const timelineEntry = z
+  .strictObject({
+    id: text,
+    category: categorySchema,
+    title: text,
+    organization: text.optional(),
+    team: text.optional(),
+    location: text.optional(),
+    startDate: careerDate.optional(),
+    endDate: z.union([careerDate, z.literal('present')]).optional(),
+    stage: text.optional(),
+    summary: text,
+    highlights: z.array(highlight).min(1).optional(),
+    tags: texts.optional(),
+    links: z.array(link).min(1).optional(),
+  })
+  .superRefine((entry, context) => {
+    if (entry.endDate && !entry.startDate)
       context.addIssue({
         code: 'custom',
-        message: `Duplicate ${field}: ${value}`,
-        path: [index, field],
+        message: 'An end date requires a start date',
+        path: ['endDate'],
       })
-    }
-    seen.add(value)
-  })
-}
-
-function requireUniqueIds(
-  items: ReadonlyArray<{ id: string }>,
-  context: z.RefinementCtx,
-) {
-  requireUniqueValues(
-    items.map(({ id }) => id),
-    'id',
-    context,
-  )
-}
-
-function requireUniqueSectionIds(
-  items: ReadonlyArray<{ sectionId: string }>,
-  context: z.RefinementCtx,
-) {
-  requireUniqueValues(
-    items.map(({ sectionId }) => sectionId),
-    'sectionId',
-    context,
-  )
-}
-
-export const resumeContentSchema = z
-  .strictObject({
-    navigation: z
-      .array(
-        z.strictObject({
-          label: requiredText,
-          sectionId: sectionIdSchema,
-        }),
-      )
-      .length(sectionIdSchema.options.length)
-      .superRefine(requireUniqueSectionIds),
-    profile: z.strictObject({
-      name: requiredText,
-      headline: requiredText,
-      tagline: requiredText,
-      location: requiredText,
-      email: z.email(),
-      links: z.array(linkSchema).min(1),
-    }),
-    hero: z.strictObject({
-      title: z.tuple([requiredText, requiredText]),
-      kicker: requiredText,
-      technologies: stringList,
-      contactLabel: requiredText,
-      scrollLabel: requiredText,
-    }),
-    careerNote: requiredText,
-    impact: z
-      .array(
-        z.strictObject({
-          value: requiredText,
-          label: requiredText,
-          detail: requiredText,
-          targetId: requiredText,
-        }),
-      )
-      .min(1),
-    sections: z.strictObject({
-      about: z.strictObject({
-        eyebrow: requiredText,
-        title: requiredText,
-        intro: requiredText,
-        themes: stringList,
-      }),
-      timeline: sectionHeadingSchema,
-      caseStudies: sectionHeadingSchema,
-      projects: sectionHeadingSchema,
-      skills: sectionHeadingSchema,
-      contact: sectionHeadingSchema.extend({
-        emailLabel: requiredText,
-      }),
-    }),
-    categories: z
-      .array(categoryDefinitionSchema)
-      .length(categorySchema.options.length)
-      .superRefine(requireUniqueIds),
-    timeline: z.array(timelineEntrySchema).min(1).superRefine(requireUniqueIds),
-    caseStudies: z.array(caseStudySchema).min(3).superRefine(requireUniqueIds),
-    projects: z.array(projectSchema).min(1).superRefine(requireUniqueIds),
-    skillOverview: stringList,
-    skillGroups: z
-      .array(
-        z.strictObject({
-          title: requiredText,
-          skills: stringList,
-        }),
-      )
-      .min(1),
-    footer: z.strictObject({
-      builtWith: requiredText,
-    }),
-  })
-  .superRefine((content, context) => {
-    content.caseStudies.slice(0, 3).forEach((study, index) => {
-      for (const field of ['outcome', 'outcomeLabel'] as const) {
-        if (!study[field]) {
-          context.addIssue({
-            code: 'custom',
-            message:
-              'Featured case studies need an outcome and its qualification',
-            path: ['caseStudies', index, field],
-          })
-        }
-      }
-    })
-    content.timeline.forEach((entry, index) => {
-      if (
-        entry.endDate &&
-        entry.endDate !== 'present' &&
-        (entry.endDate.length === 4 ? `${entry.endDate}-12` : entry.endDate) <
-          (entry.startDate.length === 4
-            ? `${entry.startDate}-01`
-            : entry.startDate)
-      ) {
+    if (entry.startDate && entry.endDate && entry.endDate !== 'present') {
+      const start =
+        entry.startDate.length === 4 ? `${entry.startDate}-01` : entry.startDate
+      const end =
+        entry.endDate.length === 4 ? `${entry.endDate}-12` : entry.endDate
+      if (end < start)
         context.addIssue({
           code: 'custom',
           message: 'End date must not precede start date',
-          path: ['timeline', index, 'endDate'],
+          path: ['endDate'],
         })
-      }
+    }
+  })
+
+export const resumeContentSchema = z
+  .strictObject({
+    navigation: z.array(z.strictObject({ label: text, sectionId })).length(3),
+    profile: z.strictObject({
+      name: text,
+      headline: text,
+      tagline: text,
+      location: text,
+      email: z.email(),
+      links: z.array(link).min(1),
+    }),
+    hero: z.strictObject({
+      title: z.tuple([text, text]),
+      kicker: text,
+      technologies: texts,
+      contactLabel: text,
+      scrollLabel: text,
+    }),
+    careerNote: text,
+    sections: z.strictObject({
+      timeline: heading,
+      skills: heading,
+      contact: heading.extend({ emailLabel: text }),
+    }),
+    categories: z
+      .array(z.strictObject({ id: categorySchema, label: text }))
+      .length(4),
+    timeline: z.array(timelineEntry).min(1),
+    skillOverview: texts,
+    skillGroups: z.array(z.strictObject({ title: text, skills: texts })).min(1),
+    footer: z.strictObject({ builtWith: text }),
+  })
+  .superRefine((content, context) => {
+    const ids = new Set<string>([
+      'top',
+      'main',
+      'experience',
+      'skills',
+      'contact',
+    ])
+    const addId = (id: string, path: (string | number)[]) => {
+      if (ids.has(id))
+        context.addIssue({
+          code: 'custom',
+          message: `Duplicate id: ${id}`,
+          path,
+        })
+      ids.add(id)
+    }
+    content.timeline.forEach((entry, i) => {
+      addId(entry.id, ['timeline', i, 'id'])
+      entry.highlights?.forEach((item, j) =>
+        addId(item.id, ['timeline', i, 'highlights', j, 'id']),
+      )
     })
+    if (new Set(content.navigation.map((n) => n.sectionId)).size !== 3)
+      context.addIssue({
+        code: 'custom',
+        message: 'Navigation must include every section exactly once',
+        path: ['navigation'],
+      })
+    if (new Set(content.categories.map((c) => c.id)).size !== 4)
+      context.addIssue({
+        code: 'custom',
+        message: 'Define each timeline category exactly once',
+        path: ['categories'],
+      })
     const skills = new Set(content.skillGroups.flatMap((group) => group.skills))
-    content.skillOverview.forEach((skill, index) => {
-      if (!skills.has(skill)) {
+    content.skillOverview.forEach((skill, i) => {
+      if (!skills.has(skill))
         context.addIssue({
           code: 'custom',
           message: 'Overview skills must belong to a skill group',
-          path: ['skillOverview', index],
+          path: ['skillOverview', i],
         })
-      }
     })
-    const targets = new Set([
-      ...sectionIdSchema.options,
-      ...content.caseStudies.map(({ id }) => id),
-    ])
-    content.impact.forEach((item, index) => {
-      if (!targets.has(item.targetId)) {
-        context.addIssue({
-          code: 'custom',
-          message: 'Impact target must reference a section or case study',
-          path: ['impact', index, 'targetId'],
-        })
-      }
-    })
-    const configuredCategories = new Set(content.categories.map(({ id }) => id))
-
-    for (const category of categorySchema.options) {
-      if (!configuredCategories.has(category)) {
-        context.addIssue({
-          code: 'custom',
-          message: `Missing category definition: ${category}`,
-          path: ['categories'],
-        })
-      }
-    }
   })
 
 export type ResumeContent = z.infer<typeof resumeContentSchema>
 export type Category = z.infer<typeof categorySchema>
 export type TimelineEntry = ResumeContent['timeline'][number]
+export type TimelineHighlight = z.infer<typeof highlight>

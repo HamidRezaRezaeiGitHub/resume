@@ -1,8 +1,9 @@
 # Resume — hamid-rezaei.com
 
-A mobile-first, scroll-driven resume with an editorial ivory/charcoal palette,
-impact highlights, a dated career timeline, selected work, independent projects,
-and a floating, filterable skill field.
+A mobile-first resume with light and dark modes, one chronological timeline,
+scrolling achievements under sticky job titles, a filterable toolkit, and contact
+links. Category labels, icons, and colors distinguish professional experience,
+personal projects, education, and teaching.
 
 ## Tech stack
 
@@ -39,41 +40,54 @@ npm run preview        # preview the production build
 
 ## Editing resume content
 
-Career content and records live in `src/data/resume.json`. This
-includes the profile, navigation labels, section headings, timeline, case
-studies, projects, skills, links, and footer text. Content changes do not
-require editing a React component. Small interface labels and decorative
-annotations live with the components.
+Career content lives in `src/data/resume.json`. The page has four sections:
+hero, experience, toolkit, and contact. All roles, projects, education, and
+teaching records belong in the single `timeline` array.
 
-- **Career dates:** `startDate` and optional `endDate` accept `YYYY-MM` or `YYYY`.
-  Use `"present"` for an ongoing role. Keep a year-only value when the month is
-  unknown. Do not add placeholder months. Entries sort newest first.
-- **Impact:** each highlight's `targetId` points to a section or case-study ID.
-- **Work:** the first three case studies receive featured layouts; the others
-  appear as expandable rows. `preview` is the short introduction; `description`
-  and `highlights` appear when expanded. Featured records use `outcome` and
-  `outcomeLabel`, including any qualification needed to interpret a metric.
-- **Skills:** `skillOverview` selects the opening cloud; every value must also
-  exist in `skillGroups`. The discipline controls show the full group.
-- **Employment context:** `careerNote` preserves the FDM-to-HSBC transition
-  separately from changes in functional teams.
+- `category` is `experience`, `project`, `education`, or `teaching`.
+- `startDate` and optional `endDate` accept `YYYY-MM` or `YYYY`. Use `"present"`
+  for an ongoing entry. If a start date is unknown, omit both dates: the entry
+  displays **Date not listed** after the dated entries. Never invent a month.
+- Dated entries sort by start date, newest first. Overlapping dates are retained;
+  equal dates and undated records keep their supplied order.
+- `title`, `organization`, `team`, and `summary` describe the entry. `stage`,
+  `location`, `tags`, and external `links` are optional.
+- Nested `highlights` hold a role's work examples. Each has a unique `id`, a
+  plain-language `title`, and `body`. Optional `details` add short bullets, and
+  `tags` identify the technologies involved.
+- An achievement's optional `metric` has both `value` and `label`. Keep any
+  qualification with the result, such as one selected trade type during a
+  defined evaluation period.
+- `skillOverview` selects the opening skill cloud. Every value must also appear
+  in `skillGroups`, which supply the discipline filters.
+- `careerNote` keeps the FDM-to-HSBC employment change separate from team moves.
 
-The JSON document is validated before local development and production builds
-by the Zod contract in `src/data/resume.schema.ts`. The same contract is
-exercised in CI, including checks for required fields, valid email/URL values,
-supported categories, unique record IDs, date order, skill membership, and impact
-targets. Validation stays out of the browser bundle. Presentation lives in
-`src/index.css` and the React components.
+The schema in `src/data/resume.schema.ts` validates the JSON before development
+and production builds. It checks dates, navigation, categories, links, metrics,
+skill membership, and globally unique entry/achievement IDs. Validation is kept
+out of the browser bundle.
+
+The undated project records can be positioned by adding their confirmed start
+dates. Platform/AI work remains its own undated HSBC entry until its parent role
+is confirmed; its highlights can then be moved into that role's `highlights`.
 
 ## Interaction and accessibility
 
-The career rail fills as the reader scrolls, with a sticky year on desktop and a
-sticky date strip on phones. Native disclosure controls reveal detailed evidence
-without long opening paragraphs. Navigation, disclosures, filters, and contact
-actions support keyboards and touch. The pause control stops decorative loops;
-the operating system's reduced-motion preference also disables parallax, reveal
-transforms, smooth scrolling, and decorative animation. Content stays available
-in both modes. The site uses system fonts and has no remote font or image requests.
+Each timeline entry contains its own sticky heading. On desktop, it stays beside
+the achievements; on phones, it stays below the navigation. The heading leaves
+with its entry, letting the next one take its place. Achievements move and fade
+as they pass through the viewport, while their content remains in the document.
+Short landscape screens use normal headings to leave room for reading.
+
+Theme buttons in the header expose light and dark modes. The initial theme uses
+the system preference unless the visitor has saved a choice. `public/theme.js`
+applies that choice before the first paint; `useTheme` manages changes. Blocked
+browser storage does not prevent theme selection.
+
+Navigation, theme controls, skill filters, and contact actions support keyboards
+and touch. Category icons and labels supplement color. Reduced motion disables
+parallax, achievement movement, fades, smooth scrolling, and decorative loops.
+The pause control stops decorative loops. System fonts avoid remote font loads.
 
 ## Deployment (Cloudflare)
 

@@ -7,7 +7,7 @@ function SystemVisual() {
   return (
     <div className="system-visual" aria-hidden="true">
       <div className="system-caption mono">
-        <span className="status-dot" /> CONNECTING THE DOTS
+        <span className="status-dot" /> JAVA / REACT / CLOUD
       </div>
       <div className="system-orbits">
         <div className="orbit orbit-one" />
@@ -18,7 +18,7 @@ function SystemVisual() {
       </div>
       <div className="system-core">
         <Asterisk strokeWidth={1.1} />
-        <span className="mono">MAKE IT WORK.</span>
+        <span className="mono">HR.</span>
       </div>
       {resume.hero.technologies.map((tech, i) => (
         <span key={tech} className={`floating-tech floating-tech-${i}`}>
@@ -56,12 +56,11 @@ export function Hero() {
           <span className="status-dot" />
           {resume.hero.kicker}
         </p>
-        <span className="mono hero-edition">A PRACTICE IN BUILDING BETTER</span>
       </div>
       <div className="hero-grid">
         <div className="hero-copy">
           <p className="hero-name">
-            Hi, I’m {resume.profile.name} <span aria-hidden="true">↗</span>
+            {resume.profile.headline} <span aria-hidden="true">↗</span>
           </p>
           <h1 id="hero-title" aria-label={resume.hero.title.join(' ')}>
             <span>{resume.hero.title[0]}</span>
@@ -69,7 +68,7 @@ export function Hero() {
           </h1>
           <p className="hero-intro">{resume.profile.tagline}</p>
           <div className="hero-actions">
-            <a className="button button-dark" href="#work">
+            <a className="button button-dark" href="#experience">
               {resume.hero.scrollLabel}
               <ArrowDownRight size={19} />
             </a>
@@ -92,9 +91,9 @@ export function Hero() {
         </motion.div>
       </div>
       <div className="hero-bottom">
-        <span className="mono">BACKEND DEPTH. FULL-STACK PERSPECTIVE.</span>
-        <a className="scroll-cue" href="#about">
-          <span>There’s more below</span>
+        <span className="mono">BACKEND · FRONTEND · DELIVERY</span>
+        <a className="scroll-cue" href="#experience">
+          <span>Experience, projects & education</span>
           <ArrowDown size={17} />
         </a>
       </div>

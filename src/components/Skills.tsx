@@ -56,7 +56,6 @@ export function Skills() {
           ))}
         </ul>
       </div>
-      <p className="toolkit-note mono">THE RIGHT TOOL. THE WHOLE PICTURE.</p>
     </Section>
   )
 }

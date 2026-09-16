@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export type Theme = 'light' | 'dark'
 export const THEME_KEY = 'resume-theme'
@@ -19,6 +19,7 @@ function systemTheme(): Theme {
 }
 
 export function useTheme() {
+  const explicitlySelected = useRef(storedTheme() !== null)
   const [theme, setTheme] = useState<Theme>(
     () => storedTheme() ?? systemTheme(),
   )
@@ -33,13 +34,14 @@ export function useTheme() {
   useEffect(() => {
     const query = window.matchMedia('(prefers-color-scheme: dark)')
     const followSystem = () => {
-      if (!storedTheme()) setTheme(systemTheme())
+      if (!explicitlySelected.current) setTheme(systemTheme())
     }
     query.addEventListener('change', followSystem)
     return () => query.removeEventListener('change', followSystem)
   }, [])
 
   function selectTheme(next: Theme) {
+    explicitlySelected.current = true
     setTheme(next)
     try {
       localStorage.setItem(THEME_KEY, next)

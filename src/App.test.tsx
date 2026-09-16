@@ -16,17 +16,10 @@ describe('resume experience', () => {
         level: 1,
       }),
     ).toBeInTheDocument()
-    expect(
-      screen.getByText(`Hi, I’m ${resume.profile.name}`),
-    ).toBeInTheDocument()
+    expect(screen.getByText(resume.profile.headline)).toBeInTheDocument()
     for (const { sectionId } of resume.navigation)
       expect(document.getElementById(sectionId)).toBeInTheDocument()
-    for (const section of [
-      resume.sections.timeline,
-      resume.sections.caseStudies,
-      resume.sections.projects,
-      resume.sections.skills,
-    ])
+    for (const section of [resume.sections.timeline, resume.sections.skills])
       expect(
         screen.getByRole('heading', { name: heading(section.title), level: 2 }),
       ).toBeInTheDocument()
@@ -45,8 +38,33 @@ describe('resume experience', () => {
       within(education).getByText('2019', { selector: 'time' }),
     ).toHaveAttribute('datetime', '2019')
     expect(
-      within(journey).getByText('Jun 2023 — Jun 2025', { selector: 'time' }),
+      within(document.getElementById('hsbc-data-service-layer')!).getByText(
+        'Jun 2023',
+        { selector: 'time' },
+      ),
     ).toBeInTheDocument()
+  })
+
+  it('keeps every category and all achievements on one timeline', () => {
+    render(<App />)
+    expect(
+      Array.from(document.querySelectorAll('main > section')).map(
+        (section) => section.id,
+      ),
+    ).toEqual(['top', 'experience', 'skills', 'contact'])
+    const timeline = document.getElementById('experience')!
+    for (const entry of resume.timeline) {
+      expect(timeline).toContainElement(document.getElementById(entry.id))
+      for (const item of entry.highlights ?? []) {
+        expect(document.getElementById(entry.id)).toContainElement(
+          document.getElementById(item.id),
+        )
+        expect(
+          screen.getByRole('heading', { name: item.title, level: 4 }),
+        ).toBeInTheDocument()
+      }
+    }
+    expect(document.querySelectorAll('details')).toHaveLength(0)
   })
 
   it('opens the mobile navigation and restores focus on Escape', async () => {

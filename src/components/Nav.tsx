@@ -56,15 +56,19 @@ export function Nav({
           hr<span className="brand-dot">.</span>
         </a>
         <div className="desktop-links">
-          {resume.navigation.slice(0, 5).map((link) => (
-            <a
-              key={link.sectionId}
-              href={`#${link.sectionId}`}
-              aria-current={active === link.sectionId ? 'location' : undefined}
-            >
-              {link.label}
-            </a>
-          ))}
+          {resume.navigation
+            .filter((link) => link.sectionId !== 'contact')
+            .map((link) => (
+              <a
+                key={link.sectionId}
+                href={`#${link.sectionId}`}
+                aria-current={
+                  active === link.sectionId ? 'location' : undefined
+                }
+              >
+                {link.label}
+              </a>
+            ))}
         </div>
         <div className="nav-actions">
           <ThemeToggle />
@@ -99,7 +103,7 @@ export function Nav({
           id="mobile-navigation"
           hidden={!open}
         >
-          <p className="eyebrow">Find your way</p>
+          <p className="eyebrow">On this page</p>
           {resume.navigation.map((link, i) => (
             <a
               key={link.sectionId}
