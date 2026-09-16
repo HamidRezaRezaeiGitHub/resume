@@ -2,6 +2,9 @@ import { z } from 'zod'
 
 const requiredText = z.string().trim().min(1)
 const stringList = z.array(requiredText).min(1)
+const careerDate = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, {
+  error: 'Use YYYY or YYYY-MM; omit unknown months',
+})
 
 const linkSchema = z.strictObject({
   label: requiredText,
@@ -41,8 +44,9 @@ const timelineEntrySchema = z.strictObject({
   title: requiredText,
   organization: requiredText.optional(),
   location: requiredText.optional(),
-  period: requiredText,
-  startYear: z.number().finite(),
+  team: requiredText.optional(),
+  startDate: careerDate,
+  endDate: z.union([careerDate, z.literal('present')]).optional(),
   summary: requiredText,
   highlights: stringList.optional(),
   tags: stringList.optional(),
@@ -53,6 +57,9 @@ const caseStudySchema = z.strictObject({
   id: requiredText,
   title: requiredText,
   context: requiredText,
+  preview: requiredText,
+  outcome: requiredText.optional(),
+  outcomeLabel: requiredText.optional(),
   description: requiredText,
   highlights: stringList.optional(),
   tags: stringList,
@@ -129,10 +136,23 @@ export const resumeContentSchema = z
       links: z.array(linkSchema).min(1),
     }),
     hero: z.strictObject({
+      title: z.tuple([requiredText, requiredText]),
+      kicker: requiredText,
       technologies: stringList,
       contactLabel: requiredText,
       scrollLabel: requiredText,
     }),
+    careerNote: requiredText,
+    impact: z
+      .array(
+        z.strictObject({
+          value: requiredText,
+          label: requiredText,
+          detail: requiredText,
+          targetId: requiredText,
+        }),
+      )
+      .min(1),
     sections: z.strictObject({
       about: z.strictObject({
         eyebrow: requiredText,
@@ -168,6 +188,32 @@ export const resumeContentSchema = z
     }),
   })
   .superRefine((content, context) => {
+    content.timeline.forEach((entry, index) => {
+      if (
+        entry.endDate &&
+        entry.endDate !== 'present' &&
+        entry.endDate < entry.startDate
+      ) {
+        context.addIssue({
+          code: 'custom',
+          message: 'End date must not precede start date',
+          path: ['timeline', index, 'endDate'],
+        })
+      }
+    })
+    const targets = new Set([
+      ...sectionIdSchema.options,
+      ...content.caseStudies.map(({ id }) => id),
+    ])
+    content.impact.forEach((item, index) => {
+      if (!targets.has(item.targetId)) {
+        context.addIssue({
+          code: 'custom',
+          message: 'Impact target must reference a section or case study',
+          path: ['impact', index, 'targetId'],
+        })
+      }
+    })
     const configuredCategories = new Set(content.categories.map(({ id }) => id))
 
     for (const category of categorySchema.options) {

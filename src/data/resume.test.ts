@@ -23,4 +23,25 @@ describe('resume content contract', () => {
       )
     }
   })
+
+  it.each(['2025-00', '2025-13', 'June 2025', '2025-06-01'])(
+    'rejects unsupported career date %s',
+    (date) => {
+      const content = structuredClone(rawResumeContent)
+      content.timeline[0].startDate = date
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
+
+  it('rejects a career period that ends before it starts', () => {
+    const content = structuredClone(rawResumeContent)
+    content.timeline[0].endDate = '2024-06'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+
+  it('rejects impact links that would lead to missing content', () => {
+    const content = structuredClone(rawResumeContent)
+    content.impact[0].targetId = 'missing-story'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
 })

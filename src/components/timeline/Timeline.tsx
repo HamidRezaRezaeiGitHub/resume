@@ -16,7 +16,9 @@ export function Timeline() {
     restDelta: 0.001,
   })
 
-  const entries = [...resume.timeline].sort((a, b) => b.startYear - a.startYear)
+  const entries = [...resume.timeline].sort((a, b) =>
+    b.startDate.localeCompare(a.startDate),
+  )
 
   return (
     <section id="experience" className="mx-auto max-w-5xl px-6 py-20">

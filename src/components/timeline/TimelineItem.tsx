@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { categories, type TimelineEntry } from '@/data/resume'
+import { formatCareerPeriod } from '@/lib/dates'
 import { cn } from '@/lib/utils'
 
 interface TimelineItemProps {
@@ -101,7 +102,9 @@ function Card({
         >
           {meta.label}
         </span>
-        <span className="text-xs text-muted-foreground">{entry.period}</span>
+        <span className="text-xs text-muted-foreground">
+          {formatCareerPeriod(entry.startDate, entry.endDate)}
+        </span>
       </div>
 
       <h3 className="mt-2 text-lg font-semibold">{entry.title}</h3>

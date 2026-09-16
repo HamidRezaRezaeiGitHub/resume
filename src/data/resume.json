@@ -1,16 +1,34 @@
 {
   "navigation": [
-    { "label": "About", "sectionId": "about" },
-    { "label": "Experience", "sectionId": "experience" },
-    { "label": "Work", "sectionId": "work" },
-    { "label": "Projects", "sectionId": "projects" },
-    { "label": "Skills", "sectionId": "skills" },
-    { "label": "Contact", "sectionId": "contact" }
+    {
+      "label": "About",
+      "sectionId": "about"
+    },
+    {
+      "label": "Experience",
+      "sectionId": "experience"
+    },
+    {
+      "label": "Selected work",
+      "sectionId": "work"
+    },
+    {
+      "label": "Projects",
+      "sectionId": "projects"
+    },
+    {
+      "label": "Toolkit",
+      "sectionId": "skills"
+    },
+    {
+      "label": "Let’s talk",
+      "sectionId": "contact"
+    }
   ],
   "profile": {
     "name": "Hamid R. Rezaei",
     "headline": "Full-Stack Software Engineer",
-    "tagline": "Full-stack software engineer with extensive experience designing and delivering Java/Spring services, secure APIs, data-intensive applications, CI/CD automation, and React interfaces — backed by strong analytical and problem-solving skills.",
+    "tagline": "I turn complex problems into reliable software. Backend depth, full-stack perspective, and a drive to make engineering better.",
     "location": "Toronto, Ontario, Canada",
     "email": "hamidreza74hrr@yahoo.com",
     "links": [
@@ -28,79 +46,84 @@
     "technologies": [
       "Java",
       "Spring Boot",
-      "Secure APIs",
       "React",
       "TypeScript",
-      "CI/CD",
       "GCP",
-      "BigQuery",
-      "Spring AI"
+      "MCP"
     ],
-    "contactLabel": "Get in touch",
-    "scrollLabel": "Scroll to content"
+    "contactLabel": "Let’s talk",
+    "scrollLabel": "Explore my work",
+    "title": ["Complex systems.", "Clear thinking."],
+    "kicker": "Software engineer · Toronto, Canada"
   },
   "sections": {
     "about": {
-      "eyebrow": "About",
-      "title": "Who I am",
-      "intro": "Backend-focused software engineer with full-stack and DevOps breadth. I build resilient Java/Spring services, secure APIs, and data-intensive systems in regulated financial environments, with a strong interest in reusable architecture, developer productivity, and practical AI adoption.",
+      "eyebrow": "01 / The approach",
+      "title": "Built with purpose.",
+      "intro": "I’m Hamid, a software engineer who connects the dots between robust backends, thoughtful interfaces, and the pipelines that ship them.",
       "themes": [
-        "Backend depth with full-stack and DevOps breadth",
-        "Modernizing regulated financial systems",
-        "Reusable architecture and developer productivity",
-        "Practical AI adoption and agent engineering",
-        "Teaching, mentoring, and cross-team enablement",
-        "Analytical, quantitative thinking from an engineering background"
+        "Reliable systems for demanding environments.",
+        "Reusable architecture that helps teams move.",
+        "Practical AI that belongs in the workflow."
       ]
     },
     "timeline": {
-      "eyebrow": "Career",
-      "title": "Experience & Education",
-      "description": "Joined HSBC as an FDM consultant in 2021 and converted to a permanent employee in September 2023 while remaining on the same team."
+      "eyebrow": "02 / The journey",
+      "title": "A foundation.\nAlways building.",
+      "description": "From engineering and teaching to software that supports global financial systems."
     },
     "caseStudies": {
-      "eyebrow": "Selected Work",
-      "title": "Professional case studies",
-      "description": "Public-safe highlights from my work delivering secure, data-intensive systems and developer tooling in a regulated financial environment."
+      "eyebrow": "03 / Selected work",
+      "title": "The work.\nThe difference.",
+      "description": "A few problems I’ve helped turn into working systems at HSBC."
     },
     "projects": {
-      "eyebrow": "Beyond Work",
-      "title": "Personal & open-source",
-      "description": "Products and open-source tools I build outside of my day job."
+      "eyebrow": "04 / Beyond the day job",
+      "title": "Curiosity, shipped.",
+      "description": "Independent products and open-source tools. Built to solve problems I care about."
     },
     "skills": {
-      "eyebrow": "Toolbox",
-      "title": "Skills & technologies",
-      "description": "Areas I actively work in and the tools I reach for."
+      "eyebrow": "05 / The toolkit",
+      "title": "Depth meets range.",
+      "description": "Backend is my home base. The whole system is my perspective."
     },
     "contact": {
-      "eyebrow": "Contact",
-      "title": "Let's talk",
-      "description": "Open to backend, full-stack, and senior software engineering roles — hybrid, remote, or onsite.",
-      "emailLabel": "Email me"
+      "eyebrow": "06 / What’s next",
+      "title": "Good work starts\nwith a conversation.",
+      "description": "Have a complex problem or a thoughtful team? Let’s talk about backend, full-stack, and senior engineering opportunities.",
+      "emailLabel": "Send me an email"
     }
   },
   "categories": [
-    { "id": "experience", "label": "Professional Experience" },
-    { "id": "project", "label": "Projects" },
-    { "id": "education", "label": "Education" },
-    { "id": "other", "label": "Teaching" }
+    {
+      "id": "experience",
+      "label": "Professional Experience"
+    },
+    {
+      "id": "project",
+      "label": "Projects"
+    },
+    {
+      "id": "education",
+      "label": "Education"
+    },
+    {
+      "id": "other",
+      "label": "Teaching"
+    }
   ],
   "timeline": [
     {
       "id": "hsbc-agency-lending",
       "category": "experience",
-      "title": "Full-Stack Engineer — Agency Securities Lending",
+      "title": "Full-Stack Engineer",
       "organization": "HSBC",
       "location": "Toronto, ON",
-      "period": "Jun 2025 — Present",
-      "startYear": 2025,
-      "summary": "Develops and maintains Java/Spring services, secure APIs, internal integrations, and data workflows supporting post-trade operations, and builds BigQuery and Looker Studio analytics in partnership with product and business users.",
+      "summary": "Secure services, connected workflows, and better delivery for post-trade operations.",
       "highlights": [
-        "Implements authentication and authorization across endpoints and manages security behavior in lower environments.",
-        "Integrates the platform with internal bank services over REST APIs and a scheduled data-export process feeding downstream scripts.",
-        "Integrates legacy Perl processing into the application so the workflow runs through one platform.",
-        "Led the migration from legacy release scripts to configurable Jenkins/Groovy pipelines automating builds, tests, security scans, versioning, and deployments."
+        "Build Java/Spring services and secure APIs, integrating internal bank platforms and legacy processing.",
+        "Partner with product and business users on BigQuery and Looker Studio analytics.",
+        "Led the move from legacy release scripts to configurable Jenkins pipelines for builds, tests, security scans, and deployments."
       ],
       "tags": [
         "Java 17",
@@ -110,22 +133,22 @@
         "BigQuery",
         "Looker Studio",
         "Jenkins"
-      ]
+      ],
+      "team": "Agency Securities Lending",
+      "startDate": "2025-06",
+      "endDate": "present"
     },
     {
       "id": "hsbc-data-service-layer",
       "category": "experience",
-      "title": "Full-Stack Engineer — Data Service Layer",
+      "title": "Full-Stack Engineer",
       "organization": "HSBC",
       "location": "Toronto, ON",
-      "period": "Jun 2023 — Jun 2025",
-      "startYear": 2023,
-      "summary": "Owned architecture for a configuration-driven data synchronization product and contributed to an event-driven, real-time ETL platform for high-throughput trading data, alongside observability tooling and a secure file-retrieval application.",
+      "summary": "Reusable data platforms, event-driven systems, and tools that make operations clearer.",
       "highlights": [
-        "Primary owner and architect of a scalable Spring Batch synchronization product using modular, configuration-driven design.",
-        "Contributed to a real-time ETL app (Java 21, Spring Integration, Solace, PostgreSQL) preserving lifecycle-event ordering with acknowledgments, retries, and transactional controls — designed to reduce the risk of data loss.",
-        "Built reusable, parameterized Grafana dashboards and Geneos alerting scripts to improve visibility into application health.",
-        "Designed and owned a secure production file-retrieval service (Spring Boot, Spring Security) with a React frontend and a daily cache for faster response."
+        "Owned the architecture of a modular, configuration-driven Spring Batch synchronization product.",
+        "Contributed to real-time ETL with event ordering, acknowledgments, retries, and transactional controls.",
+        "Built reusable Grafana dashboards, Geneos alerting, and a secure file-retrieval service with a React frontend."
       ],
       "tags": [
         "Java 21",
@@ -135,63 +158,78 @@
         "PostgreSQL",
         "React",
         "Grafana"
-      ]
+      ],
+      "team": "Data Service Layer",
+      "startDate": "2023-06",
+      "endDate": "2025-06"
     },
     {
       "id": "hsbc-trade-reporting",
       "category": "experience",
-      "title": "Software Developer & DevOps Engineer — Trade Reporting Americas",
+      "title": "Software Developer & DevOps Engineer",
       "organization": "HSBC",
       "location": "Toronto, ON",
-      "period": "Apr 2021 — Jun 2023",
-      "startYear": 2021,
-      "summary": "Delivered regulatory trade-reporting functionality across the Americas (CFTC, SEC, and Canadian regulators) using Java and Drools, and built automation that made large regression cycles practical.",
+      "summary": "Regulatory reporting across the Americas, with automation that turned week-long analysis into hours.",
       "highlights": [
-        "Designed an automated regression-analysis platform that distributed large datasets across Jenkins pipelines and aggregated results with a multithreaded Spring Boot application — reducing analysis time from one week to three hours.",
-        "Built and maintained modular Jenkins/Groovy pipelines integrating GitHub, Maven, Nexus, Jira, Ansible, and ServiceNow.",
-        "Refactored legacy applications using OOP and SOLID principles and participated in L2/L3 production support."
+        "Built a distributed regression-analysis platform using Jenkins and multithreaded Spring Boot, reducing analysis from one week to three hours.",
+        "Delivered Java/Drools reporting functionality for CFTC, SEC, and Canadian regulators.",
+        "Built modular delivery pipelines, refactored legacy applications, and supported production systems."
       ],
-      "tags": ["Java", "Drools", "Jenkins", "Groovy", "Maven", "Nexus"]
+      "tags": ["Java", "Drools", "Jenkins", "Groovy", "Maven", "Nexus"],
+      "team": "Trade Reporting Americas",
+      "startDate": "2021-04",
+      "endDate": "2023-06"
     },
     {
       "id": "edu-western",
       "category": "education",
-      "title": "Master of Engineering, Environmental Engineering",
+      "title": "Master of Engineering",
       "organization": "Western University",
       "location": "London, ON",
-      "period": "2019",
-      "startYear": 2019,
-      "summary": "Applied mathematical modeling and R programming to hydrological and spatial problems — translating domain concepts into equations and automating statistical analysis.",
-      "tags": ["R", "Statistical Modeling", "Applied Mathematics"]
+      "summary": "Mathematical modeling and R programming applied to hydrological and spatial problems.",
+      "tags": ["R", "Statistical Modeling", "Applied Mathematics"],
+      "team": "Environmental Engineering",
+      "startDate": "2019"
     },
     {
       "id": "teaching",
       "category": "other",
       "title": "Computer Science & Mathematics Teacher",
       "organization": "High School & Private Tutoring",
-      "period": "2013 — 2018",
-      "startYear": 2013.9,
-      "summary": "Taught computer science and mathematics across two high schools and private tutoring — including algorithms, flowcharts, spreadsheets, algebra, and probability.",
-      "tags": ["Teaching", "Mentoring"]
+      "summary": "Made algorithms, flowcharts, algebra, and probability accessible to high school students and private learners.",
+      "tags": ["Teaching", "Mentoring"],
+      "startDate": "2013",
+      "endDate": "2018"
     },
     {
       "id": "edu-tehran",
       "category": "education",
-      "title": "Bachelor of Science, Civil Engineering",
+      "title": "Bachelor of Science",
       "organization": "University of Tehran",
       "location": "Tehran, Iran",
-      "period": "2013 — 2017",
-      "startYear": 2013.7,
-      "summary": "Foundation in engineering, mathematics, and quantitative analysis.",
-      "tags": ["Engineering", "Mathematics"]
+      "summary": "The foundation: engineering, applied mathematics, and quantitative problem-solving.",
+      "tags": ["Engineering", "Mathematics"],
+      "team": "Civil Engineering",
+      "startDate": "2013",
+      "endDate": "2017"
     }
   ],
   "caseStudies": [
     {
+      "id": "regression-platform",
+      "title": "A week of analysis. Three hours instead.",
+      "context": "HSBC · Design & development",
+      "description": "Designed an automated platform that distributed large datasets across parallel Jenkins pipelines, then aggregated the results in a multithreaded Spring Boot application.",
+      "tags": ["Spring Boot", "Jenkins", "Multithreading", "Automation"],
+      "preview": "Parallel pipelines and a multithreaded backend transformed large regression cycles.",
+      "outcome": "1 week → 3 hours",
+      "outcomeLabel": "Regression-analysis turnaround"
+    },
+    {
       "id": "platform-poc",
-      "title": "Scoped Multi-Service Platform PoC",
+      "title": "From a blank page to platform parity.",
       "context": "HSBC · Co-architect",
-      "description": "Co-architected a multi-service proof of concept evaluated against an existing vendor platform, delivering a substantial working system under a limited timeline — including its React frontend, configuration-driven REST APIs, an Active Directory-backed authentication gateway, and an in-product AI assistant.",
+      "description": "Co-architected a working platform proof of concept under a limited timeline: a React frontend, configuration-driven APIs, an authentication gateway, and an in-product AI assistant.",
       "highlights": [
         "Achieved 100% output parity with the existing platform for one selected trade type during the defined evaluation period.",
         "Built a configuration-driven query API exposing high-dimensional datasets (100+ columns) as filterable, sortable endpoints without repetitive per-endpoint code.",
@@ -204,59 +242,62 @@
         "Spring Security",
         "Active Directory",
         "Spring AI"
-      ]
+      ],
+      "preview": "Co-architected a multi-service proof of concept, from secure APIs to the React interface.",
+      "outcome": "100% output parity",
+      "outcomeLabel": "One selected trade type · defined evaluation period"
     },
     {
       "id": "ai-assistant",
-      "title": "Context-Aware In-Product AI Assistant",
+      "title": "An assistant that knows the context.",
       "context": "HSBC · Design & implementation",
-      "description": "Designed and implemented a context-aware, in-product assistant using Spring AI and React. It supplied structured live UI state — such as active filters, table metadata, and displayed results — to an enterprise language model, letting users ask product-specific questions without manually copying data between tools.",
+      "description": "Built an assistant that understands active filters, table metadata, and displayed results, so users can ask product questions without copying data between tools.",
       "highlights": [
         "Backend AI service on Spring AI connected to the enterprise AI platform, supporting JSON and streamed (SSE) responses.",
         "Selected and structured context to avoid unnecessary token and context-window usage.",
         "Extracted the frontend and backend assistant components for reuse and shared them with an interested partner team."
       ],
-      "tags": ["Spring AI", "React", "SSE Streaming", "Enterprise LLM"]
-    },
-    {
-      "id": "ai-enablement",
-      "title": "AI-Agent Enablement & Engineering Harness",
-      "context": "HSBC · AI champion",
-      "description": "Drove AI-agent adoption across multiple teams by building an enterprise engineering harness with script-backed skills integrating source control, work tracking, documentation, CI/CD, and logs — supported by hands-on training and knowledge-sharing sessions.",
-      "highlights": [
-        "Authored shared instructions and reusable agent skills to improve consistency and results.",
-        "Delivered training on prompting, models, tokens, context windows, agent skills, and MCP.",
-        "Onboarded his own team and engineers from surrounding teams."
-      ],
-      "tags": ["MCP", "Agent Skills", "CI/CD", "Developer Productivity"]
-    },
-    {
-      "id": "regression-platform",
-      "title": "Automated Regression-Analysis Platform",
-      "context": "HSBC · Design & development",
-      "description": "Designed an automated regression-analysis platform that distributed large datasets across parallel Jenkins pipelines and aggregated results with a multithreaded Spring Boot application, reducing analysis time from one week to three hours.",
-      "tags": ["Spring Boot", "Jenkins", "Multithreading", "Automation"]
+      "tags": ["Spring AI", "React", "SSE Streaming", "Enterprise LLM"],
+      "preview": "Brought AI into the product, with live UI state and streamed answers.",
+      "outcome": "In the workflow",
+      "outcomeLabel": "Context-aware AI · Spring AI + React"
     },
     {
       "id": "sync-product",
-      "title": "Configuration-Driven Synchronization Product",
+      "title": "Configure once. Reuse across use cases.",
       "context": "HSBC · Project owner & architect",
-      "description": "Owned the architecture for a scalable, configuration-driven data-transfer and synchronization product built with Spring Batch, supporting multiple use cases without duplicating implementations, and mentored a developer onto the project.",
-      "tags": ["Spring Batch", "Java", "Modular Design", "Architecture"]
+      "description": "Owned the architecture of a configuration-driven synchronization product supporting multiple use cases without duplicate implementations. Mentored a developer onto the project.",
+      "tags": ["Spring Batch", "Java", "Modular Design", "Architecture"],
+      "preview": "A modular Spring Batch product for data transfer and synchronization."
+    },
+    {
+      "id": "ai-enablement",
+      "title": "Making AI useful across teams.",
+      "context": "HSBC · AI champion",
+      "description": "Built an enterprise engineering harness connecting source control, work tracking, documentation, delivery, and logs. Helped teams adopt it through practical training.",
+      "highlights": [
+        "Authored shared instructions and reusable agent skills to improve consistency and results.",
+        "Delivered training on prompting, models, tokens, context windows, agent skills, and MCP.",
+        "Onboarded my own team and engineers from surrounding teams."
+      ],
+      "tags": ["MCP", "Agent Skills", "CI/CD", "Developer Productivity"],
+      "preview": "Reusable agent skills, engineering workflows, and hands-on training."
     },
     {
       "id": "file-retrieval",
-      "title": "Secure File-Retrieval Application",
+      "title": "Secure access. Less waiting.",
       "context": "HSBC · Design & ownership",
-      "description": "Designed and owned a secure production file-retrieval service (Spring Boot, Spring MVC, Spring Security) with a React frontend, enforcing backend access controls and a daily cache to reduce repeated filesystem traversal and improve response times.",
-      "tags": ["Spring Boot", "Spring Security", "React"]
+      "description": "Designed and owned a Spring Boot file-retrieval application with Spring Security, a React frontend, and a daily cache to reduce repeated filesystem traversal.",
+      "tags": ["Spring Boot", "Spring Security", "React"],
+      "preview": "A production file-retrieval service with a React frontend and backend access controls."
     },
     {
       "id": "event-etl",
-      "title": "Event-Driven ETL & Reliability Controls",
+      "title": "Keep the data moving. Keep the order.",
       "context": "HSBC · Contributor",
-      "description": "Contributed to a configurable real-time ETL application (Java 21, Spring Integration, Solace, PostgreSQL) processing high-throughput trading data while preserving lifecycle-event ordering with acknowledgments, retries, and transactional controls — designed to reduce the risk of data loss.",
-      "tags": ["Java 21", "Spring Integration", "Solace", "PostgreSQL"]
+      "description": "Contributed to a configurable ETL application using Java 21, Spring Integration, Solace, and PostgreSQL. Preserved lifecycle-event ordering with acknowledgments, retries, and transactional controls.",
+      "tags": ["Java 21", "Spring Integration", "Solace", "PostgreSQL"],
+      "preview": "Real-time trading-data processing with deliberate reliability controls."
     }
   ],
   "projects": [
@@ -264,7 +305,7 @@
       "id": "man-agent-ment",
       "name": "man-agent-ment",
       "role": "Creator · Open source",
-      "description": "An open-source operating framework for AI coding agents that standardizes requirement planning, project knowledge, validation, review, debugging, and cross-session handoffs across tools such as Codex, Claude Code, Copilot, and Gemini.",
+      "description": "An open-source framework that gives AI coding agents a repeatable way to plan, validate, review, and hand off engineering work.",
       "tags": ["AI Agents", "MCP", "Developer Experience", "Automation"],
       "links": [
         {
@@ -277,8 +318,8 @@
       "id": "buy-or-rent",
       "name": "BuyOrRent",
       "role": "Backend engineer",
-      "description": "A TypeScript/Hono financial-calculation service on Cloudflare Workers, exposing shared domain logic through documented HTTP APIs and MCP tools across DEV, UAT, and production. The broader buy-versus-rent comparison is in active development.",
-      "stage": "DEV · UAT · Production",
+      "description": "Financial calculations through shared HTTP APIs and MCP tools. Built with TypeScript and Hono on Cloudflare Workers; the broader comparison product is in development.",
+      "stage": "In development",
       "tags": [
         "TypeScript",
         "Hono",
@@ -302,7 +343,7 @@
       "id": "buildean",
       "name": "Buildean",
       "role": "Co-founder · Backend engineer",
-      "description": "Co-founded and built the Java/Spring backend and GCP infrastructure for a construction-management product in beta — including its API architecture, PostgreSQL data model, Firebase security, automated delivery workflows, and DEV/UAT environments.",
+      "description": "A construction-management product in beta. I co-founded it and own its Java/Spring backend, PostgreSQL data model, security, and GCP delivery infrastructure.",
       "stage": "Beta",
       "tags": [
         "Java 25",
@@ -316,21 +357,16 @@
   ],
   "skillGroups": [
     {
-      "title": "Backend & Languages",
+      "title": "Backend",
       "skills": [
         "Java",
         "Spring Boot",
-        "Spring MVC",
-        "Spring Data JPA",
-        "Hibernate",
         "Spring Security",
         "Spring Batch",
         "Spring Integration",
-        "Spring AI",
         "REST APIs",
-        "Groovy",
         "SQL",
-        "Bash"
+        "Hibernate"
       ]
     },
     {
@@ -339,84 +375,84 @@
         "React",
         "TypeScript",
         "JavaScript",
-        "HTML",
-        "CSS",
-        "shadcn/ui",
-        "Angular"
+        "Angular",
+        "HTML & CSS",
+        "shadcn/ui"
       ]
     },
     {
-      "title": "Architecture & Engineering",
+      "title": "Architecture",
       "skills": [
         "Microservices",
-        "Event-Driven Architecture",
-        "Data-Intensive Systems",
-        "Concurrent & Multithreaded Processing",
-        "API Gateway Design",
-        "AuthN / AuthZ",
-        "LDAP / Active Directory",
-        "JWT",
+        "Event-Driven Systems",
+        "Concurrent Processing",
+        "API Gateways",
         "Configuration-Driven Design",
-        "OOP & SOLID",
-        "Design Patterns"
+        "OOP & SOLID"
       ]
     },
     {
-      "title": "Data & Messaging",
+      "title": "Data",
       "skills": [
         "PostgreSQL",
         "BigQuery",
-        "Looker Studio",
         "Solace",
-        "GCP Cloud SQL",
+        "Looker Studio",
         "MongoDB",
-        "Cloudflare R2",
-        "Firebase Storage"
+        "Cloudflare R2"
       ]
     },
     {
-      "title": "DevOps & Delivery",
+      "title": "Cloud & delivery",
       "skills": [
-        "Git & GitHub",
-        "Maven",
-        "Jenkins",
-        "Groovy Pipelines",
-        "GitHub Actions",
-        "Nexus / Nexus IQ",
-        "Checkmarx",
+        "GCP",
+        "Cloudflare Workers",
         "Docker",
-        "GCP (Cloud Run, Artifact Registry, IAM, Secret Manager)",
-        "Jira & Confluence",
-        "ServiceNow",
-        "Ansible",
-        "Cloudflare Workers / Wrangler"
+        "Jenkins",
+        "GitHub Actions",
+        "Maven",
+        "Groovy",
+        "Bash"
       ]
     },
     {
       "title": "Observability",
-      "skills": [
-        "Grafana",
-        "Geneos",
-        "Spring Boot Actuator",
-        "Scheduled Metric Collection",
-        "Alerting Scripts"
-      ]
+      "skills": ["Grafana", "Geneos", "Spring Boot Actuator", "Alerting"]
     },
     {
-      "title": "AI Engineering",
+      "title": "AI engineering",
       "skills": [
         "Spring AI",
-        "Enterprise LLM Integration",
-        "Streaming Responses",
-        "Context-Aware Assistants",
-        "Prompt & System Design",
         "MCP",
         "Agent Skills",
-        "GitHub Copilot / Claude Code / Codex"
+        "LLM Integration",
+        "Streaming Responses",
+        "Context-Aware Assistants"
       ]
     }
   ],
   "footer": {
     "builtWith": "Built with React, Vite & Motion."
-  }
+  },
+  "impact": [
+    {
+      "value": "1 week → 3 hours",
+      "label": "Regression analysis",
+      "detail": "An automated platform that made large regression cycles practical.",
+      "targetId": "regression-platform"
+    },
+    {
+      "value": "100%",
+      "label": "Scoped output parity",
+      "detail": "A platform proof of concept. One trade type. A defined evaluation period.",
+      "targetId": "platform-poc"
+    },
+    {
+      "value": "End to end",
+      "label": "Engineering ownership",
+      "detail": "From service architecture and interfaces to cloud delivery.",
+      "targetId": "projects"
+    }
+  ],
+  "careerNote": "Joined HSBC through FDM in 2021. Became a permanent HSBC employee in September 2023, continuing on the Data Service Layer team."
 }
