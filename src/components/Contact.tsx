@@ -1,53 +1,94 @@
-import { Mail, MapPin } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowUpRight, Check, Copy, MapPin } from 'lucide-react'
 import { resume } from '@/data/resume'
-import { Section } from '@/components/Section'
+import { Reveal } from '@/components/Reveal'
 
 export function Contact() {
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>(
+    'idle',
+  )
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(resume.profile.email)
+      setCopyState('copied')
+    } catch {
+      setCopyState('failed')
+    }
+  }
   return (
-    <Section
+    <section
       id="contact"
-      eyebrow={resume.sections.contact.eyebrow}
-      title={resume.sections.contact.title}
-      description={resume.sections.contact.description}
+      className="contact-section dark-section"
+      aria-labelledby="contact-title"
     >
-      <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-2">
-            <p className="flex items-center gap-2 text-muted-foreground">
-              <MapPin className="size-4" />
+      <div className="container">
+        <Reveal>
+          <p className="eyebrow">{resume.sections.contact.eyebrow}</p>
+          <h2 id="contact-title" tabIndex={-1}>
+            {resume.sections.contact.title}
+            <span className="contact-spark" aria-hidden="true">
+              ↗
+            </span>
+          </h2>
+        </Reveal>
+        <div className="contact-grid">
+          <Reveal>
+            <p className="contact-description">
+              {resume.sections.contact.description}
+            </p>
+            <p className="contact-location">
+              <MapPin size={15} />
               {resume.profile.location}
             </p>
+          </Reveal>
+          <Reveal className="contact-actions">
             <a
+              className="button button-lime"
               href={`mailto:${resume.profile.email}`}
-              className="flex items-center gap-2 text-lg font-medium hover:text-cat-experience"
             >
-              <Mail className="size-5" />
-              {resume.profile.email}
-            </a>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={`mailto:${resume.profile.email}`}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              <Mail className="size-4" />
               {resume.sections.contact.emailLabel}
+              <ArrowUpRight size={20} />
             </a>
-            {resume.profile.links.map((link) => (
-              <a
-                key={link.label}
-                href={link.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="rounded-full border border-border px-5 py-2 text-sm font-medium transition-colors hover:bg-accent"
-              >
-                {link.label}
+            <div className="email-row">
+              <a href={`mailto:${resume.profile.email}`}>
+                {resume.profile.email}
               </a>
-            ))}
-          </div>
+              <button
+                type="button"
+                className="icon-button"
+                onClick={copyEmail}
+                aria-label="Copy email address"
+              >
+                {copyState === 'copied' ? (
+                  <Check size={16} />
+                ) : (
+                  <Copy size={16} />
+                )}
+              </button>
+            </div>
+            <p className="copy-status" role="status">
+              {copyState === 'copied'
+                ? 'Email copied.'
+                : copyState === 'failed'
+                  ? 'You can select the email address or tap it to get in touch.'
+                  : ''}
+            </p>
+          </Reveal>
+        </div>
+        <div className="contact-socials">
+          {resume.profile.links.map((link) => (
+            <a
+              key={link.label}
+              href={link.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {link.label}
+              <ArrowUpRight size={18} />
+            </a>
+          ))}
         </div>
       </div>
-    </Section>
+    </section>
   )
 }

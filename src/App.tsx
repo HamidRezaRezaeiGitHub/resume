@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { MotionConfig } from 'motion/react'
 import { ScrollProgress } from '@/components/ScrollProgress'
 import { Nav } from '@/components/Nav'
 import { Hero } from '@/components/Hero'
@@ -10,22 +12,27 @@ import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
 
 function App() {
+  const [paused, setPaused] = useState(false)
   return (
-    <>
-      <ScrollProgress />
-      <Nav />
-      <main id="top">
-        <Hero />
-        <About />
-        <Timeline />
-        <CaseStudies />
-        <Projects />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <MotionConfig reducedMotion="user">
+      <div className={paused ? 'site motion-paused' : 'site'}>
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        <ScrollProgress />
+        <Nav paused={paused} onToggleMotion={() => setPaused(!paused)} />
+        <main id="main" tabIndex={-1}>
+          <Hero />
+          <About />
+          <Timeline />
+          <CaseStudies />
+          <Projects />
+          <Skills />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </MotionConfig>
   )
 }
-
 export default App

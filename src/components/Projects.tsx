@@ -1,73 +1,70 @@
-import { motion } from 'motion/react'
-import { ExternalLink } from 'lucide-react'
+import { ArrowUpRight, Braces, Building2, Workflow } from 'lucide-react'
 import { resume } from '@/data/resume'
 import { Section } from '@/components/Section'
+import { Reveal } from '@/components/Reveal'
 
+const icons = [Workflow, Braces, Building2]
 export function Projects() {
   return (
     <Section
       id="projects"
-      eyebrow={resume.sections.projects.eyebrow}
-      title={resume.sections.projects.title}
-      description={resume.sections.projects.description}
+      className="projects-section"
+      {...resume.sections.projects}
     >
-      <div className="grid gap-6 md:grid-cols-3">
-        {resume.projects.map((p, i) => (
-          <motion.article
-            key={p.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.45, delay: i * 0.06 }}
-            className="flex flex-col rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
-          >
-            <div className="flex items-center justify-between gap-2">
-              <h3 className="text-lg font-semibold text-cat-project">
-                {p.name}
-              </h3>
-              {p.stage && (
-                <span className="rounded-full border border-cat-project/40 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-cat-project">
-                  {p.stage}
-                </span>
-              )}
-            </div>
-            <p className="text-xs font-medium text-muted-foreground">
-              {p.role}
-            </p>
-
-            <p className="mt-3 flex-1 text-sm text-muted-foreground">
-              {p.description}
-            </p>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              {p.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-secondary px-2.5 py-0.5 text-xs text-secondary-foreground"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {p.links && p.links.length > 0 && (
-              <div className="mt-5 flex flex-wrap gap-4 border-t border-border pt-4">
-                {p.links.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="inline-flex items-center gap-1 text-sm font-medium text-cat-project underline-offset-4 hover:underline"
-                  >
-                    {link.label}
-                    <ExternalLink className="size-3.5" />
-                  </a>
-                ))}
-              </div>
-            )}
-          </motion.article>
-        ))}
+      <div className="project-grid">
+        {resume.projects.map((project, i) => {
+          const Icon = icons[i % icons.length]
+          return (
+            <Reveal
+              key={project.id}
+              delay={i * 0.08}
+              className="project-reveal"
+            >
+              <article className={`project-card project-${i}`}>
+                <div className="project-art" aria-hidden="true">
+                  <span className="mono project-number">BUILD / 0{i + 1}</span>
+                  <Icon strokeWidth={1} />
+                  <span className="project-art-label mono">
+                    {project.tags.slice(0, 2).join(' + ')}
+                  </span>
+                  <span className="project-orbit" />
+                </div>
+                <div className="project-body">
+                  <div className="project-name">
+                    <h3>{project.name}</h3>
+                    {project.stage && (
+                      <span className="project-stage">{project.stage}</span>
+                    )}
+                  </div>
+                  <p className="project-role mono">{project.role}</p>
+                  <p className="project-description">{project.description}</p>
+                  <ul className="inline-tags" aria-label="Technologies">
+                    {project.tags.map((tag) => (
+                      <li key={tag}>{tag}</li>
+                    ))}
+                  </ul>
+                  {project.links && (
+                    <div className="project-links">
+                      {project.links.map((link) => (
+                        <a
+                          key={link.url}
+                          href={link.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-link"
+                          aria-label={`${project.name} — ${link.label}`}
+                        >
+                          {link.label}
+                          <ArrowUpRight size={17} />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </article>
+            </Reveal>
+          )
+        })}
       </div>
     </Section>
   )

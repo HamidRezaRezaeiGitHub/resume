@@ -1,95 +1,103 @@
-import { motion } from 'motion/react'
-import { ArrowDown, Mail } from 'lucide-react'
+import { useRef } from 'react'
+import { ArrowDown, ArrowDownRight, ArrowUpRight, Asterisk } from 'lucide-react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { resume } from '@/data/resume'
 
-export function Hero() {
+function SystemVisual() {
   return (
-    <section className="relative flex min-h-svh flex-col items-center justify-center px-6 text-center">
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-muted-foreground"
-      >
-        {resume.profile.headline}
-      </motion.p>
+    <div className="system-visual" aria-hidden="true">
+      <div className="system-caption mono">
+        <span className="status-dot" /> CONNECTING THE DOTS
+      </div>
+      <div className="system-orbits">
+        <div className="orbit orbit-one" />
+        <div className="orbit orbit-two" />
+        <div className="orbit orbit-three" />
+        <div className="orbit-cross cross-x" />
+        <div className="orbit-cross cross-y" />
+      </div>
+      <div className="system-core">
+        <Asterisk strokeWidth={1.1} />
+        <span className="mono">MAKE IT WORK.</span>
+      </div>
+      {resume.hero.technologies.map((tech, i) => (
+        <span key={tech} className={`floating-tech floating-tech-${i}`}>
+          {tech}
+          <span className="tech-dot" />
+        </span>
+      ))}
+      <span className="visual-coordinate mono">
+        SYSTEMS / INTERFACES / DELIVERY
+      </span>
+      <span className="visual-plus plus-one">+</span>
+      <span className="visual-plus plus-two">+</span>
+    </div>
+  )
+}
 
-      <motion.h1
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl"
-      >
-        {resume.profile.name}
-      </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="mt-6 max-w-2xl text-balance text-lg text-muted-foreground"
-      >
-        {resume.profile.tagline}
-      </motion.p>
-
-      <motion.ul
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2"
-      >
-        {resume.hero.technologies.map((tech) => (
-          <li
-            key={tech}
-            className="rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground"
-          >
-            {tech}
-          </li>
-        ))}
-      </motion.ul>
-
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        className="mt-8 flex flex-wrap items-center justify-center gap-3"
-      >
-        <a
-          href={`mailto:${resume.profile.email}`}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+export function Hero() {
+  const ref = useRef<HTMLElement>(null)
+  const reduced = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [0, 90])
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 8])
+  return (
+    <section
+      ref={ref}
+      id="top"
+      className="hero container"
+      aria-labelledby="hero-title"
+    >
+      <div className="hero-topline">
+        <p className="eyebrow">
+          <span className="status-dot" />
+          {resume.hero.kicker}
+        </p>
+        <span className="mono hero-edition">A PRACTICE IN BUILDING BETTER</span>
+      </div>
+      <div className="hero-grid">
+        <div className="hero-copy">
+          <p className="hero-name">
+            Hi, I’m {resume.profile.name} <span aria-hidden="true">↗</span>
+          </p>
+          <h1 id="hero-title" aria-label={resume.hero.title.join(' ')}>
+            <span>{resume.hero.title[0]}</span>
+            <span className="hero-title-second">{resume.hero.title[1]}</span>
+          </h1>
+          <p className="hero-intro">{resume.profile.tagline}</p>
+          <div className="hero-actions">
+            <a className="button button-dark" href="#work">
+              {resume.hero.scrollLabel}
+              <ArrowDownRight size={19} />
+            </a>
+            <a
+              className="text-link"
+              href={resume.profile.links[0].url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </div>
+        <motion.div
+          className="hero-art"
+          style={reduced ? undefined : { y, rotate }}
         >
-          <Mail className="size-4" />
-          {resume.hero.contactLabel}
+          <SystemVisual />
+        </motion.div>
+      </div>
+      <div className="hero-bottom">
+        <span className="mono">BACKEND DEPTH. FULL-STACK PERSPECTIVE.</span>
+        <a className="scroll-cue" href="#about">
+          <span>There’s more below</span>
+          <ArrowDown size={17} />
         </a>
-        {resume.profile.links.map((link) => (
-          <a
-            key={link.label}
-            href={link.url}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="rounded-full border border-border px-5 py-2 text-sm font-medium transition-colors hover:bg-accent"
-          >
-            {link.label}
-          </a>
-        ))}
-      </motion.div>
-
-      <motion.a
-        href="#about"
-        aria-label={resume.hero.scrollLabel}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-        className="absolute bottom-10 text-muted-foreground"
-      >
-        <motion.span
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-          className="block"
-        >
-          <ArrowDown className="size-6" />
-        </motion.span>
-      </motion.a>
+      </div>
     </section>
   )
 }

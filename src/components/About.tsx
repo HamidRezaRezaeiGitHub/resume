@@ -1,35 +1,47 @@
-import { motion } from 'motion/react'
-import { Check } from 'lucide-react'
+import { ArrowDownRight, Asterisk } from 'lucide-react'
 import { resume } from '@/data/resume'
-import { Section } from '@/components/Section'
+import { Reveal } from '@/components/Reveal'
 
 export function About() {
   return (
-    <Section
+    <section
       id="about"
-      eyebrow={resume.sections.about.eyebrow}
-      title={resume.sections.about.title}
+      className="section about-section"
+      aria-labelledby="about-title"
     >
-      <div className="grid gap-10 md:grid-cols-[1.2fr_1fr]">
-        <p className="text-lg leading-relaxed text-muted-foreground">
-          {resume.sections.about.intro}
-        </p>
-        <ul className="space-y-3">
-          {resume.sections.about.themes.map((theme, i) => (
-            <motion.li
-              key={theme}
-              initial={{ opacity: 0, x: 16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="flex items-start gap-3"
-            >
-              <Check className="mt-0.5 size-5 shrink-0 text-cat-project" />
-              <span className="text-sm text-foreground">{theme}</span>
-            </motion.li>
+      <div className="container">
+        <Reveal className="about-intro">
+          <div>
+            <p className="eyebrow">{resume.sections.about.eyebrow}</p>
+            <h2 id="about-title" tabIndex={-1}>
+              {resume.sections.about.title}
+            </h2>
+          </div>
+          <p>{resume.sections.about.intro}</p>
+        </Reveal>
+        <div className="impact-grid">
+          {resume.impact.map((item, i) => (
+            <Reveal key={item.label} delay={i * 0.07}>
+              <a className="impact-item" href={`#${item.targetId}`}>
+                <span className="eyebrow">
+                  {item.label}
+                  <ArrowDownRight size={18} />
+                </span>
+                <strong>{item.value}</strong>
+                <p>{item.detail}</p>
+              </a>
+            </Reveal>
           ))}
-        </ul>
+        </div>
+        <Reveal className="approach-line">
+          {resume.sections.about.themes.map((theme) => (
+            <span key={theme}>
+              <Asterisk size={17} />
+              {theme}
+            </span>
+          ))}
+        </Reveal>
       </div>
-    </Section>
+    </section>
   )
 }

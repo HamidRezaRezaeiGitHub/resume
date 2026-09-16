@@ -1,59 +1,82 @@
-import { useRef } from 'react'
-import { motion, useScroll, useSpring } from 'motion/react'
+import { useRef, useState } from 'react'
+import { motion, useReducedMotion, useScroll } from 'motion/react'
+import { ArrowDownRight } from 'lucide-react'
 import { resume } from '@/data/resume'
-import { CategoryLegend } from '@/components/CategoryLegend'
 import { TimelineItem } from '@/components/timeline/TimelineItem'
+import { formatCareerPeriod } from '@/lib/dates'
+import { Reveal } from '@/components/Reveal'
 
 export function Timeline() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start center', 'end center'],
-  })
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  })
-
   const entries = [...resume.timeline].sort((a, b) =>
     b.startDate.localeCompare(a.startDate),
   )
-
+  const [activeId, setActiveId] = useState(entries[0].id)
+  const active = entries.find((entry) => entry.id === activeId) ?? entries[0]
+  const railRef = useRef<HTMLDivElement>(null)
+  const reduced = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: railRef,
+    offset: ['start center', 'end center'],
+  })
   return (
-    <section id="experience" className="mx-auto max-w-5xl px-6 py-20">
-      <div className="mb-12 text-center">
-        <p className="mb-2 text-sm font-medium uppercase tracking-[0.25em] text-muted-foreground">
-          {resume.sections.timeline.eyebrow}
-        </p>
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          {resume.sections.timeline.title}
-        </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
-          {resume.sections.timeline.description}
-        </p>
-        <CategoryLegend className="mt-6" />
-      </div>
-
-      <div ref={containerRef} className="relative">
-        {/* Rail track */}
-        <div className="absolute left-4 top-0 h-full w-px -translate-x-1/2 bg-border md:left-1/2" />
-        {/* Scroll-linked progress rail */}
-        <motion.div
-          style={{ scaleY }}
-          className="absolute left-4 top-0 h-full w-px origin-top -translate-x-1/2 bg-foreground md:left-1/2"
-        />
-
-        <ol className="space-y-16">
-          {entries.map((entry, index) => (
-            <TimelineItem
-              key={entry.id}
-              entry={entry}
-              index={index}
-              side={index % 2 === 0 ? 'left' : 'right'}
+    <section
+      id="experience"
+      className="section journey-section"
+      aria-labelledby="experience-title"
+    >
+      <div className="container journey-grid">
+        <aside className="journey-aside">
+          <div className="journey-sticky">
+            <Reveal>
+              <p className="eyebrow">{resume.sections.timeline.eyebrow}</p>
+              <h2 id="experience-title" tabIndex={-1}>
+                {resume.sections.timeline.title}
+              </h2>
+              <p className="section-description">
+                {resume.sections.timeline.description}
+              </p>
+            </Reveal>
+            <div className="career-clock" aria-hidden="true">
+              <span className="eyebrow">The chapter</span>
+              <div className="career-year" key={active.startDate}>
+                {active.startDate.slice(0, 4)}
+                <span>↘</span>
+              </div>
+              <span className="mono">
+                {formatCareerPeriod(active.startDate, active.endDate)}
+              </span>
+            </div>
+            <p className="career-note">{resume.careerNote}</p>
+            <a className="text-link" href="#work">
+              See the work behind the roles <ArrowDownRight size={18} />
+            </a>
+          </div>
+        </aside>
+        <div ref={railRef} className="journey-content">
+          <div className="journey-mobile-index" aria-hidden="true">
+            <span className="eyebrow">The chapter</span>
+            <span className="mono">
+              {formatCareerPeriod(active.startDate, active.endDate)}
+            </span>
+          </div>
+          <div className="timeline-rail" aria-hidden="true">
+            <motion.div
+              className="timeline-fill"
+              style={{ scaleY: reduced ? 1 : scrollYProgress }}
             />
-          ))}
-        </ol>
+          </div>
+          <ol className="timeline-list">
+            {entries.map((entry, index) => (
+              <TimelineItem
+                key={entry.id}
+                entry={entry}
+                index={index}
+                active={activeId === entry.id}
+                onEnter={() => setActiveId(entry.id)}
+              />
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   )

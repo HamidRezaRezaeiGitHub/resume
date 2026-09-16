@@ -1,33 +1,96 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import App from '@/App'
 import { resume } from '@/data/resume'
 
-describe('App', () => {
-  it('renders the profile name in the hero', () => {
+const heading = (text: string) => (name: string) =>
+  name.replace(/\s+/g, ' ') === text.replace(/\s+/g, ' ')
+
+describe('resume experience', () => {
+  it('makes the identity, headline, and every navigation destination available', () => {
     render(<App />)
     expect(
-      screen.getByRole('heading', { name: resume.profile.name, level: 1 }),
+      screen.getByRole('heading', {
+        name: resume.hero.title.join(' '),
+        level: 1,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(`Hi, I’m ${resume.profile.name}`),
+    ).toBeInTheDocument()
+    for (const { sectionId } of resume.navigation)
+      expect(document.getElementById(sectionId)).toBeInTheDocument()
+    for (const section of [
+      resume.sections.timeline,
+      resume.sections.caseStudies,
+      resume.sections.projects,
+      resume.sections.skills,
+    ])
+      expect(
+        screen.getByRole('heading', { name: heading(section.title), level: 2 }),
+      ).toBeInTheDocument()
+  })
+
+  it('shows each career entry once and preserves date precision', () => {
+    render(<App />)
+    const journey = screen.getByRole('region', {
+      name: heading(resume.sections.timeline.title),
+    })
+    expect(within(journey).getAllByRole('article')).toHaveLength(
+      resume.timeline.length,
+    )
+    const education = document.getElementById('edu-western')!
+    expect(
+      within(education).getByText('2019', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2019')
+    expect(
+      within(journey).getByText('Jun 2023 — Jun 2025', { selector: 'time' }),
     ).toBeInTheDocument()
   })
 
-  it('renders the main resume sections', () => {
+  it('opens the mobile navigation and restores focus on Escape', async () => {
+    const user = userEvent.setup()
     render(<App />)
+    const toggle = screen.getByRole('button', { name: 'Open navigation' })
+    await user.click(toggle)
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    await user.keyboard('{Escape}')
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    expect(toggle).toHaveFocus()
+  })
+
+  it('filters the skill field without navigating away', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: 'AI engineering' }))
+    const skills = screen.getByRole('list', { name: 'AI engineering skills' })
+    expect(within(skills).getByText('Spring AI')).toBeInTheDocument()
+    expect(within(skills).queryByText('Docker')).not.toBeInTheDocument()
     expect(
-      screen.getByRole('heading', {
-        name: resume.sections.timeline.title,
-      }),
-    ).toBeInTheDocument()
+      screen.getByRole('button', { name: 'AI engineering' }),
+    ).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('lets readers pause decorative motion', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(
+      screen.getByRole('button', { name: 'Pause decorative motion' }),
+    )
     expect(
-      screen.getByRole('heading', {
-        name: resume.sections.caseStudies.title,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', { name: resume.sections.skills.title }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', { name: resume.sections.projects.title }),
-    ).toBeInTheDocument()
+      screen.getByRole('button', { name: 'Resume decorative motion' }),
+    ).toHaveAttribute('aria-pressed', 'true')
+    expect(document.querySelector('.site')).toHaveClass('motion-paused')
+  })
+
+  it('copies the email and announces the result', async () => {
+    const user = userEvent.setup()
+    const copy = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue()
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: 'Copy email address' }))
+    expect(copy).toHaveBeenCalledWith(resume.profile.email)
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied.')
+    copy.mockRestore()
   })
 })

@@ -1,61 +1,99 @@
-import { motion } from 'motion/react'
+import { ArrowUpRight, Plus } from 'lucide-react'
 import { resume } from '@/data/resume'
 import { Section } from '@/components/Section'
+import { Reveal } from '@/components/Reveal'
 
 export function CaseStudies() {
   return (
     <Section
       id="work"
-      eyebrow={resume.sections.caseStudies.eyebrow}
-      title={resume.sections.caseStudies.title}
-      description={resume.sections.caseStudies.description}
+      className="work-section dark-section"
+      {...resume.sections.caseStudies}
     >
-      <div className="grid gap-6 md:grid-cols-2">
-        {resume.caseStudies.map((cs, i) => (
-          <motion.article
-            key={cs.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.45, delay: (i % 2) * 0.05 }}
-            className="flex flex-col rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+      <div className="featured-work">
+        {resume.caseStudies.slice(0, 3).map((study, i) => (
+          <Reveal
+            key={study.id}
+            className={`work-reveal work-reveal-${i}`}
+            delay={i * 0.05}
           >
-            <p className="text-xs font-semibold uppercase tracking-wider text-cat-experience">
-              {cs.context}
-            </p>
-            <h3 className="mt-2 text-lg font-semibold">{cs.title}</h3>
-            <p className="mt-3 text-sm text-muted-foreground">
-              {cs.description}
-            </p>
-
-            {cs.highlights && cs.highlights.length > 0 && (
-              <ul className="mt-4 space-y-2">
-                {cs.highlights.map((h) => (
-                  <li
-                    key={h}
-                    className="flex gap-2 text-sm text-muted-foreground"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-2 size-1.5 shrink-0 rounded-full bg-cat-experience"
-                    />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            <div className="mt-5 flex flex-wrap gap-2 border-t border-border pt-4">
-              {cs.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-secondary px-2.5 py-0.5 text-xs text-secondary-foreground"
-                >
-                  {tag}
+            <article
+              id={study.id}
+              className={`work-card work-card-${i}`}
+              aria-labelledby={`${study.id}-title`}
+            >
+              <div className="work-card-top">
+                <span className="mono">
+                  0{i + 1} / {study.context}
                 </span>
-              ))}
-            </div>
-          </motion.article>
+                <ArrowUpRight size={23} aria-hidden="true" />
+              </div>
+              <div className="work-result">
+                <strong>{study.outcome}</strong>
+                <span className="mono">{study.outcomeLabel}</span>
+              </div>
+              <div className="work-copy">
+                <h3 id={`${study.id}-title`}>{study.title}</h3>
+                <p>{study.preview}</p>
+                <ul className="inline-tags" aria-label="Technologies">
+                  {study.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+                <details className="details">
+                  <summary>
+                    <span>
+                      Behind the build
+                      <span className="sr-only">: {study.title}</span>
+                    </span>
+                    <Plus size={18} />
+                  </summary>
+                  <div className="detail-content">
+                    <p>{study.description}</p>
+                    {study.highlights && (
+                      <ul className="detail-bullets">
+                        {study.highlights.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </details>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+      <div className="more-work">
+        <p className="eyebrow">More problems. More possibilities.</p>
+        {resume.caseStudies.slice(3).map((study, i) => (
+          <Reveal key={study.id}>
+            <details className="work-row" id={study.id}>
+              <summary>
+                <span className="mono">0{i + 4}</span>
+                <span>
+                  <strong>{study.title}</strong>
+                  <span className="work-row-preview">{study.preview}</span>
+                </span>
+                <Plus size={21} />
+              </summary>
+              <div className="work-row-content">
+                <p>{study.description}</p>
+                {study.highlights && (
+                  <ul className="detail-bullets">
+                    {study.highlights.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+                <ul className="inline-tags" aria-label="Technologies">
+                  {study.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+              </div>
+            </details>
+          </Reveal>
         ))}
       </div>
     </Section>
