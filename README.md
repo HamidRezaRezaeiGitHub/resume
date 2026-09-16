@@ -7,14 +7,14 @@ more.
 ## Tech stack
 
 | Area        | Choice                                                            |
-| ----------- | ---------------------------------------------------------------- |
-| Build tool  | [Vite](https://vite.dev/) + React 19 + TypeScript                |
-| Styling     | [Tailwind CSS v4](https://tailwindcss.com/) (shadcn-style tokens)|
-| Animation   | [Motion](https://motion.dev/) (scroll-linked timeline)           |
-| UI          | Custom components + shadcn/ui primitives                         |
-| Testing     | [Vitest](https://vitest.dev/) + Testing Library                  |
-| Lint/Format | ESLint + Prettier                                                |
-| Hosting     | Cloudflare Workers (static assets)                               |
+| ----------- | ----------------------------------------------------------------- |
+| Build tool  | [Vite](https://vite.dev/) + React 19 + TypeScript                 |
+| Styling     | [Tailwind CSS v4](https://tailwindcss.com/) (shadcn-style tokens) |
+| Animation   | [Motion](https://motion.dev/) (scroll-linked timeline)            |
+| UI          | Custom components + shadcn/ui primitives                          |
+| Testing     | [Vitest](https://vitest.dev/) + Testing Library                   |
+| Lint/Format | ESLint + Prettier                                                 |
+| Hosting     | Cloudflare Workers (static assets)                                |
 
 ## Local development
 
