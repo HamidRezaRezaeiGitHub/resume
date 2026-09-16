@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
-import { ArrowDown } from 'lucide-react'
-import { profile } from '@/data/resume'
+import { ArrowDown, Mail } from 'lucide-react'
+import { heroTech, profile } from '@/data/resume'
 
 export function Hero() {
   return (
@@ -32,12 +32,35 @@ export function Hero() {
         {profile.tagline}
       </motion.p>
 
-      <motion.div
+      <motion.ul
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.35 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2"
+      >
+        {heroTech.map((tech) => (
+          <li
+            key={tech}
+            className="rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground"
+          >
+            {tech}
+          </li>
+        ))}
+      </motion.ul>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
         className="mt-8 flex flex-wrap items-center justify-center gap-3"
       >
+        <a
+          href={`mailto:${profile.email}`}
+          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+        >
+          <Mail className="size-4" />
+          Get in touch
+        </a>
         {profile.links.map((link) => (
           <a
             key={link.label}
@@ -52,8 +75,8 @@ export function Hero() {
       </motion.div>
 
       <motion.a
-        href="#timeline"
-        aria-label="Scroll to timeline"
+        href="#about"
+        aria-label="Scroll to content"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.6 }}

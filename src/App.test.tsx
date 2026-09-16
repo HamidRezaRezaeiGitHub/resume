@@ -6,19 +6,23 @@ describe('App', () => {
   it('renders the profile name in the hero', () => {
     render(<App />)
     expect(
-      screen.getByRole('heading', { name: /hamid reza rezaei/i, level: 1 }),
+      screen.getByRole('heading', { name: /hamid r\. rezaei/i, level: 1 }),
     ).toBeInTheDocument()
   })
 
-  it('renders the timeline section with all category labels', () => {
+  it('renders the main resume sections', () => {
     render(<App />)
     expect(
-      screen.getByRole('heading', { name: /^timeline$/i }),
+      screen.getByRole('heading', { name: /experience & education/i }),
     ).toBeInTheDocument()
     expect(
-      screen.getAllByText(/professional experience/i).length,
-    ).toBeGreaterThan(0)
-    expect(screen.getAllByText(/personal projects/i).length).toBeGreaterThan(0)
-    expect(screen.getAllByText(/education/i).length).toBeGreaterThan(0)
+      screen.getByRole('heading', { name: /professional case studies/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /skills & technologies/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /personal & open-source/i }),
+    ).toBeInTheDocument()
   })
 })
