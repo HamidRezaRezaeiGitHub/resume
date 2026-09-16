@@ -20,6 +20,11 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['ai/**/*.mjs'],
+    extends: [js.configs.recommended],
+    languageOptions: { globals: globals.node },
+  },
   // Keep this last: turns off ESLint rules that would fight Prettier.
   prettier,
 ])

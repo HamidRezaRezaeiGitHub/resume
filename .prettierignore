@@ -3,3 +3,6 @@ dist
 .wrangler
 coverage
 package-lock.json
+
+# Local agent requirement workspaces
+requirements/

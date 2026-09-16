@@ -19,7 +19,8 @@
     "test:coverage": "vitest run --coverage",
     "deploy:dev": "wrangler deploy --env dev",
     "deploy:uat": "wrangler deploy --env uat",
-    "deploy:prod": "wrangler deploy --env production"
+    "deploy:prod": "wrangler deploy --env production",
+    "check:ai": "sh ai/scripts/check-pack.sh"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

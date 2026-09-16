@@ -1,3 +1,11 @@
+---
+title: Personal project evidence
+domain: evidence
+tags: [projects, provenance, publication]
+status: current
+last_updated: 2026-09-16
+---
+
 # Personal project evidence
 
 Read-only review of sibling repositories on 2026-09-16. One research assignment

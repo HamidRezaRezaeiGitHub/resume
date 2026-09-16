@@ -1,0 +1,8 @@
+name: default-agent-instruction-pack
+version: 0.4.12
+installed_from: man-agent-ment
+adopted_from: buy-or-rent/buy-or-rent-backend
+adaptation: resume-react-static-site
+adaptation_version: 1
+adopted_on: 2026-09-16
+description: Shared agent workflows adapted for the React resume website.

@@ -1,3 +1,11 @@
+---
+title: Application review on 2026-09-16
+domain: reviews
+tags: [react, accessibility, validation]
+status: current
+last_updated: 2026-09-16
+---
+
 # Application review
 
 Reviewed the React components, browser hooks, editable content contract,
@@ -55,5 +63,6 @@ The release gate includes strict typecheck, ESLint, Prettier, the full Vitest
 suite, content validation, and the production build. Browser checks cover
 320–1440px widths, current-role labeling, dates, sticky headings, navigation,
 all skill filters, theme persistence, reduced motion, and JavaScript errors.
-The final pushed commit must also pass GitHub CI and the UAT deployment; its
-workflow run is the release record.
+Commit `92f8737` subsequently passed GitHub CI and deployed to UAT in
+[run 35135806620](https://github.com/HamidRezaRezaeiGitHub/resume/actions/runs/35135806620).
+This is a dated review record, not a claim about later revisions.
