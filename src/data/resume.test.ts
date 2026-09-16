@@ -44,4 +44,22 @@ describe('resume content contract', () => {
     content.impact[0].targetId = 'missing-story'
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
+
+  it('accepts a year-only end when the starting month is in that year', () => {
+    const content = structuredClone(rawResumeContent)
+    content.timeline[0].endDate = '2025'
+    expect(resumeContentSchema.safeParse(content).success).toBe(true)
+  })
+
+  it('keeps the skills overview grounded in the editable skill groups', () => {
+    const content = structuredClone(rawResumeContent)
+    content.skillOverview[0] = 'Unlisted skill'
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+
+  it('requires a qualification alongside featured outcomes', () => {
+    const content = structuredClone(rawResumeContent)
+    delete content.caseStudies[0].outcomeLabel
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
 })

@@ -79,7 +79,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
             >
-              LinkedIn
+              {resume.profile.links[0].label}
               <ArrowUpRight size={16} />
             </a>
           </div>

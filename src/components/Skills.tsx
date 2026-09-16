@@ -5,23 +5,9 @@ import { Section } from '@/components/Section'
 
 export function Skills() {
   const [selected, setSelected] = useState('Overview')
-  const overview = [
-    'Java',
-    'Spring Boot',
-    'React',
-    'TypeScript',
-    'PostgreSQL',
-    'GCP',
-    'Docker',
-    'Jenkins',
-    'Spring AI',
-    'MCP',
-    'GitHub Actions',
-    'BigQuery',
-  ]
   const skills =
     selected === 'Overview'
-      ? overview
+      ? resume.skillOverview
       : resume.skillGroups.find((group) => group.title === selected)!.skills
   return (
     <Section id="skills" className="skills-section" {...resume.sections.skills}>
@@ -54,7 +40,6 @@ export function Skills() {
         </span>
         <ul
           className="skill-cloud"
-          key={selected}
           id="skill-cloud"
           aria-label={`${selected} skills`}
           aria-live="polite"

@@ -299,6 +299,9 @@ h3 {
   font-size: 15px;
   margin-bottom: 28px;
 }
+.hero-copy {
+  min-width: 0;
+}
 .hero-name span {
   display: inline-block;
   margin-left: 14px;
@@ -329,6 +332,7 @@ h1 > span {
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 28px;
   align-items: center;
   margin-top: 30px;
@@ -1616,7 +1620,7 @@ details[open] > summary > svg {
     gap: 22px;
   }
   h1 {
-    font-size: clamp(41px, 11.4vw, 62px);
+    font-size: clamp(37px, 11.4vw, 62px);
     max-width: 100%;
   }
   .hero-name {
@@ -1632,6 +1636,9 @@ details[open] > summary > svg {
   .hero-actions {
     margin-top: 23px;
     gap: 28px;
+  }
+  .nav .brand {
+    min-width: 48px;
   }
   .hero-actions .button {
     min-height: 48px;
@@ -1941,5 +1948,30 @@ details[open] > summary > svg {
   [style] {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* Dates and metric qualifiers are content, so keep them readable on phones. */
+.timeline-meta .mono,
+.career-clock > .mono,
+.work-result > .mono {
+  font-size: 11px;
+  letter-spacing: 0.025em;
+}
+@media (max-width: 800px) {
+  .journey-mobile-index .mono {
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+  .journey-mobile-index .eyebrow {
+    font-size: 10px;
+  }
+}
+@media (max-width: 540px) {
+  .current-label {
+    font-size: 10px;
+  }
+  .work-result > .mono {
+    font-size: 10px;
   }
 }

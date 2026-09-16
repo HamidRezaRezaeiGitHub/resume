@@ -78,7 +78,7 @@ export function Nav({
             {paused ? <Play size={15} /> : <Pause size={15} />}
           </button>
           <a className="nav-contact" href="#contact">
-            Let’s talk <ArrowUpRight size={16} />
+            {resume.hero.contactLabel} <ArrowUpRight size={16} />
           </a>
           <button
             ref={menuButton}

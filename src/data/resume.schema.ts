@@ -173,8 +173,9 @@ export const resumeContentSchema = z
       .length(categorySchema.options.length)
       .superRefine(requireUniqueIds),
     timeline: z.array(timelineEntrySchema).min(1).superRefine(requireUniqueIds),
-    caseStudies: z.array(caseStudySchema).min(1).superRefine(requireUniqueIds),
+    caseStudies: z.array(caseStudySchema).min(3).superRefine(requireUniqueIds),
     projects: z.array(projectSchema).min(1).superRefine(requireUniqueIds),
+    skillOverview: stringList,
     skillGroups: z
       .array(
         z.strictObject({
@@ -188,16 +189,41 @@ export const resumeContentSchema = z
     }),
   })
   .superRefine((content, context) => {
+    content.caseStudies.slice(0, 3).forEach((study, index) => {
+      for (const field of ['outcome', 'outcomeLabel'] as const) {
+        if (!study[field]) {
+          context.addIssue({
+            code: 'custom',
+            message:
+              'Featured case studies need an outcome and its qualification',
+            path: ['caseStudies', index, field],
+          })
+        }
+      }
+    })
     content.timeline.forEach((entry, index) => {
       if (
         entry.endDate &&
         entry.endDate !== 'present' &&
-        entry.endDate < entry.startDate
+        (entry.endDate.length === 4 ? `${entry.endDate}-12` : entry.endDate) <
+          (entry.startDate.length === 4
+            ? `${entry.startDate}-01`
+            : entry.startDate)
       ) {
         context.addIssue({
           code: 'custom',
           message: 'End date must not precede start date',
           path: ['timeline', index, 'endDate'],
+        })
+      }
+    })
+    const skills = new Set(content.skillGroups.flatMap((group) => group.skills))
+    content.skillOverview.forEach((skill, index) => {
+      if (!skills.has(skill)) {
+        context.addIssue({
+          code: 'custom',
+          message: 'Overview skills must belong to a skill group',
+          path: ['skillOverview', index],
         })
       }
     })

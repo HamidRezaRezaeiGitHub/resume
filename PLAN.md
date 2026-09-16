@@ -30,3 +30,15 @@ Keep all career claims grounded in the supplied JSON.
 HSBC roles have supplied month/year dates. Education and teaching retain
 year-only dates until more precise dates are supplied. The September 2023
 employment conversion remains distinct from the June 2023 team transition.
+
+## Completed implementation and local verification
+
+- Content and structured chronology committed separately from the visual rebuild.
+- Desktop and touch-browser layouts inspected at 320, 375, 390, 430, 768, 1024,
+  and 1440 pixels; the production build has no horizontal overflow.
+- Verified navigation, live career dates, native disclosures, all skill filters
+  at 320 pixels, decorative-motion pause, and reduced-motion rendering.
+- No browser JavaScript errors. Typecheck, lint, formatting, 19 tests, and the
+  production build pass.
+- Review target: `https://uat.hamid-rezaei.com`. Deployment confirmation belongs
+  to the GitHub Actions `Deploy UAT` run for the pushed release commit.

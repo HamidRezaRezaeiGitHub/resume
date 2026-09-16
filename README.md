@@ -1,20 +1,20 @@
 # Resume — hamid-rezaei.com
 
-An interactive, scroll-driven single-page resume. As you scroll, a color-coded
-timeline reveals professional experience, personal projects, education, and
-more.
+A mobile-first, scroll-driven resume with an editorial ivory/charcoal palette,
+impact highlights, a dated career timeline, selected work, independent projects,
+and a floating, filterable skill field.
 
 ## Tech stack
 
-| Area        | Choice                                                            |
-| ----------- | ----------------------------------------------------------------- |
-| Build tool  | [Vite](https://vite.dev/) + React 19 + TypeScript                 |
-| Styling     | [Tailwind CSS v4](https://tailwindcss.com/) (shadcn-style tokens) |
-| Animation   | [Motion](https://motion.dev/) (scroll-linked timeline)            |
-| UI          | Custom components + shadcn/ui primitives                          |
-| Testing     | [Vitest](https://vitest.dev/) + Testing Library                   |
-| Lint/Format | ESLint + Prettier                                                 |
-| Hosting     | Cloudflare Workers (static assets)                                |
+| Area        | Choice                                                                 |
+| ----------- | ---------------------------------------------------------------------- |
+| Build tool  | [Vite](https://vite.dev/) + React 19 + TypeScript                      |
+| Styling     | Custom responsive CSS with [Tailwind CSS v4](https://tailwindcss.com/) |
+| Animation   | [Motion](https://motion.dev/) (scroll-linked timeline)                 |
+| UI          | Custom React components and Lucide icons                               |
+| Testing     | [Vitest](https://vitest.dev/) + Testing Library                        |
+| Lint/Format | ESLint + Prettier                                                      |
+| Hosting     | Cloudflare Workers (static assets)                                     |
 
 ## Local development
 
@@ -39,17 +39,41 @@ npm run preview        # preview the production build
 
 ## Editing resume content
 
-All editable resume copy and records live in `src/data/resume.json`. This
+Career content and records live in `src/data/resume.json`. This
 includes the profile, navigation labels, section headings, timeline, case
 studies, projects, skills, links, and footer text. Content changes do not
-require editing a React component.
+require editing a React component. Small interface labels and decorative
+annotations live with the components.
+
+- **Career dates:** `startDate` and optional `endDate` accept `YYYY-MM` or `YYYY`.
+  Use `"present"` for an ongoing role. Keep a year-only value when the month is
+  unknown. Do not add placeholder months. Entries sort newest first.
+- **Impact:** each highlight's `targetId` points to a section or case-study ID.
+- **Work:** the first three case studies receive featured layouts; the others
+  appear as expandable rows. `preview` is the short introduction; `description`
+  and `highlights` appear when expanded. Featured records use `outcome` and
+  `outcomeLabel`, including any qualification needed to interpret a metric.
+- **Skills:** `skillOverview` selects the opening cloud; every value must also
+  exist in `skillGroups`. The discipline controls show the full group.
+- **Employment context:** `careerNote` preserves the FDM-to-HSBC transition
+  separately from changes in functional teams.
 
 The JSON document is validated before local development and production builds
 by the Zod contract in `src/data/resume.schema.ts`. The same contract is
 exercised in CI, including checks for required fields, valid email/URL values,
-supported categories, and unique record IDs. Validation stays out of the
-browser bundle. Presentation-only category colors remain in `src/data/resume.ts`
-and `src/index.css` (the `--cat-*` tokens).
+supported categories, unique record IDs, date order, skill membership, and impact
+targets. Validation stays out of the browser bundle. Presentation lives in
+`src/index.css` and the React components.
+
+## Interaction and accessibility
+
+The career rail fills as the reader scrolls, with a sticky year on desktop and a
+sticky date strip on phones. Native disclosure controls reveal detailed evidence
+without long opening paragraphs. Navigation, disclosures, filters, and contact
+actions support keyboards and touch. The pause control stops decorative loops;
+the operating system's reduced-motion preference also disables parallax, reveal
+transforms, smooth scrolling, and decorative animation. Content stays available
+in both modes. The site uses system fonts and has no remote font or image requests.
 
 ## Deployment (Cloudflare)
 

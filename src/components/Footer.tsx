@@ -7,7 +7,7 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {resume.profile.name}
         </p>
-        <span className="mono">THOUGHTFULLY ENGINEERED.</span>
+        <span className="mono">{resume.footer.builtWith.toUpperCase()}</span>
         <a href="#top" className="text-link">
           Back to top
           <ArrowUp size={15} />

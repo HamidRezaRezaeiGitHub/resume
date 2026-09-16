@@ -432,7 +432,7 @@
     }
   ],
   "footer": {
-    "builtWith": "Built with React, Vite & Motion."
+    "builtWith": "Thoughtfully engineered."
   },
   "impact": [
     {
@@ -454,5 +454,19 @@
       "targetId": "projects"
     }
   ],
-  "careerNote": "Joined HSBC through FDM in 2021. Became a permanent HSBC employee in September 2023, continuing on the Data Service Layer team."
+  "careerNote": "Joined HSBC through FDM in 2021. Became a permanent HSBC employee in September 2023, continuing on the Data Service Layer team.",
+  "skillOverview": [
+    "Java",
+    "Spring Boot",
+    "React",
+    "TypeScript",
+    "PostgreSQL",
+    "GCP",
+    "Docker",
+    "Jenkins",
+    "Spring AI",
+    "MCP",
+    "GitHub Actions",
+    "BigQuery"
+  ]
 }
