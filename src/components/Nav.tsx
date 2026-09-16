@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Menu, Pause, Play, X } from 'lucide-react'
 import { resume } from '@/data/resume'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 export function Nav({
   paused,
@@ -66,6 +67,7 @@ export function Nav({
           ))}
         </div>
         <div className="nav-actions">
+          <ThemeToggle />
           <button
             className="icon-button motion-control"
             type="button"

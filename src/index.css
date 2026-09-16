@@ -1975,3 +1975,110 @@ details[open] > summary > svg {
     font-size: 10px;
   }
 }
+
+.theme-control {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+}
+.theme-control button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.theme-control button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+:root[data-theme='dark'] {
+  --paper: #181c19;
+  --ink: #edf0e8;
+  --muted: #adb7a7;
+  --line: #3b4537;
+  color: var(--ink);
+  background: var(--paper);
+}
+[data-theme='dark'] .site-header {
+  background: #181c19f2;
+  border-color: var(--line);
+}
+[data-theme='dark'] .desktop-links a,
+[data-theme='dark'] .hero-title-second,
+[data-theme='dark'] .project-stage {
+  color: #bdcba8;
+}
+[data-theme='dark'] .brand-dot {
+  color: var(--lime);
+}
+[data-theme='dark'] .floating-tech {
+  background: #252c23;
+  border-color: #49553e;
+}
+[data-theme='dark'] .system-core,
+[data-theme='dark'] .button-lime,
+[data-theme='dark'] .work-card-0 {
+  --ink: #252923;
+}
+[data-theme='dark'] .button-dark:hover {
+  background: #d3ef80;
+}
+[data-theme='dark'] .journey-section,
+[data-theme='dark'] .skills-section {
+  background: #20261f;
+}
+[data-theme='dark'] .journey-mobile-index {
+  background: #20261ff5;
+}
+[data-theme='dark'] .timeline-node {
+  background: #20261f;
+}
+[data-theme='dark'] .timeline-team,
+[data-theme='dark'] .current-label,
+[data-theme='dark'] .cloud-word-1,
+[data-theme='dark'] .cloud-word-2,
+[data-theme='dark'] .cloud-word-4 {
+  color: #bdcba8;
+}
+[data-theme='dark'] .skill-filters button {
+  color: #bdcba8;
+}
+[data-theme='dark'] .skill-filters .selected {
+  background: var(--lime);
+  color: #252923;
+}
+[data-theme='dark'] .project-art {
+  background: #303a29;
+}
+[data-theme='dark'] .project-1 .project-art {
+  background: #293b3b;
+}
+[data-theme='dark'] .project-2 .project-art {
+  background: #3c3429;
+}
+[data-theme='dark'] .project-art > svg,
+[data-theme='dark'] .project-number,
+[data-theme='dark'] .project-art-label {
+  color: #c1cbb4;
+}
+[data-theme='dark'] .project-role,
+[data-theme='dark'] .toolkit-note {
+  color: var(--muted);
+}
+@media (max-width: 800px) {
+  .nav-contact {
+    display: none;
+  }
+  .nav .brand {
+    min-width: 44px;
+  }
+  .nav {
+    gap: 10px;
+  }
+}
