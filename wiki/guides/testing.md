@@ -33,7 +33,8 @@ mode or `npm run test:ci -- path/to/file.test.ts` for a focused run.
 
 Test meaningful behavior and failure boundaries: invalid dates/links/IDs,
 ordering ties, current-role selection, denied clipboard or storage access,
-theme updates, and effect cleanup. Do not add tests that duplicate markup or
+theme/motion preference updates, tall-card reading positions, and effect cleanup.
+Do not add tests that duplicate markup or
 merely verify a library. Follow the shared
 [testing workflow](../../ai/workflows/testing-quality.md).
 
@@ -46,6 +47,10 @@ short landscape viewport. Check:
 - No horizontal overflow, clipped copy, or fixed-navigation overlap.
 - Current appears only on the selected role; all date ranges stay readable.
 - Headings pin while their achievements scroll and release for the next entry.
+- On the stack experiment, each card's full text passes through the reading
+  area before fading; reverse scrolling restores it. Test unequal card heights,
+  narrow phones, direct fragment links from later chapters, and initial deep
+  links. Reduced motion, short screens and print must reveal all highlights.
 - Light/dark themes, saved and system preferences, and readable contrast.
 - Reduced motion, the pause control, keyboard navigation, mobile menu, section
   links, skill filters, and contact actions.

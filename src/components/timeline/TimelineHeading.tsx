@@ -1,3 +1,6 @@
+import type { RefObject } from 'react'
+import { motion, useScroll, useTransform } from 'motion/react'
+import { useReducedMotionPreference } from '@/hooks/useReducedMotionPreference'
 import type { TimelineEntry } from '@/data/resume'
 import { formatCareerDate } from '@/lib/dates'
 import { categoryIcons } from '@/components/timeline/category-icons'
@@ -16,20 +19,39 @@ type HeadingEntry = Pick<
 >
 
 export function TimelineHeading({
+  ref,
+  chapterRef,
   entry,
   index,
   isCurrent,
   categoryLabel,
 }: {
+  ref: RefObject<HTMLElement | null>
+  chapterRef: RefObject<HTMLLIElement | null>
   entry: HeadingEntry
   index: number
   isCurrent: boolean
   categoryLabel: string
 }) {
+  const reduced = useReducedMotionPreference()
+  const { scrollYProgress } = useScroll({
+    target: chapterRef,
+    offset: ['start end', 'end start'],
+  })
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.08, 0.91, 1],
+    [0, 1, 1, 0],
+  )
+  const y = useTransform(scrollYProgress, [0, 0.08, 0.91, 1], [48, 0, 0, -32])
   const Icon = categoryIcons[entry.category]
   const stage = isCurrent ? 'Current role' : entry.stage
   return (
-    <header className="chapter-heading">
+    <motion.header
+      ref={ref}
+      className="chapter-heading"
+      style={reduced ? { opacity: 1, y: 0 } : { opacity, y }}
+    >
       <div className="chapter-date-row">
         <p className="chapter-date mono">
           <time dateTime={entry.startDate}>
@@ -71,6 +93,6 @@ export function TimelineHeading({
       <h3 id={`${entry.id}-title`}>{entry.title}</h3>
       {entry.team && <p className="chapter-team">{entry.team}</p>}
       {entry.location && <p className="chapter-location">{entry.location}</p>}
-    </header>
+    </motion.header>
   )
 }

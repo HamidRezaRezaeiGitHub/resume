@@ -33,8 +33,11 @@ describes the static-assets Worker and environment routes.
    content module exposes typed data; Zod is not shipped to the browser.
 3. `src/lib/dates.ts` and `src/lib/timeline.ts` format and order entries.
 4. `Timeline` resolves data and order. `TimelineItem` composes each chapter;
-   `TimelineHeading` renders its heading and `TimelineAchievement` owns
-   achievement motion. Children receive explicit props.
+   `TimelineHeading` renders its heading and chapter transition.
+   `TimelineAchievements` coordinates the highlight deck, `useTimelineDeck`
+   measures layout, and `TimelineAchievement` renders each animated card.
+   `src/lib/timeline-deck.ts` owns pure reading-position calculations.
+   Children receive explicit props.
 5. CSS controls reading density and responsive layout. Motion changes
    presentation without creating artificial reading distance.
 

@@ -1,9 +1,10 @@
 import { useRef } from 'react'
-import { motion, useScroll, useReducedMotion } from 'motion/react'
+import { motion, useScroll } from 'motion/react'
+import { useReducedMotionPreference } from '@/hooks/useReducedMotionPreference'
 import { ArrowUpRight } from 'lucide-react'
 import type { TimelineEntry } from '@/data/resume'
 import { TimelineHeading } from '@/components/timeline/TimelineHeading'
-import { TimelineAchievement } from '@/components/timeline/TimelineAchievement'
+import { TimelineAchievements } from '@/components/timeline/TimelineAchievements'
 import { TechnologyList } from '@/components/timeline/TechnologyList'
 
 export function TimelineItem({
@@ -18,7 +19,8 @@ export function TimelineItem({
   categoryLabel: string
 }) {
   const ref = useRef<HTMLLIElement>(null)
-  const reduced = useReducedMotion()
+  const headingRef = useRef<HTMLElement>(null)
+  const reduced = useReducedMotionPreference()
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start center', 'end center'],
@@ -34,6 +36,8 @@ export function TimelineItem({
       </div>
       <article className="chapter-grid" aria-labelledby={`${entry.id}-title`}>
         <TimelineHeading
+          ref={headingRef}
+          chapterRef={ref}
           entry={entry}
           index={index}
           isCurrent={isCurrent}
@@ -62,14 +66,11 @@ export function TimelineItem({
             )}
           </div>
           {entry.highlights && (
-            <ul
-              className="chapter-achievements"
-              aria-label={`${entry.team ?? entry.title} achievements`}
-            >
-              {entry.highlights.map((item, i) => (
-                <TimelineAchievement item={item} index={i} key={item.id} />
-              ))}
-            </ul>
+            <TimelineAchievements
+              items={entry.highlights}
+              label={`${entry.team ?? entry.title} achievements`}
+              headingRef={headingRef}
+            />
           )}
         </div>
       </article>

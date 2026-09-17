@@ -1,5 +1,20 @@
 # Wiki log
 
+## [2026-09-16] update | Three-way animation comparison
+
+Deployed the original master `f9d2152` to production (successful run
+[35156531863](https://github.com/HamidRezaRezaeiGitHub/resume/actions/runs/35156531863)),
+then merged the first slide/tilt experiment `525105d` into master for UAT
+(successful run [35157020031](https://github.com/HamidRezaRezaeiGitHub/resume/actions/runs/35157020031)).
+Both live versions passed phone smoke checks. This supersedes the earlier
+entry's pending-approval status for the first experiment.
+
+The new `codex/timeline-scene-transitions` DEV experiment uses stacked highlight
+cards that shrink/fade away, chapter heading transitions, and outlined year
+labels. Documented geometry ownership, tall-card reading behavior, direct-link
+restoration, and static reduced-motion/short-screen/print fallbacks. Resume
+content and its JSON contract are unchanged.
+
 ## [2026-09-16] update | DEV highlight animation and terminology
 
 Documented the feature-branch experiment with staggered slide/tilt reveals,

@@ -1,57 +1,53 @@
-import { useRef } from 'react'
-import { motion, useScroll, useReducedMotion, useTransform } from 'motion/react'
+import { motion, useTransform, type MotionValue } from 'motion/react'
 import type { TimelineHighlight } from '@/data/resume'
+import type { DeckFrame } from '@/lib/timeline-deck'
 import { formatCareerDate } from '@/lib/dates'
 import { TechnologyList } from '@/components/timeline/TechnologyList'
 
 export function TimelineAchievement({
   item,
   index,
+  count,
+  distance,
+  frame,
 }: {
   item: TimelineHighlight
   index: number
+  count: number
+  distance: MotionValue<number>
+  frame?: DeckFrame
 }) {
-  const ref = useRef<HTMLLIElement>(null)
-  const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.28, 0.82, 1],
-    [0.35, 1, 1, 0.5],
+  const progress = useTransform(distance, (value) =>
+    frame ? (value - frame.start) / frame.travel : 0,
   )
-  // Separate entrance windows make the heading lead the supporting copy.
-  // The static li owns measurement so animated children cannot shift the range.
-  const x = useTransform(scrollYProgress, [0, 0.3, 0.82, 1], [48, 0, 0, -16])
-  const rotateY = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.82, 1],
-    [-9, 0, 0, 3],
-  )
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.82, 1],
-    [0.94, 1, 1, 0.98],
-  )
-  const headingY = useTransform(scrollYProgress, [0.03, 0.25], [35, 0])
-  const detailY = useTransform(scrollYProgress, [0.08, 0.36], [28, 0])
-  const detailOpacity = useTransform(scrollYProgress, [0.08, 0.34], [0.45, 1])
-  const lineScale = useTransform(scrollYProgress, [0.03, 0.36], [0, 1])
+  const opacity = useTransform(progress, [0, 0.35, 0.95], [1, 1, 0])
+  const scale = useTransform(progress, [0, 1], [1, 0.9])
+  const y = useTransform(progress, [0, 1], [0, -32])
+  const rule = useTransform(progress, [0, 1], [1, 0])
+
   return (
-    <li ref={ref} id={item.id} className="chapter-story">
-      <motion.span
-        className="story-rule"
-        aria-hidden="true"
-        style={reduced ? undefined : { scaleX: lineScale }}
-      />
+    <li
+      id={item.id}
+      className="chapter-story"
+      style={frame ? { top: frame.top } : undefined}
+    >
       <motion.div
         className="story-content"
-        style={reduced ? undefined : { opacity, x, rotateY, scale }}
+        style={frame ? { opacity, scale, y } : { opacity: 1, scale: 1, y: 0 }}
       >
+        <motion.span
+          className="story-rule"
+          aria-hidden="true"
+          style={{ scaleX: frame ? rule : 1 }}
+        />
         <p className="story-number mono">
-          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <span aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+            <span className="story-count">
+              {' '}
+              / {String(count).padStart(2, '0')}
+            </span>
+          </span>
           {item.date && (
             <time dateTime={item.date}>{formatCareerDate(item.date)}</time>
           )}
@@ -62,25 +58,16 @@ export function TimelineAchievement({
             <span>{item.metric.label}</span>
           </div>
         )}
-        <div className="story-title-reveal">
-          <motion.h4 style={reduced ? undefined : { y: headingY }}>
-            {item.title}
-          </motion.h4>
-        </div>
-        <motion.div
-          className="story-support"
-          style={reduced ? undefined : { y: detailY, opacity: detailOpacity }}
-        >
-          <p className="story-body">{item.body}</p>
-          {item.details && (
-            <ul className="story-details">
-              {item.details.map((detail) => (
-                <li key={detail}>{detail}</li>
-              ))}
-            </ul>
-          )}
-          {item.tags && <TechnologyList items={item.tags} />}
-        </motion.div>
+        <h4>{item.title}</h4>
+        <p className="story-body">{item.body}</p>
+        {item.details && (
+          <ul className="story-details">
+            {item.details.map((detail) => (
+              <li key={detail}>{detail}</li>
+            ))}
+          </ul>
+        )}
+        {item.tags && <TechnologyList items={item.tags} />}
       </motion.div>
     </li>
   )

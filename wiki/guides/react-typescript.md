@@ -44,12 +44,25 @@ release at the end of their chapter and remain usable on short screens.
 Use content-driven spacing; do not add viewport-height padding to make effects
 last longer. Scroll motion should not trap navigation or gate access to copy.
 
-On the `codex/timeline-highlight-motion` DEV experiment, highlights slide and
-tilt into place, with the heading leading the supporting text and an accent
-rule drawing across the row. A static list item measures scroll progress;
-only its children transform. All layers settle before the main reading area,
-reverse naturally with scrolling, and become static for reduced motion/print.
-This experiment does not imply approval to merge into the accepted UAT design.
+The `codex/timeline-scene-transitions` experiment uses a stack of sticky cards.
+Each highlight holds a reading position, then scales down and fades behind the
+next. Headings rise into view and recede at chapter boundaries; outlined year
+labels distinguish the desktop treatment. Card spacing follows content height.
+
+`TimelineAchievements` measures the static list's scroll progress.
+`useTimelineDeck` observes card/heading sizes; the pure `layoutTimelineDeck`
+helper computes reading positions. Only the card's inner content transforms.
+Tall cards expose their bottom before their exit starts. Fragment links target
+the original card position rather than its already-sticky position. Observers
+and listeners clean up when unmounted. Reduced motion, screens at most 600px
+high, and print use normal card flow with all text visible.
+The timeline subscribes to live system motion-preference changes and explicitly
+resets animated values when entering the static fallback.
+
+For the September 16 comparison, production preserves the original animation
+at `f9d2152`; master/UAT contains the first slide/tilt experiment at `525105d`.
+The new stack is isolated on its feature branch for DEV review. Deployment
+routes and verification are documented in the [deployment guide](../operations/ci-cd-and-deployment.md).
 
 ## Accessibility and phone review
 
