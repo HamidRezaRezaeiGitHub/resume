@@ -78,6 +78,13 @@ reusable piece. A **field** is a named JSON property; `[]` means an item in a li
 | Contact invitation            | Contact section     | `sections.contact`, `profile.email`, `links[]`               | `Contact`                    |
 | Copyright and build credit    | Footer              | `profile.name`, `footer.builtWith`                           | `Footer`                     |
 
+The website-style hero adds `hero.eyebrow` (the greeting),
+`hero.experienceLabel` and `hero.contactLabel` (call-to-action button text).
+Identity and summary still belong to `profile`. In Let's Talk,
+`sections.contact.eyebrow` is the short invitation above the title;
+`emailLabel` names the email action. These labels remain editable in JSON.
+The previous decorative hero schema is not used.
+
 Experience entries have `title` (job title), `organization`, optional `team`,
 and `location`. Projects have `title` (project name), `role`, `stage`, and
 optional `links[]`. Education has `title` (degree), `field`, `organization`,
@@ -89,7 +96,7 @@ proof-of-concept bullet. IDs must be unique across all sections and cannot colli
 with section anchors or generated heading IDs. Lists must not contain duplicate
 skills or links; category names and navigation destinations are unique.
 
-The old `timeline`, `categories`, `hero`, `currentRoleId`, `skillOverview`
+The old `timeline`, `categories`, `currentRoleId`, `skillOverview`
 and nested highlight/metric structures were replaced by this section contract.
 Update JSON, schema, components, tests and this guide together when it evolves.
 

@@ -1,5 +1,13 @@
 # Wiki log
 
+## 2026-09-23 — update — Website-style hero and contact
+
+Refined the page bookends with a split hero, larger name typography, a soft
+background wash, experience/contact calls to action, and a contrasting Let's
+Talk band. The four middle resume sections keep their compact layout and content.
+New labels live in JSON; themes, phone navigation, clipboard fallback and print
+remain supported. Updated the component/content guide for the new fields.
+
 ## 2026-09-23 — update — Resume sections and minimal presentation
 
 Replaced the unified timeline with Summary, Experiences, Projects, Skills,

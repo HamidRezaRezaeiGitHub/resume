@@ -69,12 +69,21 @@ export const resumeContentSchema = z
       email: z.email(),
       links,
     }),
+    hero: z.strictObject({
+      eyebrow: text,
+      experienceLabel: text,
+      contactLabel: text,
+    }),
     sections: z.strictObject({
       experience: heading,
       projects: heading,
       skills: heading,
       education: heading,
-      contact: heading.extend({ description: text, emailLabel: text }),
+      contact: heading.extend({
+        eyebrow: text,
+        description: text,
+        emailLabel: text,
+      }),
     }),
     experiences: z
       .array(

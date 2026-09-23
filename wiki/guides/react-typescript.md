@@ -28,8 +28,11 @@ Use the Node version in `.nvmrc`, then `npm ci` and `npm run dev`.
 
 The current design is a minimal resume with Summary, Experiences, Projects,
 Skills, Education and Let's Talk. Neutral theme tokens, serif display headings,
-plain bullets, compact spacing and thin rules establish hierarchy. No category
-colors, sticky entry headings, floating skill cloud or scroll-linked reveals.
+plain bullets, compact spacing and thin rules establish hierarchy in the middle
+sections. The hero uses larger name typography, a soft background wash and direct
+experience/contact calls to action. Let's Talk closes with a contrasting green
+band, large heading and email action. Their styles are scoped to those sections.
+No category colors, sticky entry headings, skill cloud or scroll-linked reveals.
 
 The fixed navigation exposes all four middle-section links on every viewport.
 On phones the links occupy a second row; there is no hamburger menu. Native

@@ -54,7 +54,8 @@
     "contact": {
       "title": "Let’s Talk",
       "description": "I’m interested in backend, full-stack, and senior engineering roles. If you think we could work well together, I’d like to hear from you.",
-      "emailLabel": "Get in touch"
+      "emailLabel": "Send an email",
+      "eyebrow": "Have a role or project in mind?"
     }
   },
   "experiences": [
@@ -338,5 +339,10 @@
   ],
   "footer": {
     "builtWith": "React · TypeScript · Motion"
+  },
+  "hero": {
+    "eyebrow": "Hi, I’m",
+    "experienceLabel": "Explore my experience",
+    "contactLabel": "Let’s talk"
   }
 }

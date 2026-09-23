@@ -5,7 +5,7 @@
 Hamid Rezaei's personal resume website is a static React application for
 recruiters and hiring managers. It presents a minimal, mobile-friendly
 resume with separate experience, project, skill and education sections, plus
-a personal summary and contact links in light and dark modes.
+a distinctive hero and contact section in light and dark modes.
 This wiki owns durable project knowledge. Local task state lives in ignored
 `requirements/` workspaces; shared agent workflows live in `ai/`.
 

@@ -14,6 +14,13 @@ describe('resume sections', () => {
     expect(screen.getByText(resume.profile.summary)).not.toHaveTextContent(
       'HSBC',
     )
+    const hero = screen.getByRole('region', { name: resume.profile.name })
+    expect(
+      within(hero).getByRole('link', { name: resume.hero.experienceLabel }),
+    ).toHaveAttribute('href', '#experience')
+    expect(
+      within(hero).getByRole('link', { name: resume.hero.contactLabel }),
+    ).toHaveAttribute('href', '#contact')
     expect(
       Array.from(document.querySelectorAll('main > section')).map(
         (section) => section.id,
