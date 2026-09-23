@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ArrowUpRight, Check, Copy, MapPin } from 'lucide-react'
 import { resume } from '@/data/resume'
+import { ResumeDownload } from '@/components/ResumeDownload'
 
 export function Contact() {
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>(
@@ -32,13 +33,16 @@ export function Contact() {
             <p className="contact-description">
               {resume.sections.contact.description}
             </p>
-            <a
-              className="contact-button"
-              href={`mailto:${resume.profile.email}`}
-            >
-              {resume.sections.contact.emailLabel}
-              <ArrowUpRight size={22} aria-hidden="true" />
-            </a>
+            <div className="contact-actions">
+              <a
+                className="contact-button"
+                href={`mailto:${resume.profile.email}`}
+              >
+                {resume.sections.contact.emailLabel}
+                <ArrowUpRight size={22} aria-hidden="true" />
+              </a>
+              <ResumeDownload />
+            </div>
           </div>
         </div>
         <div className="contact-details">

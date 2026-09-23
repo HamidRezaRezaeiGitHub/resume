@@ -1,4 +1,7 @@
+/// <reference types="node" />
 import { describe, expect, it } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import rawResumeContent from '@/data/resume.json'
 import { resumeContentSchema } from '@/data/resume.schema'
 
@@ -6,6 +9,33 @@ const editableCopy = () =>
   resumeContentSchema.parse(structuredClone(rawResumeContent))
 
 describe('section-based resume content', () => {
+  it('ships a real PDF for every configured download', () => {
+    for (const option of editableCopy().downloads.options) {
+      const file = readFileSync(
+        resolve(import.meta.dirname, '../../public', option.path.slice(1)),
+      )
+      expect(file.subarray(0, 5).toString()).toBe('%PDF-')
+    }
+  })
+  it.each([
+    '/resumes/../secret.pdf',
+    'https://example.com/resume.pdf',
+    '//example.com/resume.pdf',
+    '/resumes/resume.html',
+    '/resumes/test.pdf?draft=true',
+  ])('rejects an unsafe or unsupported download path %s', (path) => {
+    const content = editableCopy()
+    content.downloads.options[0].path = path
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it('requires separate compact and long documents', () => {
+    const content = editableCopy()
+    content.downloads.options[1].path = content.downloads.options[0].path
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    content.downloads.options[1].path = '/resumes/hamid-rezaei-resume-long.pdf'
+    content.downloads.options[1].id = content.downloads.options[0].id
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
   it('accepts the published resume', () => {
     expect(resumeContentSchema.safeParse(rawResumeContent).success).toBe(true)
   })

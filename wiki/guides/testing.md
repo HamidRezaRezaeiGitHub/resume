@@ -71,6 +71,12 @@ short landscape viewport. Check:
 - No idle motion or node dots; reduced motion disables interaction transitions.
 - Tooltip hover/focus, Escape dismissal, contrast and clipping on narrow screens.
 - Print shows all nine skill groups instead of the interactive graph; contact still works.
+- Résumé chooser from Hero and Contact: both choices, native keyboard containment,
+  Escape/close/outside dismissal, focus return, no page-scroll lock after closing.
+  Check desktop anchoring, phone bottom sheet, 320px and short landscape fit.
+- Download both PDFs, verify filenames, PDF bytes, content type and attachment
+  headers in Wrangler/deployed environments. Vite preview does not apply headers.
+  Confirm reduced-motion and print hide/disable the relevant download UI.
 - Browser console errors and broken assets.
 
 Use available browser tooling; do not require a script from someone's `/tmp`

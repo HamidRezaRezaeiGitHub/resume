@@ -1,0 +1,154 @@
+.resume-download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 50px;
+  padding: 10px 0;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 13px;
+}
+.resume-download-button:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.contact-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 24px;
+}
+.contact-actions .contact-button {
+  margin-top: 0;
+}
+.contact-actions .resume-download-button {
+  color: var(--contact-ink);
+}
+.resume-download-dialog {
+  position: fixed;
+  inset: var(--download-top, 16px) auto auto var(--download-left, 16px);
+  width: min(360px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 18px 70px #00000024;
+}
+.resume-download-dialog[open] {
+  animation: resume-download-in 180ms ease-out;
+}
+.resume-download-dialog::backdrop {
+  background: #00000028;
+}
+.resume-download-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.resume-download-heading h2 {
+  font: inherit;
+  font-size: 17px;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+}
+.resume-download-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  margin: -8px -8px -8px 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--muted);
+  background: transparent;
+}
+.resume-download-close:hover {
+  background: var(--surface);
+  color: var(--ink);
+}
+.resume-download-options {
+  display: grid;
+  gap: 10px;
+}
+.resume-download-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 80px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition:
+    background 150ms,
+    border-color 150ms;
+}
+.resume-download-option:hover,
+.resume-download-option:focus-visible {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+.resume-download-option > svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.resume-download-option > span {
+  display: grid;
+  gap: 5px;
+  flex: 1;
+}
+.resume-download-option strong {
+  font-size: 15px;
+  font-weight: 550;
+}
+.resume-download-option span span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+@keyframes resume-download-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 600px) {
+  .resume-download-dialog {
+    inset: auto 0 0;
+    width: 100%;
+    max-height: calc(100dvh - 20px);
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+    border-radius: 20px 20px 0 0;
+    border-bottom: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .resume-download-dialog[open] {
+    animation: none;
+  }
+  .resume-download-option {
+    transition: none;
+  }
+}
+@media print {
+  .resume-download-button,
+  .resume-download-dialog,
+  .resume-download-dialog::backdrop {
+    display: none !important;
+  }
+}

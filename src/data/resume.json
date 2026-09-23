@@ -316,8 +316,7 @@
   ],
   "hero": {
     "eyebrow": "Hi, I’m",
-    "experienceLabel": "Explore my experience",
-    "contactLabel": "Let’s talk"
+    "experienceLabel": "Explore my experience"
   },
   "skills": [
     {
@@ -1034,5 +1033,24 @@
       "source": "jira",
       "target": "confluence"
     }
-  ]
+  ],
+  "downloads": {
+    "buttonLabel": "Download résumé",
+    "title": "Choose a version",
+    "closeLabel": "Close résumé downloads",
+    "options": [
+      {
+        "id": "compact",
+        "label": "Compact",
+        "description": "1 page · PDF",
+        "path": "/resumes/hamid-rezaei-resume-compact.pdf"
+      },
+      {
+        "id": "long",
+        "label": "Long",
+        "description": "All experiences · PDF",
+        "path": "/resumes/hamid-rezaei-resume-long.pdf"
+      }
+    ]
+  }
 }

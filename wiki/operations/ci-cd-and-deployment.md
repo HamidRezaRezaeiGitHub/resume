@@ -3,7 +3,7 @@ title: CI and deployment
 domain: operations
 tags: [github-actions, cloudflare, deployment]
 status: current
-last_updated: 2026-09-16
+last_updated: 2026-09-23
 ---
 
 # CI and deployment
@@ -52,3 +52,15 @@ For delivery changes, inspect current workflow and Wrangler configuration,
 check current official provider documentation when necessary, and follow
 [protected boundaries](../../ai/workflows/protected-boundaries.md). Preserve
 environment separation and validate the intended commit before release.
+
+## PDF download assets
+
+Vite copies `public/resumes/*.pdf` and `public/_headers` into `dist`. Cloudflare
+serves the PDFs directly with `application/pdf`, `Content-Disposition: attachment`
+and the original filename. Revalidation (`max-age=0, must-revalidate`) keeps stable
+URLs current after a replacement. No Worker code, R2 bucket or API is needed.
+
+Vite preview serves the files but does not apply Cloudflare's `_headers` rules.
+Use Wrangler local preview or the deployed environment to verify HTTP headers.
+After release, check both PDF responses and compare their bytes with the source;
+a missing path may otherwise return the SPA HTML fallback with status 200.

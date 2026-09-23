@@ -233,8 +233,7 @@ h1 {
   flex-wrap: wrap;
   margin-top: 28px;
 }
-.hero-primary,
-.hero-secondary {
+.hero-primary {
   display: inline-flex;
   align-items: center;
   gap: 14px;
@@ -249,13 +248,6 @@ h1 {
 }
 .hero-primary:hover {
   background: var(--accent);
-}
-.hero-secondary {
-  color: var(--ink);
-}
-.hero-secondary:hover {
-  text-decoration: underline;
-  text-underline-offset: 5px;
 }
 .hero-actions svg,
 .contact-button svg {
@@ -614,9 +606,6 @@ h3 {
   .hero-primary {
     padding-inline: 14px;
     gap: 10px;
-  }
-  .hero-secondary {
-    gap: 7px;
   }
   .hero-bottom {
     align-items: flex-start;

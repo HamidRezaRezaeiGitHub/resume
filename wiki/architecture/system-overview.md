@@ -49,6 +49,12 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
    motion loop runs.
    Observers, pointer capture and tooltip listeners clean up appropriately.
 
+7. `ResumeDownload` is reused in Hero and Contact. Its native modal dialog appears
+   beside the trigger on desktop and as a bottom sheet on phones. Native links
+   download authored PDFs from `public/resumes/`; `public/_headers` controls their
+   attachment response and cache revalidation. The dialog is portalled to body
+   for consistent themes and top-layer rendering, with scoped download CSS.
+
 The [content guide](../guides/resume-content.md) owns fields and publication rules.
 
 ## Source map

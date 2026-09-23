@@ -1,5 +1,13 @@
 # Wiki log
 
+## 2026-09-23 — update — Résumé downloads
+
+Added the shared Compact/Long chooser to Hero and Let's Talk. Desktop uses an
+anchored native dialog; phones use a bottom sheet. User-supplied PDFs are preserved
+unchanged in root public/resumes, with attachment and cache-revalidation headers.
+JSON/schema own the download labels and paths; validation checks published assets.
+Documented keyboard behavior, file replacement and deployment verification.
+
 ## 2026-09-23 — update — Minimal Skills graph
 
 Removed node tiles, dropdown, selection/neighbor panel and explanatory legend.

@@ -1,0 +1,5 @@
+/resumes/*.pdf
+  Content-Type: application/pdf
+  Content-Disposition: attachment; filename=":splat.pdf"
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff

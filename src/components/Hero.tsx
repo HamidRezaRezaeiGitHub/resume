@@ -1,5 +1,6 @@
 import { ArrowDownRight, ArrowUpRight, MapPin } from 'lucide-react'
 import { resume } from '@/data/resume'
+import { ResumeDownload } from '@/components/ResumeDownload'
 
 export function Hero() {
   return (
@@ -25,10 +26,7 @@ export function Hero() {
                 {resume.hero.experienceLabel}
                 <ArrowDownRight size={19} aria-hidden="true" />
               </a>
-              <a className="hero-secondary" href="#contact">
-                {resume.hero.contactLabel}
-                <ArrowUpRight size={17} aria-hidden="true" />
-              </a>
+              <ResumeDownload />
             </div>
           </div>
         </div>

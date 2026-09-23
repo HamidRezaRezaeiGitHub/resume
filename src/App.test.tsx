@@ -20,8 +20,8 @@ describe('resume sections', () => {
       within(hero).getByRole('link', { name: resume.hero.experienceLabel }),
     ).toHaveAttribute('href', '#experience')
     expect(
-      within(hero).getByRole('link', { name: resume.hero.contactLabel }),
-    ).toHaveAttribute('href', '#contact')
+      within(hero).getByRole('button', { name: resume.downloads.buttonLabel }),
+    ).toHaveAttribute('aria-haspopup', 'dialog')
     expect(
       Array.from(document.querySelectorAll('main > section')).map(
         (section) => section.id,

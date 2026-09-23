@@ -30,8 +30,8 @@ The current design is a minimal resume with Summary, Experiences, Projects,
 Skills, Education and Let's Talk. Neutral theme tokens, serif display headings,
 plain bullets, compact spacing and thin rules establish hierarchy in the middle
 sections. The hero uses larger name typography, a soft background wash and direct
-experience/contact calls to action. Let's Talk closes with a contrasting green
-band, large heading and email action. Their styles are scoped to those sections.
+experience/download calls to action. Let's Talk closes with a contrasting green
+band, large heading, email action and a second résumé download trigger. Their styles are scoped to those sections.
 No category colors, sticky entry headings or scroll-linked reveals. Skills is the
 intentional interactive exception to the otherwise compact reading layout.
 
@@ -97,3 +97,13 @@ listeners. Skills inherits the same container width as the other sections.
 
 The List/print view derives nine PDF groups from graph category mappings, with
 no repeated skill within one group. Never require gestures to access resume facts.
+
+## Résumé chooser
+
+`ResumeDownload` owns a native `<dialog>` with labelled Compact/Long download
+links. Desktop placement follows the trigger and flips above it when space is
+limited; CSS turns it into a bottom sheet at 600px. Native modality handles
+keyboard containment, Escape and focus restoration. Close button, complete
+outside click and download selection dismiss it. Root scroll locking and resize
+listeners are restored on close/unmount. Opening motion respects reduced motion;
+print hides triggers, dialog and backdrop. Use the existing theme tokens.

@@ -73,7 +73,27 @@ export const resumeContentSchema = z
     hero: z.strictObject({
       eyebrow: text,
       experienceLabel: text,
-      contactLabel: text,
+    }),
+    downloads: z.strictObject({
+      buttonLabel: text,
+      title: text,
+      closeLabel: text,
+      options: z
+        .array(
+          z.strictObject({
+            id: z.enum(['compact', 'long']),
+            label: text,
+            description: text,
+            path: text.regex(/^\/resumes\/[a-z0-9]+(?:-[a-z0-9]+)*\.pdf$/),
+          }),
+        )
+        .length(2)
+        .refine(
+          (options) =>
+            new Set(options.map((option) => option.id)).size === 2 &&
+            new Set(options.map((option) => option.path)).size === 2,
+          'Provide distinct compact and long PDF downloads',
+        ),
     }),
     sections: z.strictObject({
       experience: heading,

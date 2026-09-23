@@ -112,7 +112,8 @@ reusable piece. A **field** is a named JSON property; `[]` means an item in a li
 | Copyright                     | Footer              | `profile.name`                                               | `Footer`                     |
 
 The website-style hero adds `hero.eyebrow` (the greeting),
-`hero.experienceLabel` and `hero.contactLabel` (call-to-action button text).
+`hero.experienceLabel` (experience button text). The former `hero.contactLabel`
+was replaced by the shared résumé download action.
 Identity and summary still belong to `profile`. In Let's Talk,
 `sections.contact.eyebrow` is the short invitation above the title;
 `emailLabel` names the email action. These labels remain editable in JSON.
@@ -150,3 +151,18 @@ click pins it; blank-space click or Escape clears it. The earlier pointer parall
 and ambient drift were removed at the user's request.
 
 Example: “Connect Vitest to Backend as well, and make the hovered neighborhood easier to see.”
+
+## Downloadable PDFs
+
+`downloads` owns the shared hero/contact button label, dialog title, close label,
+and two `options`: `compact` and `long`. Each option has `label`, `description`
+and a root-relative `path` under `/resumes/` ending in `.pdf`. Paths and IDs must
+be distinct. Compact is the one-page résumé; Long includes the full experience
+version. These are authored PDFs, independent of the website's JSON content.
+
+Store the published files in **root `public/resumes/`**, never `src/public/`:
+`hamid-rezaei-resume-compact.pdf` and `hamid-rezaei-resume-long.pdf`. Replace the
+appropriate file and deploy when updating it; stable names preserve download URLs.
+Keep editable source documents outside the deployed public directory. Verify
+Compact remains one page and review both PDFs before publication. Content tests
+check that every configured path resolves to a real PDF asset before dev/build.
