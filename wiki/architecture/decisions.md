@@ -54,16 +54,22 @@ Local adaptations and upgrade rules live in the [pack guide](../guides/ai-pack.m
 ## D-006: An explorable Skills network
 
 On September 23 the user requested an explorable graph while preserving the
-accepted resume layout. Fifteen individual topic hubs map to the PDF's nine
-combined groups; a canonical technology can connect to multiple topics.
-Connection count controls label size, never proficiency. A bounded D3 layout and
-rectangular collision pass run once per module load; SVG renders the result.
-No individual node positions are manually authored.
+accepted resume layout. Content still maps topics and technologies to the PDF's
+nine groups, but the network treats every keyword as a peer. Explicit ecosystem
+relationships supplement category membership: Jenkins–Groovy, Backend–APIs,
+Java–Spring and related frameworks, languages, delivery and data/cloud tools.
 
-The user refined the initial version to remove ambient drift and pointer parallax.
-Mouse hover now highlights the direct neighborhood without moving it. Node drag,
-background pan, pinch zoom and persistent selection are distinct interactions.
+A single undirected adjacency map drives every edge, highlight, neighbor list and
+font size. The shared square-root degree scale has no proficiency weights or
+named-node overrides. Label types/counts are not displayed. A bounded D3 layout
+uses links and common seeds instead of fixed category anchors, then resolves label
+collisions. No individual positions are manually authored. The simulation runs
+once; it does not introduce idle motion.
+
+Mouse hover highlights the direct neighborhood without moving it. Node drag,
+background pan, pinch zoom and persistent selection remain distinct interactions.
 Initial/resize views fit the complete graph, using the normal section width.
 Toolbar tooltips explain controls. Touch capture stays opt-in; a deduplicated
-list and print view preserve scanning and accessible alternatives. Production
-promotion still requires fresh explicit user approval; changes go to DEV/UAT.
+list and print view preserve scanning and accessible alternatives. The user
+explicitly approved publishing this connected graph to all environments from
+master. Future production changes still need their own authorized release scope.

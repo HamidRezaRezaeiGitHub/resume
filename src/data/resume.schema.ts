@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { skillConnections } from './skills'
 
 const text = z.string().trim().min(1)
 const texts = z
@@ -119,6 +120,9 @@ export const resumeContentSchema = z
     skillCategories: z
       .array(z.strictObject({ id: anchorId, title: text, groupId: anchorId }))
       .min(1),
+    skillRelationships: z.array(
+      z.strictObject({ source: anchorId, target: anchorId }),
+    ),
     skills: z
       .array(z.strictObject({ id: anchorId, label: text, categories: texts }))
       .min(1),
@@ -211,6 +215,32 @@ export const resumeContentSchema = z
           })
       })
     })
+    const edgeIds = new Set<string>()
+    const membershipCount = content.skills.reduce(
+      (count, skill) => count + skill.categories.length,
+      0,
+    )
+    skillConnections(content.skills, content.skillRelationships).forEach(
+      ({ source, target }, index) => {
+        const key = [source, target].sort().join(':')
+        if (
+          !graphIds.has(source) ||
+          !graphIds.has(target) ||
+          source === target ||
+          edgeIds.has(key)
+        )
+          context.addIssue({
+            code: 'custom',
+            message:
+              'Relationships need distinct existing nodes and unique undirected pairs',
+            path:
+              index >= membershipCount
+                ? ['skillRelationships', index - membershipCount]
+                : ['skills'],
+          })
+        edgeIds.add(key)
+      },
+    )
     content.skillCategories.forEach((category, i) => {
       if (!groupIds.has(category.groupId))
         context.addIssue({

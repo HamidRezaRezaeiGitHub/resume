@@ -1,16 +1,17 @@
 import {
   forceCollide,
   forceLink,
+  forceManyBody,
   forceSimulation,
   forceX,
   forceY,
 } from 'd3-force'
 import type { ResumeContent } from '@/data/resume'
+import { skillConnections } from '@/data/skills'
 
 export interface GraphNode {
   id: string
   label: string
-  kind: 'category' | 'skill'
   connections: string[]
   fontSize: number
   width: number
@@ -46,16 +47,14 @@ export const MAX_ZOOM = 2
 function node(
   id: string,
   label: string,
-  kind: GraphNode['kind'],
   connections: string[],
   x: number,
   y: number,
 ): GraphNode {
-  const fontSize = 18 + 4 * Math.log2(connections.length + 1)
+  const fontSize = 16 + 7 * Math.sqrt(connections.length)
   return {
     id,
     label,
-    kind,
     connections,
     fontSize,
     width: label.length * fontSize * 0.59 + 32,
@@ -68,43 +67,31 @@ function node(
 export function buildSkillsGraph(
   groups: ResumeContent['skillCategories'],
   skills: ResumeContent['skills'],
+  relationships: ResumeContent['skillRelationships'],
 ): SkillsGraph {
-  const hubs = groups.map((group, i) => {
-    const angle = (i * Math.PI * 2) / groups.length - Math.PI / 2
+  const links = skillConnections(skills, relationships)
+  const labels = [
+    ...groups.map((group) => ({ id: group.id, label: group.title })),
+    ...skills.map(({ id, label }) => ({ id, label })),
+  ]
+  const adjacency = new Map(labels.map(({ id }) => [id, new Set<string>()]))
+  for (const { source, target } of links) {
+    adjacency.get(source)!.add(target)
+    adjacency.get(target)!.add(source)
+  }
+  // All nodes start with the same deterministic seed pattern. Relationships,
+  // not topic anchors or hand-authored coordinates, shape the neighborhoods.
+  const nodes = labels.map(({ id, label }, i) => {
+    const angle = i * Math.PI * (3 - Math.sqrt(5))
+    const radius = 55 * Math.sqrt(i + 1)
     return node(
-      group.id,
-      group.title,
-      'category',
-      skills
-        .filter((skill) => skill.categories.includes(group.id))
-        .map((skill) => skill.id),
-      Math.cos(angle) * 630,
-      Math.sin(angle) * 230,
+      id,
+      label,
+      [...adjacency.get(id)!],
+      Math.cos(angle) * radius,
+      Math.sin(angle) * radius,
     )
   })
-  const tools = skills.map((skill, i) => {
-    const categories = hubs.filter((hub) => skill.categories.includes(hub.id))
-    const x =
-      categories.reduce((sum, hub) => sum + hub.x, 0) / categories.length
-    const y =
-      categories.reduce((sum, hub) => sum + hub.y, 0) / categories.length
-    return node(
-      skill.id,
-      skill.label,
-      'skill',
-      [...skill.categories],
-      x + Math.cos(i * 2.4) * 100,
-      y + Math.sin(i * 2.4) * 100,
-    )
-  })
-  const nodes = [...hubs, ...tools]
-  const links = skills.flatMap((skill) =>
-    skill.categories.map((category) => ({
-      source: category,
-      target: skill.id,
-    })),
-  )
-  const anchors = new Map(nodes.map((n) => [n.id, { x: n.x, y: n.y }]))
   // D3 owns only these new layout objects, never the editable resume data.
   forceSimulation(nodes)
     .stop()
@@ -112,26 +99,17 @@ export function buildSkillsGraph(
       'links',
       forceLink<GraphNode, GraphLink>(links.map((link) => ({ ...link })))
         .id((n) => n.id)
-        .distance(140)
-        .strength(0.12),
+        .distance(150)
+        .strength(0.35),
     )
-    .force(
-      'x',
-      forceX<GraphNode>((n) => anchors.get(n.id)!.x).strength((n) =>
-        n.kind === 'category' ? 0.8 : 0.12,
-      ),
-    )
-    .force(
-      'y',
-      forceY<GraphNode>((n) => anchors.get(n.id)!.y).strength((n) =>
-        n.kind === 'category' ? 0.8 : 0.12,
-      ),
-    )
+    .force('charge', forceManyBody().strength(-650))
+    .force('x', forceX(0).strength(0.015))
+    .force('y', forceY(0).strength(0.06))
     .force(
       'collision',
-      forceCollide<GraphNode>((n) => n.height / 2 + 8),
+      forceCollide<GraphNode>((n) => n.height / 2 + 12),
     )
-    .tick(300)
+    .tick(350)
   // Rectangular relaxation protects long labels without wasting a circular radius.
   for (let pass = 0; pass < 160; pass++) {
     let overlaps = 0

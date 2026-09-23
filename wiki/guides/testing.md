@@ -28,7 +28,8 @@ through tests; deployment jobs additionally build before uploading assets.
 
 Vitest with Testing Library and jsdom covers content validation, date
 helpers, theme behavior, contact interactions, and graph relationships/camera
-math, grouped membership, hover/selection, individual node dragging, gesture
+math, undirected edge validation, shared degree sizing, deterministic clustering,
+grouped membership, hover/selection, individual node dragging, gesture
 boundaries and tooltips. Tests live beside the code;
 `src/test/setup.ts` supplies browser/test setup. Use `npm run test` for watch
 mode or `npm run test:ci -- path/to/file.test.ts` for a focused run.
@@ -51,7 +52,10 @@ short landscape viewport. Check:
 - Light/dark themes, saved and system preferences, and readable contrast.
 - Every top-bar section link is visible on phones and scrolls up/down to an
   unobscured target, preserving keyboard focus.
-- Skills: select TypeScript and verify Languages, Backend, and Frontend.
+- Skills: Java connects to Spring/modules; Jenkins to Groovy; Backend to APIs.
+  Trace links in both directions; selecting a neighbor must update the selection.
+- Every node has the same visual treatment and alphabetized picker; no type/count
+  labels. Font size follows all unique neighbors, including explicit relationships.
 - Graph zoom limits/reset, mouse pan, modifier-wheel zoom, and ordinary wheel scrolling.
 - Phone: default swipe scrolls the page; Explore graph enables node drag/pan/pinch; Done restores scrolling.
 - Keyboard picker, arrows/+/-/0, Shift+arrows for nodes, visible focus, tooltips and complete List view.

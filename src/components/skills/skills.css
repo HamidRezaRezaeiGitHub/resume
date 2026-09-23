@@ -198,14 +198,6 @@
   font-weight: 450;
   pointer-events: none;
 }
-.network-node.category rect {
-  fill: var(--surface);
-  stroke: var(--line);
-}
-.network-node.category text {
-  font-weight: 550;
-  fill: var(--ink);
-}
 .network-node.is-muted {
   opacity: 0.17;
 }
@@ -226,15 +218,6 @@
 }
 .network-node.is-highlighted {
   filter: drop-shadow(0 4px 12px #00000018);
-}
-.network-caption {
-  position: absolute;
-  bottom: 16px;
-  right: 22px;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0.07em;
-  pointer-events: none;
 }
 .network-detail {
   border-top: 1px solid var(--line);
@@ -362,11 +345,6 @@
   }
   .network-detail {
     padding: 18px 16px;
-  }
-  .network-caption {
-    right: 14px;
-    bottom: 14px;
-    font-size: 9px;
   }
   .network-help {
     font-size: 11px;

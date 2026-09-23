@@ -5,7 +5,11 @@ import { buildSkillsGraph, MAX_ZOOM, MIN_ZOOM, type GraphNode } from './graph'
 import { useGraphInteraction } from './useGraphInteraction'
 import { GraphControl } from './GraphControl'
 
-const graph = buildSkillsGraph(resume.skillCategories, resume.skills)
+const graph = buildSkillsGraph(
+  resume.skillCategories,
+  resume.skills,
+  resume.skillRelationships,
+)
 
 export function SkillsNetwork() {
   const [selected, setSelected] = useState<string | null>(null)
@@ -45,24 +49,13 @@ export function SkillsNetwork() {
             }
           >
             <option value="">Explore the toolkit</option>
-            <optgroup label="Categories">
-              {controls.nodes
-                .filter((n) => n.kind === 'category')
-                .map((n) => (
-                  <option key={n.id} value={n.id}>
-                    {n.label}
-                  </option>
-                ))}
-            </optgroup>
-            <optgroup label="Technologies & tools">
-              {controls.nodes
-                .filter((n) => n.kind === 'skill')
-                .map((n) => (
-                  <option key={n.id} value={n.id}>
-                    {n.label}
-                  </option>
-                ))}
-            </optgroup>
+            {[...controls.nodes]
+              .sort((a, b) => a.label.localeCompare(b.label, 'en'))
+              .map((node) => (
+                <option key={node.id} value={node.id}>
+                  {node.label}
+                </option>
+              ))}
           </select>
         </label>
         <div
@@ -159,11 +152,11 @@ export function SkillsNetwork() {
                 key={node.id}
                 data-node-id={node.id}
                 transform={`translate(${node.x} ${node.y})`}
-                className={`network-node ${node.kind}${active?.id === node.id ? ' is-highlighted' : ''}${neighborhood && !neighborhood.has(node.id) ? ' is-muted' : ''}`}
+                className={`network-node${active?.id === node.id ? ' is-highlighted' : ''}${neighborhood && !neighborhood.has(node.id) ? ' is-muted' : ''}`}
                 role="button"
-                aria-label={`${node.label}, ${node.connections.length} ${node.connections.length === 1 ? 'connection' : 'connections'}`}
+                aria-label={node.label}
                 aria-pressed={selected === node.id}
-                tabIndex={node.id === (selected ?? 'typescript') ? 0 : -1}
+                tabIndex={node.id === (selected ?? 'java') ? 0 : -1}
                 onPointerEnter={(event) => {
                   if (event.pointerType === 'mouse' && !event.buttons)
                     setHovered(node.id)
@@ -189,7 +182,7 @@ export function SkillsNetwork() {
                   y={-node.height / 2}
                   width={node.width}
                   height={node.height}
-                  rx={node.kind === 'category' ? node.height / 2 : 8}
+                  rx={8}
                 />
                 <text
                   textAnchor="middle"
@@ -211,10 +204,6 @@ export function SkillsNetwork() {
             {controls.exploring ? 'Done exploring' : 'Explore graph'}
           </button>
         </div>
-        <span className="network-caption" aria-hidden="true">
-          {resume.skills.length} tools · {resume.skillCategories.length}{' '}
-          categories
-        </span>
       </div>
       <div className="network-detail">
         <div className="network-selection" aria-live="polite">
@@ -222,11 +211,7 @@ export function SkillsNetwork() {
           <strong>
             {selection?.label ?? resume.sections.skills.idleTitle}
           </strong>
-          <span>
-            {selection
-              ? `${selection.connections.length} ${selection.kind === 'category' ? 'tools' : 'categories'}`
-              : resume.sections.skills.idleDescription}
-          </span>
+          {!selection && <span>{resume.sections.skills.idleDescription}</span>}
         </div>
         {selection && (
           <div

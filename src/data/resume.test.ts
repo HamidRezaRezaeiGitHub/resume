@@ -163,4 +163,20 @@ describe('section-based resume content', () => {
       content.skillGroups[1].id = content.skillGroups[0].id
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
+  it.each([
+    { source: 'java', target: 'missing' },
+    { source: 'missing', target: 'java' },
+    { source: 'java', target: 'java' },
+    { source: 'java', target: 'spring' },
+    { source: 'spring', target: 'java' },
+    { source: 'backend', target: 'java' },
+    { source: 'java', target: 'backend' },
+  ])(
+    'rejects unknown, self or duplicate relationship $source → $target',
+    (relationship) => {
+      const content = editableCopy()
+      content.skillRelationships.push(relationship)
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
 })

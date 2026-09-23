@@ -1,5 +1,14 @@
 # Wiki log
 
+## 2026-09-23 — update — Connected skills graph
+
+Added explicit undirected ecosystem relationships, including Jenkins–Groovy,
+Backend–APIs and Java–Spring. All keywords now use one node style, a shared
+unique-neighbor sizing rule and relationship-driven placement without topic
+anchors. Removed graph kind/count labels; kept list/print grouping and existing
+interaction controls. Added relationship validation and regression coverage.
+The user authorized deploying the final master revision to DEV, UAT and PROD.
+
 ## 2026-09-23 — update — Skills graph interaction refinement
 
 Replaced drift/parallax with mouse-hover connection highlighting. Added individual

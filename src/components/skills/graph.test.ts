@@ -10,34 +10,76 @@ import {
 } from './graph'
 
 describe('skills graph', () => {
-  const graph = buildSkillsGraph(resume.skillCategories, resume.skills)
-  it('represents shared skills once with every category connection and degree-based sizing', () => {
-    const ts = graph.nodes.filter((node) => node.id === 'typescript')
-    expect(ts).toHaveLength(1)
-    expect(ts[0].connections).toEqual(['languages', 'backend', 'frontend'])
-    expect(
-      graph.links
-        .filter((link) => link.target === 'typescript')
-        .map((link) => link.source),
-    ).toEqual(ts[0].connections)
-    expect(ts[0].fontSize).toBeGreaterThan(
-      graph.nodes.find((node) => node.id === 'react')!.fontSize,
+  const graph = buildSkillsGraph(
+    resume.skillCategories,
+    resume.skills,
+    resume.skillRelationships,
+  )
+  it('connects tool and topic peers in both directions, counting each neighbor once', () => {
+    const byId = new Map(graph.nodes.map((node) => [node.id, node]))
+    for (const [source, target] of [
+      ['jenkins', 'groovy'],
+      ['backend', 'apis'],
+      ['java', 'spring'],
+      ['java', 'junit'],
+      ['spring-integration', 'solace'],
+      ['bigquery', 'looker-studio'],
+    ]) {
+      expect(byId.get(source)!.connections).toContain(target)
+      expect(byId.get(target)!.connections).toContain(source)
+    }
+    expect(graph.nodes.filter((node) => node.id === 'typescript')).toHaveLength(
+      1,
     )
-    expect(
-      graph.nodes.find((node) => node.id === 'backend')!.fontSize,
-    ).toBeGreaterThan(ts[0].fontSize)
+    expect(byId.get('java')!.connections).toHaveLength(15)
     for (const node of graph.nodes) {
+      expect(new Set(node.connections).size).toBe(node.connections.length)
       expect(
         graph.links.filter(
           (link) => link.source === node.id || link.target === node.id,
         ),
       ).toHaveLength(node.connections.length)
       expect(Number.isFinite(node.x) && Number.isFinite(node.y)).toBe(true)
+      for (const other of graph.nodes) {
+        if (node.connections.length === other.connections.length)
+          expect(node.fontSize).toBe(other.fontSize)
+        else if (node.connections.length > other.connections.length)
+          expect(node.fontSize).toBeGreaterThan(other.fontSize)
+      }
     }
+    expect(byId.get('java')!.fontSize).toBeGreaterThan(
+      byId.get('typescript')!.fontSize,
+    )
+  })
+  it('uses the actual connections to form neighborhoods without fixed topic positions', () => {
+    const linked: number[] = [],
+      unrelated: number[] = []
+    for (let i = 0; i < graph.nodes.length; i++)
+      for (let j = i + 1; j < graph.nodes.length; j++) {
+        const a = graph.nodes[i],
+          b = graph.nodes[j]
+        const distances = a.connections.includes(b.id) ? linked : unrelated
+        distances.push(Math.hypot(a.x - b.x, a.y - b.y))
+      }
+    const mean = (values: number[]) =>
+      values.reduce((sum, n) => sum + n, 0) / values.length
+    expect(mean(linked)).toBeLessThan(mean(unrelated) * 0.75)
+    const withoutRelationships = buildSkillsGraph(
+      resume.skillCategories,
+      resume.skills,
+      [],
+    )
+    expect(
+      withoutRelationships.nodes.find((node) => node.id === 'java')!.x,
+    ).not.toBe(graph.nodes.find((node) => node.id === 'java')!.x)
   })
   it('is deterministic, preserves input, and keeps label hit areas from overlapping', () => {
     const before = JSON.stringify(resume)
-    const again = buildSkillsGraph(resume.skillCategories, resume.skills)
+    const again = buildSkillsGraph(
+      resume.skillCategories,
+      resume.skills,
+      resume.skillRelationships,
+    )
     expect(JSON.stringify(resume)).toBe(before)
     expect(again).toEqual(graph)
     for (let i = 0; i < graph.nodes.length; i++)

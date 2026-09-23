@@ -33,7 +33,17 @@ describe('skills exploration', () => {
       within(connections)
         .getAllByRole('button')
         .map((button) => button.textContent),
-    ).toEqual(['Languages↗', 'Backend↗', 'Frontend↗'])
+    ).toEqual([
+      'Languages↗',
+      'Backend↗',
+      'Frontend↗',
+      'JavaScript↗',
+      'React↗',
+      'Angular↗',
+      'Hono↗',
+      'Cloudflare Workers↗',
+      'Vitest↗',
+    ])
     await user.click(
       within(connections).getByRole('button', { name: /Frontend/ }),
     )
@@ -44,6 +54,32 @@ describe('skills exploration', () => {
     expect(
       screen.queryByRole('group', { name: 'Interactive skills network' }),
     ).not.toBeInTheDocument()
+  })
+  it('presents a single network with direct peer connections and no kind/count labels', async () => {
+    const user = userEvent.setup()
+    const graph = setup()
+    expect(graph.querySelector('.category, .skill')).toBeNull()
+    expect(document.querySelector('optgroup')).toBeNull()
+    expect(document.querySelector('.network-caption')).toBeNull()
+    await user.selectOptions(screen.getByRole('combobox'), 'jenkins')
+    const connections = screen.getByLabelText('Connections for Jenkins')
+    await user.click(
+      within(connections).getByRole('button', { name: /Groovy/ }),
+    )
+    expect(screen.getByRole('combobox')).toHaveValue('groovy')
+    expect(
+      within(screen.getByLabelText('Connections for Groovy')).getByRole(
+        'button',
+        { name: /Jenkins/ },
+      ),
+    ).toBeVisible()
+    expect(within(graph).getByRole('button', { name: 'Java' })).toHaveAttribute(
+      'aria-label',
+      'Java',
+    )
+    expect(document.querySelector('.network-selection')).not.toHaveTextContent(
+      /\d/,
+    )
   })
   it('supports keyboard pan, bounded zoom and reset without capturing normal wheel scrolling', async () => {
     const user = userEvent.setup()
@@ -89,8 +125,8 @@ describe('skills exploration', () => {
   })
   it('previews mouse hover without changing the selection or camera, then restores the selection', () => {
     const graph = setup()
-    const ts = screen.getByRole('button', { name: 'TypeScript, 3 connections' })
-    const react = screen.getByRole('button', { name: 'React, 1 connection' })
+    const ts = screen.getByRole('button', { name: 'TypeScript' })
+    const react = screen.getByRole('button', { name: 'React' })
     const camera = graph
       .querySelector('.network-camera')!
       .getAttribute('transform')
@@ -99,7 +135,7 @@ describe('skills exploration', () => {
     expect(ts).toHaveClass('is-highlighted')
     expect(ts).toHaveAttribute('aria-pressed', 'false')
     expect(react).toHaveAttribute('aria-pressed', 'true')
-    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(3)
+    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(9)
     expect(graph.querySelector('.network-camera')).toHaveAttribute(
       'transform',
       camera,
@@ -113,8 +149,8 @@ describe('skills exploration', () => {
   it('moves only the dragged node, including its edges, at the current zoom', async () => {
     const user = userEvent.setup()
     const graph = setup()
-    const ts = screen.getByRole('button', { name: 'TypeScript, 3 connections' })
-    const react = screen.getByRole('button', { name: 'React, 1 connection' })
+    const ts = screen.getByRole('button', { name: 'TypeScript' })
+    const react = screen.getByRole('button', { name: 'React' })
     const original = ts.getAttribute('transform')
     const other = react.getAttribute('transform')
     const edge = graph.querySelector(
@@ -145,7 +181,7 @@ describe('skills exploration', () => {
   })
   it('deselects on a blank click but preserves selection after a background drag', () => {
     const graph = setup()
-    const ts = screen.getByRole('button', { name: 'TypeScript, 3 connections' })
+    const ts = screen.getByRole('button', { name: 'TypeScript' })
     fireEvent.click(ts)
     const camera = graph
       .querySelector('.network-camera')!
@@ -168,7 +204,7 @@ describe('skills exploration', () => {
   it('does not move nodes with touch before opt-in, and handles pinch and cancellation after opt-in', async () => {
     const user = userEvent.setup()
     const graph = setup()
-    const ts = screen.getByRole('button', { name: 'TypeScript, 3 connections' })
+    const ts = screen.getByRole('button', { name: 'TypeScript' })
     const original = ts.getAttribute('transform')
     pointer(ts, 'pointerdown', {
       pointerType: 'touch',
@@ -232,7 +268,7 @@ describe('skills exploration', () => {
   })
   it('moves a focused node with Shift+arrows without changing the camera', () => {
     const graph = setup()
-    const ts = screen.getByRole('button', { name: 'TypeScript, 3 connections' })
+    const ts = screen.getByRole('button', { name: 'TypeScript' })
     const original = ts.getAttribute('transform')
     const camera = graph
       .querySelector('.network-camera')!

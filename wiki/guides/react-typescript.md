@@ -58,9 +58,15 @@ narrow phones and short landscape using the [browser checklist](testing.md).
 ## Skills network
 
 Keep graph data/layout, interaction state and presentation separate. The automatic
-layout uses computed category seeds, a bounded force simulation on copied data,
-and rectangular relaxation for label spacing. Size is a shared logarithmic
-function of connection count. No coordinates are manually authored in JSON.
+layout uses common deterministic seeds, link attraction, charge repulsion and a
+bounded force simulation on copied data, followed by rectangular label spacing.
+There are no fixed topic anchors. Membership and extra ecosystem links form one
+undirected adjacency map before layout. Every node uses the same square-root
+function of its total unique neighbors for label size. Connected nodes tend to
+cluster, while spacing keeps long labels readable; not every pair can be adjacent.
+No coordinates, proficiency weights or named-node overrides are authored in JSON.
+The alphabetized picker, labels and styling do not distinguish node kinds or show
+counts. The complete list/print view retains its content groupings.
 
 `useGraphInteraction` owns temporary node positions, camera state, pointer capture
 and pinch tracking. Dragging a node moves it and its edges; background dragging

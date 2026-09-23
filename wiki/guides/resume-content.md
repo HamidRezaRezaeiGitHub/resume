@@ -61,48 +61,55 @@ Bootstrap and R were also verified against the public LinkedIn skills list on
 September 23. Category membership describes how a tool is used, not proficiency.
 
 `skillGroups[]` defines the nine printed/list groups (`id`, `title`).
-`skillCategories[]` defines the graph's separate topic hubs (`id`, `title`,
-`groupId` referring to a printed group). For example, Observability and Analytics
-are separate graph categories mapped to the same Observability & Analytics group.
-The graph also separates Backend/APIs, Databases/Storage, Cloud/Infrastructure,
-Build/Delivery, and Testing/Security, for 15 hubs in total.
+`skillCategories[]` defines topic labels (`id`, `title`, `groupId` referring to a
+printed group). Observability and Analytics remain separate graph nodes mapped
+to the combined list group. These content distinctions serve the list only:
+all graph nodes have identical styling and behavior, with no kind or count labels.
 
 `skills[]` defines each technology once (`id`, `label`, `categories[]` referring
-to graph category IDs). TypeScript belongs to `languages`, `backend`, and
-`frontend`. Graph edges derive from those memberships. `skillsForGroup` derives
-the printed group membership through `groupId`, including each skill only once
-even if it belongs to several topics within that group. Never maintain a second
-list of edges or duplicate technology nodes.
+to topic IDs). `skillsForGroup` derives the printed group membership through
+`groupId`, including each skill once even if several topics map to the same group.
+Spring is the framework umbrella alongside its specific modules.
 
-Graph IDs and labels must be unique; memberships must name an existing category;
-categories must refer to existing groups; no group or category may be empty.
-These are internal keys, not page fragment anchors. Label size increases with
-connection count for both hubs and tools, not proficiency. No node coordinates
-are authored in JSON; the automatic layout and temporary drag positions belong
-to presentation state.
+`skillRelationships[]` contains additional undirected connections (`source`,
+`target`, both existing topic/skill IDs). For example, Jenkins–Groovy,
+Backend–APIs and Java–Spring supplement the existing membership connections.
+`skillConnections` combines both sources into the graph. Add direct ecosystem,
+language, integration or workflow relationships supported by the toolkit; do not
+connect every vaguely compatible technology just to inflate its importance.
+Relationships do not change list membership or claim equal proficiency.
+
+Graph IDs and labels must be unique; memberships must name an existing topic;
+topics must refer to existing groups; no group or topic may be empty. Relationships
+cannot reference missing IDs, link a node to itself, or repeat an undirected pair,
+including reversed pairs and pairs already supplied by membership.
+These are internal keys, not page fragment anchors. Every node uses the same
+square-root sizing rule based on its total unique neighbors. No expertise weights,
+Java-specific size overrides or node coordinates are authored in JSON.
+The automatic layout and temporary drag positions belong to presentation state.
 
 ## JSON terminology
 
 A **section** is a major page region. A **component** renders a section or a
 reusable piece. A **field** is a named JSON property; `[]` means an item in a list.
 
-| What you see                     | Term                | JSON source                                                  | Component                    |
-| -------------------------------- | ------------------- | ------------------------------------------------------------ | ---------------------------- |
-| Fixed top bar                    | Navigation / navbar | `navigation[].label`, `sectionId`                            | `Nav`                        |
-| Name and introduction            | Hero / summary      | `profile.name`, `headline`, `summary`, `location`, `links[]` | `Hero`                       |
-| Section name                     | Section heading     | `sections.*.title`                                           | `Section`                    |
-| One job or teaching position     | Experience / role   | `experiences[]`                                              | `Experiences`, `ResumeEntry` |
-| One personal project             | Project entry       | `projects[]`                                                 | `Projects`, `ResumeEntry`    |
-| A role or project achievement    | Bullet              | Entry `bullets[].text`                                       | `ResumeEntry`                |
-| Period on an entry               | Date range          | `startDate`, `endDate`                                       | `ResumeEntry`                |
-| Project maturity                 | Stage               | `projects[].stage`                                           | `ResumeEntry`                |
-| Skill category                   | Hub / category node | `skillCategories[].id`, `title`, `groupId`                   | `SkillsNetwork`              |
-| Printed/list skill heading       | Skill group         | `skillGroups[].id`, `title`                                  | `Skills`                     |
-| One technology or tool           | Skill / node        | `skills[].id`, `label`, `categories[]`                       | `SkillsNetwork`, `Skills`    |
-| Line between a tool and category | Connection / edge   | Derived from `skills[].categories[]`                         | `SkillsNetwork`              |
-| One degree                       | Education entry     | `education[]`                                                | `Education`, `ResumeEntry`   |
-| Contact invitation               | Contact section     | `sections.contact`, `profile.email`, `links[]`               | `Contact`                    |
-| Copyright                        | Footer              | `profile.name`                                               | `Footer`                     |
+| What you see                  | Term                | JSON source                                                  | Component                    |
+| ----------------------------- | ------------------- | ------------------------------------------------------------ | ---------------------------- |
+| Fixed top bar                 | Navigation / navbar | `navigation[].label`, `sectionId`                            | `Nav`                        |
+| Name and introduction         | Hero / summary      | `profile.name`, `headline`, `summary`, `location`, `links[]` | `Hero`                       |
+| Section name                  | Section heading     | `sections.*.title`                                           | `Section`                    |
+| One job or teaching position  | Experience / role   | `experiences[]`                                              | `Experiences`, `ResumeEntry` |
+| One personal project          | Project entry       | `projects[]`                                                 | `Projects`, `ResumeEntry`    |
+| A role or project achievement | Bullet              | Entry `bullets[].text`                                       | `ResumeEntry`                |
+| Period on an entry            | Date range          | `startDate`, `endDate`                                       | `ResumeEntry`                |
+| Project maturity              | Stage               | `projects[].stage`                                           | `ResumeEntry`                |
+| Topic keyword                 | Node / topic        | `skillCategories[].id`, `title`, `groupId`                   | `SkillsNetwork`              |
+| Printed/list skill heading    | Skill group         | `skillGroups[].id`, `title`                                  | `Skills`                     |
+| One technology or tool        | Skill / node        | `skills[].id`, `label`, `categories[]`                       | `SkillsNetwork`, `Skills`    |
+| Line between two keywords     | Connection / edge   | `skills[].categories[]` and `skillRelationships[]`           | `SkillsNetwork`              |
+| One degree                    | Education entry     | `education[]`                                                | `Education`, `ResumeEntry`   |
+| Contact invitation            | Contact section     | `sections.contact`, `profile.email`, `links[]`               | `Contact`                    |
+| Copyright                     | Footer              | `profile.name`                                               | `Footer`                     |
 
 The website-style hero adds `hero.eyebrow` (the greeting),
 `hero.experienceLabel` and `hero.contactLabel` (call-to-action button text).

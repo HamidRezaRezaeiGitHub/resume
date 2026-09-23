@@ -38,11 +38,13 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
    reduced-motion scrolling and print. Skills-specific CSS stays in
    `src/components/skills/skills.css`.
 6. `Skills` switches between the network and a derived definition list. The
-   graph module builds category/skill nodes and pure camera calculations.
+   graph module builds uniform nodes, undirected adjacency and pure camera calculations.
    `useGraphInteraction` owns node positions, camera gestures and touch capture.
    Mouse hover is transient presentation state, separate from persistent selection.
    Graph topics map to PDF/list groups through `skillCategories[].groupId`;
-   `src/data/skills.ts` deduplicates group membership. No ambient motion loop runs.
+   `src/data/skills.ts` derives group membership and combines membership edges with
+   `skillRelationships`. Total degree controls all label sizes; link forces shape
+   neighborhoods without fixed topic anchors. No ambient motion loop runs.
    Observers, pointer capture and tooltip listeners clean up appropriately.
 
 The [content guide](../guides/resume-content.md) owns fields and publication rules.

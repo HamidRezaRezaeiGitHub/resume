@@ -360,6 +360,11 @@
       "categories": ["languages", "frontend"]
     },
     {
+      "id": "spring",
+      "label": "Spring",
+      "categories": ["backend"]
+    },
+    {
       "id": "spring-boot",
       "label": "Spring Boot",
       "categories": ["backend"]
@@ -690,6 +695,348 @@
       "id": "workflow",
       "title": "Developer Workflow",
       "groupId": "workflow"
+    }
+  ],
+  "skillRelationships": [
+    {
+      "source": "backend",
+      "target": "apis"
+    },
+    {
+      "source": "frontend",
+      "target": "apis"
+    },
+    {
+      "source": "databases",
+      "target": "storage"
+    },
+    {
+      "source": "databases",
+      "target": "analytics"
+    },
+    {
+      "source": "cloud",
+      "target": "infrastructure"
+    },
+    {
+      "source": "build",
+      "target": "delivery"
+    },
+    {
+      "source": "testing",
+      "target": "delivery"
+    },
+    {
+      "source": "security",
+      "target": "apis"
+    },
+    {
+      "source": "observability",
+      "target": "infrastructure"
+    },
+    {
+      "source": "java",
+      "target": "spring"
+    },
+    {
+      "source": "java",
+      "target": "spring-boot"
+    },
+    {
+      "source": "java",
+      "target": "spring-mvc"
+    },
+    {
+      "source": "java",
+      "target": "spring-batch"
+    },
+    {
+      "source": "java",
+      "target": "spring-integration"
+    },
+    {
+      "source": "java",
+      "target": "spring-security"
+    },
+    {
+      "source": "java",
+      "target": "spring-data-jdbc"
+    },
+    {
+      "source": "java",
+      "target": "spring-data-jpa"
+    },
+    {
+      "source": "java",
+      "target": "spring-ai"
+    },
+    {
+      "source": "java",
+      "target": "junit"
+    },
+    {
+      "source": "java",
+      "target": "mockito"
+    },
+    {
+      "source": "java",
+      "target": "maven"
+    },
+    {
+      "source": "java",
+      "target": "groovy"
+    },
+    {
+      "source": "spring",
+      "target": "spring-boot"
+    },
+    {
+      "source": "spring",
+      "target": "spring-mvc"
+    },
+    {
+      "source": "spring",
+      "target": "spring-batch"
+    },
+    {
+      "source": "spring",
+      "target": "spring-integration"
+    },
+    {
+      "source": "spring",
+      "target": "spring-security"
+    },
+    {
+      "source": "spring",
+      "target": "spring-data-jdbc"
+    },
+    {
+      "source": "spring",
+      "target": "spring-data-jpa"
+    },
+    {
+      "source": "spring",
+      "target": "spring-ai"
+    },
+    {
+      "source": "spring-boot",
+      "target": "maven"
+    },
+    {
+      "source": "spring-boot",
+      "target": "junit"
+    },
+    {
+      "source": "spring-mvc",
+      "target": "rest"
+    },
+    {
+      "source": "spring-integration",
+      "target": "solace"
+    },
+    {
+      "source": "spring-security",
+      "target": "jwt"
+    },
+    {
+      "source": "spring-security",
+      "target": "ldap"
+    },
+    {
+      "source": "spring-data-jpa",
+      "target": "postgresql"
+    },
+    {
+      "source": "spring-data-jpa",
+      "target": "h2"
+    },
+    {
+      "source": "spring-data-jdbc",
+      "target": "sql"
+    },
+    {
+      "source": "spring-ai",
+      "target": "mcp"
+    },
+    {
+      "source": "spring-ai",
+      "target": "react"
+    },
+    {
+      "source": "junit",
+      "target": "mockito"
+    },
+    {
+      "source": "jenkins",
+      "target": "groovy"
+    },
+    {
+      "source": "jenkins",
+      "target": "git"
+    },
+    {
+      "source": "jenkins",
+      "target": "maven"
+    },
+    {
+      "source": "jenkins",
+      "target": "nexus"
+    },
+    {
+      "source": "jenkins",
+      "target": "ansible"
+    },
+    {
+      "source": "jenkins",
+      "target": "checkmarx"
+    },
+    {
+      "source": "jenkins",
+      "target": "sonatype"
+    },
+    {
+      "source": "maven",
+      "target": "nexus"
+    },
+    {
+      "source": "maven",
+      "target": "sonatype"
+    },
+    {
+      "source": "github-actions",
+      "target": "git"
+    },
+    {
+      "source": "github-actions",
+      "target": "docker"
+    },
+    {
+      "source": "ansible",
+      "target": "bash"
+    },
+    {
+      "source": "typescript",
+      "target": "javascript"
+    },
+    {
+      "source": "typescript",
+      "target": "react"
+    },
+    {
+      "source": "typescript",
+      "target": "angular"
+    },
+    {
+      "source": "typescript",
+      "target": "hono"
+    },
+    {
+      "source": "typescript",
+      "target": "cloudflare-workers"
+    },
+    {
+      "source": "typescript",
+      "target": "vitest"
+    },
+    {
+      "source": "javascript",
+      "target": "react"
+    },
+    {
+      "source": "javascript",
+      "target": "angular"
+    },
+    {
+      "source": "javascript",
+      "target": "npm"
+    },
+    {
+      "source": "react",
+      "target": "html"
+    },
+    {
+      "source": "react",
+      "target": "css"
+    },
+    {
+      "source": "react",
+      "target": "vitest"
+    },
+    {
+      "source": "angular",
+      "target": "html"
+    },
+    {
+      "source": "angular",
+      "target": "css"
+    },
+    {
+      "source": "bootstrap",
+      "target": "html"
+    },
+    {
+      "source": "bootstrap",
+      "target": "css"
+    },
+    {
+      "source": "dart",
+      "target": "flutter"
+    },
+    {
+      "source": "hono",
+      "target": "cloudflare-workers"
+    },
+    {
+      "source": "hono",
+      "target": "rest"
+    },
+    {
+      "source": "hono",
+      "target": "mcp"
+    },
+    {
+      "source": "sql",
+      "target": "postgresql"
+    },
+    {
+      "source": "sql",
+      "target": "h2"
+    },
+    {
+      "source": "sql",
+      "target": "cloud-sql"
+    },
+    {
+      "source": "sql",
+      "target": "bigquery"
+    },
+    {
+      "source": "cloud-sql",
+      "target": "postgresql"
+    },
+    {
+      "source": "cloud-sql",
+      "target": "gcp-cloud-run"
+    },
+    {
+      "source": "bigquery",
+      "target": "looker-studio"
+    },
+    {
+      "source": "docker",
+      "target": "gcp-cloud-run"
+    },
+    {
+      "source": "cloudflare-workers",
+      "target": "cloudflare-r2"
+    },
+    {
+      "source": "git",
+      "target": "github-copilot"
+    },
+    {
+      "source": "jira",
+      "target": "confluence"
     }
   ]
 }
