@@ -115,7 +115,28 @@ describe('section-based resume content', () => {
   })
   it('rejects repeated skills within a category', () => {
     const content = editableCopy()
-    content.skillGroups[0].skills.push(content.skillGroups[0].skills[0])
+    content.skills[0].categories.push(content.skills[0].categories[0])
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it.each([
+    'duplicate-id',
+    'duplicate-label',
+    'unknown-category',
+    'empty-category',
+    'empty-membership',
+    'category-skill-collision',
+  ])('rejects invalid network data: %s', (invalid) => {
+    const content = editableCopy()
+    if (invalid === 'duplicate-id') content.skills[1].id = content.skills[0].id
+    if (invalid === 'duplicate-label')
+      content.skills[1].label = content.skills[0].label.toUpperCase()
+    if (invalid === 'unknown-category')
+      content.skills[0].categories = ['missing']
+    if (invalid === 'empty-category')
+      content.skillGroups.push({ id: 'unused', title: 'Unused' })
+    if (invalid === 'empty-membership') content.skills[0].categories = []
+    if (invalid === 'category-skill-collision')
+      content.skills[0].id = content.skillGroups[0].id
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
 })

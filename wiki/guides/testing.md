@@ -27,7 +27,8 @@ through tests; deployment jobs additionally build before uploading assets.
 ## Useful automated coverage
 
 Vitest with Testing Library and jsdom covers content validation, date
-helpers, theme behavior, and contact interactions. Tests live beside the code;
+helpers, theme behavior, contact interactions, and graph relationships/camera
+math, selection, gesture boundaries and motion lifecycle. Tests live beside the code;
 `src/test/setup.ts` supplies browser/test setup. Use `npm run test` for watch
 mode or `npm run test:ci -- path/to/file.test.ts` for a focused run.
 
@@ -49,7 +50,12 @@ short landscape viewport. Check:
 - Light/dark themes, saved and system preferences, and readable contrast.
 - Every top-bar section link is visible on phones and scrolls up/down to an
   unobscured target, preserving keyboard focus.
-- Reduced motion, print, all nine visible skill categories and contact actions.
+- Skills: select TypeScript and verify Languages, Backend & APIs, and Frontend.
+- Graph zoom limits/reset, mouse pan, modifier-wheel zoom, and ordinary wheel scrolling.
+- Phone: default swipe scrolls the page; Explore graph enables pan/pinch; Done restores scrolling.
+- Keyboard picker, graph arrows/+/-/0, visible focus, and complete List view.
+- Reduced motion and pause stop ambient motion; offscreen/hidden tabs stop the loop.
+- Print shows all nine skill categories instead of the interactive graph; contact still works.
 - Browser console errors and broken assets.
 
 Use available browser tooling; do not require a script from someone's `/tmp`

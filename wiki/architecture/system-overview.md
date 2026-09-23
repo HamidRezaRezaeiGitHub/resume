@@ -18,6 +18,8 @@ Vite builds React 19 and strict TypeScript. Tailwind v4 and custom CSS provide
 styling; Lucide supplies icons. Vitest/Testing Library run in jsdom. Zod validates
 editable content at build time. Use versions in `.nvmrc` and the lockfile.
 The current design has no Motion runtime imports or scroll-linked animations.
+Skills uses `d3-force` for a bounded deterministic layout, then SVG and native
+Pointer Events for interaction; no continuously running physics simulation.
 
 `index.html` loads `public/theme.js` for the initial theme before React mounts
 through `src/main.tsx`. Theme colors in CSS, the bootstrap and `useTheme` agree.
@@ -33,22 +35,30 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
 4. `ResumeEntry` renders headings, semantic dates, ordinary bullets and links.
    `src/lib/dates.ts` preserves date precision. There is no runtime sorting.
 5. `src/index.css` owns compact reading density, responsive layout, themes,
-   reduced-motion scrolling and print.
+   reduced-motion scrolling and print. Skills-specific CSS stays in
+   `src/components/skills/skills.css`.
+6. `Skills` switches between the network and a derived definition list. The
+   graph module builds category/skill nodes and pure camera calculations.
+   `useGraphCamera` owns pan/zoom and touch capture. `useGraphMotion` owns
+   pointer parallax and ambient movement, with pause/reduced-motion/offscreen
+   and hidden-tab handling. It changes one SVG transform without frame-by-frame
+   React renders. All observers, events and animation frames clean up on unmount.
 
 The [content guide](../guides/resume-content.md) owns fields and publication rules.
 
 ## Source map
 
-| Path              | Responsibility                                          |
-| ----------------- | ------------------------------------------------------- |
-| `src/components/` | Sections, shared entries, navigation and contact        |
-| `src/hooks/`      | Theme preference and browser synchronization            |
-| `src/data/`       | JSON, schema, typed export and contract tests           |
-| `src/lib/`        | Pure date formatting and utilities                      |
-| `src/index.css`   | Theme tokens, responsive layout and print               |
-| `public/`         | Public assets and pre-paint theme bootstrap             |
-| `ai/`             | Agent workflows, scripts, skills and templates          |
-| `wiki/`           | Durable project knowledge, never imported into the page |
+| Path                     | Responsibility                                                       |
+| ------------------------ | -------------------------------------------------------------------- |
+| `src/components/`        | Sections, shared entries, navigation and contact                     |
+| `src/components/skills/` | Graph model, SVG presentation, camera/motion hooks and scoped styles |
+| `src/hooks/`             | Theme preference and browser synchronization                         |
+| `src/data/`              | JSON, schema, typed export and contract tests                        |
+| `src/lib/`               | Pure date formatting and utilities                                   |
+| `src/index.css`          | Theme tokens, responsive layout and print                            |
+| `public/`                | Public assets and pre-paint theme bootstrap                          |
+| `ai/`                    | Agent workflows, scripts, skills and templates                       |
+| `wiki/`                  | Durable project knowledge, never imported into the page              |
 
 ## Browser integrations
 

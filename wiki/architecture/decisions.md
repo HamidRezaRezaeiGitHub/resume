@@ -38,7 +38,8 @@ concrete refactor and regression coverage.
 Ordinary bullets remain visible and entries scroll normally. Compact spacing
 replaces the animated achievement blocks. Smooth anchor navigation respects
 reduced motion; print preserves all content. There are no sticky entry headings,
-reveal effects or decorative loops. This follows the user's request for a more
+reveal effects in the resume entries. Skills has a separately scoped exception
+under D-006. This follows the user's request for a more
 minimal and professional resume rather than another animation experiment.
 
 ## D-005: Adapt the agent pack to the site
@@ -49,3 +50,17 @@ and a compact wiki. Combine stack, data flow, and integration information in the
 system overview; omit backend API/MCP guidance and the financial domain wiki.
 Do not copy credentials, source-project task history, or its deployment files.
 Local adaptations and upgrade rules live in the [pack guide](../guides/ai-pack.md).
+
+## D-006: An explorable Skills network
+
+On September 23 the user requested a graph as the website's playful discovery
+section, while preserving the accepted resume layout. The PDF's nine categories
+become hubs; canonical technology nodes can belong to multiple categories.
+Connection count controls label size uniformly, never indicating proficiency.
+A bounded D3 layout and rectangular collision pass run once per module load;
+SVG renders the result. Native pointer/camera helpers keep gestures testable.
+Pointer parallax and subtle drift stop when paused, offscreen, hidden, or reduced
+motion is requested. Touch capture is opt-in. A complete list and print view
+preserve scanability and accessible alternatives. The footer build credit was
+removed at the user's request. This feature is approved for DEV/UAT review only;
+production promotion requires fresh explicit user approval.

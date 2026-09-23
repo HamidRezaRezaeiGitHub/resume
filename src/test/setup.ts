@@ -15,3 +15,12 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vi.fn(),
   }),
 })
+
+// Layout observers are controlled explicitly in graph lifecycle tests.
+class PassiveObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+vi.stubGlobal('ResizeObserver', PassiveObserver)
+vi.stubGlobal('IntersectionObserver', PassiveObserver)

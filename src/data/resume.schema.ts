@@ -77,7 +77,13 @@ export const resumeContentSchema = z
     sections: z.strictObject({
       experience: heading,
       projects: heading,
-      skills: heading,
+      skills: heading.extend({
+        eyebrow: text,
+        description: text,
+        legend: text,
+        idleTitle: text,
+        idleDescription: text,
+      }),
       education: heading,
       contact: heading.extend({
         eyebrow: text,
@@ -109,7 +115,10 @@ export const resumeContentSchema = z
           .superRefine(validatePeriod),
       )
       .min(1),
-    skillGroups: z.array(z.strictObject({ title: text, skills: texts })).min(1),
+    skillGroups: z.array(z.strictObject({ id: anchorId, title: text })).min(1),
+    skills: z
+      .array(z.strictObject({ id: anchorId, label: text, categories: texts }))
+      .min(1),
     education: z
       .array(
         datedEntry
@@ -121,7 +130,6 @@ export const resumeContentSchema = z
           .superRefine(validatePeriod),
       )
       .min(1),
-    footer: z.strictObject({ builtWith: text }),
   })
   .superRefine((content, context) => {
     const ids = new Set([
@@ -159,15 +167,39 @@ export const resumeContentSchema = z
         message: 'Navigation must include every section exactly once',
         path: ['navigation'],
       })
-    const titles = new Set<string>()
+    const graphIds = new Set<string>()
+    const labels = new Set<string>()
+    const categoryIds = new Set(content.skillGroups.map((group) => group.id))
+    for (const key of ['skillGroups', 'skills'] as const) {
+      content[key].forEach((item, i) => {
+        const label = 'title' in item ? item.title : item.label
+        if (graphIds.has(item.id) || labels.has(label.toLowerCase()))
+          context.addIssue({
+            code: 'custom',
+            message: 'Graph IDs and labels must be unique',
+            path: [key, i],
+          })
+        graphIds.add(item.id)
+        labels.add(label.toLowerCase())
+      })
+    }
+    content.skills.forEach((skill, i) => {
+      skill.categories.forEach((id, j) => {
+        if (!categoryIds.has(id))
+          context.addIssue({
+            code: 'custom',
+            message: `Unknown skill category: ${id}`,
+            path: ['skills', i, 'categories', j],
+          })
+      })
+    })
     content.skillGroups.forEach((group, i) => {
-      if (titles.has(group.title))
+      if (!content.skills.some((skill) => skill.categories.includes(group.id)))
         context.addIssue({
           code: 'custom',
-          message: 'Skill category titles must be unique',
-          path: ['skillGroups', i, 'title'],
+          message: 'Skill categories must contain a skill',
+          path: ['skillGroups', i],
         })
-      titles.add(group.title)
     })
   })
 

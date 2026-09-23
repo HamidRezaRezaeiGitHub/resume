@@ -106,8 +106,10 @@ describe('resume sections', () => {
     }
   })
 
-  it('shows all nine PDF skill categories without hiding skills behind filters', () => {
+  it('makes all nine PDF skill categories available in the readable list', async () => {
+    const user = userEvent.setup()
     render(<App />)
+    await user.click(screen.getByRole('button', { name: 'List' }))
     const skills = screen.getByRole('region', { name: 'Skills' })
     expect(
       within(skills)
@@ -125,7 +127,14 @@ describe('resume sections', () => {
       'Developer Workflow',
     ])
     for (const group of resume.skillGroups)
-      expect(within(skills).getByText(group.skills.join(', '))).toBeVisible()
+      expect(
+        within(skills).getByText(
+          resume.skills
+            .filter((skill) => skill.categories.includes(group.id))
+            .map((skill) => skill.label)
+            .join(', '),
+        ),
+      ).toBeVisible()
   })
 
   it('places degrees in Education and preserves their month precision', () => {

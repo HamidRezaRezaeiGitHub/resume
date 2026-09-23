@@ -46,7 +46,12 @@
       "title": "Projects"
     },
     "skills": {
-      "title": "Skills"
+      "title": "Skills",
+      "eyebrow": "A connected toolkit",
+      "description": "Explore the tools I use across backend, frontend, and delivery.",
+      "legend": "Larger labels have more connections.",
+      "idleTitle": "Find the connections.",
+      "idleDescription": "Choose a node to explore."
     },
     "education": {
       "title": "Education"
@@ -257,64 +262,40 @@
   ],
   "skillGroups": [
     {
-      "title": "Languages",
-      "skills": [
-        "Java",
-        "TypeScript/JavaScript",
-        "SQL",
-        "Groovy",
-        "Bash",
-        "Dart"
-      ]
+      "id": "languages",
+      "title": "Languages"
     },
     {
-      "title": "Backend & APIs",
-      "skills": [
-        "Spring (Boot, MVC, Batch, Integration, Security, Data JDBC/JPA, AI)",
-        "REST",
-        "MCP",
-        "JWT",
-        "LDAP",
-        "Hono"
-      ]
+      "id": "backend",
+      "title": "Backend & APIs"
     },
     {
-      "title": "Frontend",
-      "skills": ["React", "HTML", "CSS", "Flutter"]
+      "id": "frontend",
+      "title": "Frontend"
     },
     {
-      "title": "Database & Storage",
-      "skills": ["PostgreSQL", "Cloud SQL", "H2", "BigQuery", "MongoDB (NoSQL)"]
+      "id": "storage",
+      "title": "Database & Storage"
     },
     {
-      "title": "Cloud & Infrastructure",
-      "skills": [
-        "GCP Cloud Run",
-        "Firebase",
-        "Cloudflare Workers/R2",
-        "Docker",
-        "Solace"
-      ]
+      "id": "cloud",
+      "title": "Cloud & Infrastructure"
     },
     {
-      "title": "Build & Delivery",
-      "skills": ["Git", "Maven", "NPM", "Jenkins", "GitHub Actions", "Nexus"]
+      "id": "delivery",
+      "title": "Build & Delivery"
     },
     {
-      "title": "Testing & Security",
-      "skills": ["JUnit", "Mockito", "Vitest", "Checkmarx", "Sonatype"]
+      "id": "testing",
+      "title": "Testing & Security"
     },
     {
-      "title": "Observability & Analytics",
-      "skills": ["Data Studio (Looker)", "Grafana", "Geneos"]
+      "id": "observability",
+      "title": "Observability & Analytics"
     },
     {
-      "title": "Developer Workflow",
-      "skills": [
-        "Coding-agent workflows (Copilot, Claude Code, Codex)",
-        "Jira",
-        "Confluence"
-      ]
+      "id": "workflow",
+      "title": "Developer Workflow"
     }
   ],
   "education": [
@@ -337,12 +318,301 @@
       "endDate": "2017-12"
     }
   ],
-  "footer": {
-    "builtWith": "React · TypeScript · Motion"
-  },
   "hero": {
     "eyebrow": "Hi, I’m",
     "experienceLabel": "Explore my experience",
     "contactLabel": "Let’s talk"
-  }
+  },
+  "skills": [
+    {
+      "id": "java",
+      "label": "Java",
+      "categories": ["languages", "backend"]
+    },
+    {
+      "id": "typescript",
+      "label": "TypeScript",
+      "categories": ["languages", "backend", "frontend"]
+    },
+    {
+      "id": "javascript",
+      "label": "JavaScript",
+      "categories": ["languages", "backend", "frontend"]
+    },
+    {
+      "id": "sql",
+      "label": "SQL",
+      "categories": ["languages", "storage", "observability"]
+    },
+    {
+      "id": "groovy",
+      "label": "Groovy",
+      "categories": ["languages", "delivery"]
+    },
+    {
+      "id": "bash",
+      "label": "Bash",
+      "categories": ["languages", "delivery", "cloud"]
+    },
+    {
+      "id": "dart",
+      "label": "Dart",
+      "categories": ["languages", "frontend"]
+    },
+    {
+      "id": "spring-boot",
+      "label": "Spring Boot",
+      "categories": ["backend"]
+    },
+    {
+      "id": "spring-mvc",
+      "label": "Spring MVC",
+      "categories": ["backend"]
+    },
+    {
+      "id": "spring-batch",
+      "label": "Spring Batch",
+      "categories": ["backend"]
+    },
+    {
+      "id": "spring-integration",
+      "label": "Spring Integration",
+      "categories": ["backend"]
+    },
+    {
+      "id": "spring-security",
+      "label": "Spring Security",
+      "categories": ["backend", "testing"]
+    },
+    {
+      "id": "spring-data-jdbc",
+      "label": "Spring Data JDBC",
+      "categories": ["backend", "storage"]
+    },
+    {
+      "id": "spring-data-jpa",
+      "label": "Spring Data JPA",
+      "categories": ["backend", "storage"]
+    },
+    {
+      "id": "spring-ai",
+      "label": "Spring AI",
+      "categories": ["backend", "workflow"]
+    },
+    {
+      "id": "rest",
+      "label": "REST",
+      "categories": ["backend", "frontend"]
+    },
+    {
+      "id": "mcp",
+      "label": "MCP",
+      "categories": ["backend", "workflow"]
+    },
+    {
+      "id": "jwt",
+      "label": "JWT",
+      "categories": ["backend", "testing"]
+    },
+    {
+      "id": "ldap",
+      "label": "LDAP",
+      "categories": ["backend", "testing"]
+    },
+    {
+      "id": "hono",
+      "label": "Hono",
+      "categories": ["backend"]
+    },
+    {
+      "id": "react",
+      "label": "React",
+      "categories": ["frontend"]
+    },
+    {
+      "id": "html",
+      "label": "HTML",
+      "categories": ["frontend"]
+    },
+    {
+      "id": "css",
+      "label": "CSS",
+      "categories": ["frontend"]
+    },
+    {
+      "id": "flutter",
+      "label": "Flutter",
+      "categories": ["frontend"]
+    },
+    {
+      "id": "postgresql",
+      "label": "PostgreSQL",
+      "categories": ["storage"]
+    },
+    {
+      "id": "cloud-sql",
+      "label": "Cloud SQL",
+      "categories": ["storage", "cloud"]
+    },
+    {
+      "id": "h2",
+      "label": "H2",
+      "categories": ["storage", "testing"]
+    },
+    {
+      "id": "bigquery",
+      "label": "BigQuery",
+      "categories": ["storage", "cloud", "observability"]
+    },
+    {
+      "id": "mongodb",
+      "label": "MongoDB",
+      "categories": ["storage"]
+    },
+    {
+      "id": "gcp-cloud-run",
+      "label": "GCP Cloud Run",
+      "categories": ["cloud"]
+    },
+    {
+      "id": "firebase",
+      "label": "Firebase",
+      "categories": ["cloud", "storage"]
+    },
+    {
+      "id": "cloudflare-workers",
+      "label": "Cloudflare Workers",
+      "categories": ["cloud", "backend"]
+    },
+    {
+      "id": "cloudflare-r2",
+      "label": "Cloudflare R2",
+      "categories": ["cloud", "storage"]
+    },
+    {
+      "id": "docker",
+      "label": "Docker",
+      "categories": ["cloud", "delivery"]
+    },
+    {
+      "id": "solace",
+      "label": "Solace",
+      "categories": ["cloud", "backend"]
+    },
+    {
+      "id": "git",
+      "label": "Git",
+      "categories": ["delivery", "workflow"]
+    },
+    {
+      "id": "maven",
+      "label": "Maven",
+      "categories": ["delivery"]
+    },
+    {
+      "id": "npm",
+      "label": "NPM",
+      "categories": ["delivery", "frontend"]
+    },
+    {
+      "id": "jenkins",
+      "label": "Jenkins",
+      "categories": ["delivery"]
+    },
+    {
+      "id": "github-actions",
+      "label": "GitHub Actions",
+      "categories": ["delivery"]
+    },
+    {
+      "id": "nexus",
+      "label": "Nexus",
+      "categories": ["delivery"]
+    },
+    {
+      "id": "ansible",
+      "label": "Ansible",
+      "categories": ["delivery", "cloud"]
+    },
+    {
+      "id": "junit",
+      "label": "JUnit",
+      "categories": ["testing"]
+    },
+    {
+      "id": "mockito",
+      "label": "Mockito",
+      "categories": ["testing"]
+    },
+    {
+      "id": "vitest",
+      "label": "Vitest",
+      "categories": ["testing", "frontend"]
+    },
+    {
+      "id": "checkmarx",
+      "label": "Checkmarx",
+      "categories": ["testing", "delivery"]
+    },
+    {
+      "id": "sonatype",
+      "label": "Sonatype",
+      "categories": ["testing", "delivery"]
+    },
+    {
+      "id": "looker-studio",
+      "label": "Looker Studio",
+      "categories": ["observability"]
+    },
+    {
+      "id": "grafana",
+      "label": "Grafana",
+      "categories": ["observability"]
+    },
+    {
+      "id": "geneos",
+      "label": "Geneos",
+      "categories": ["observability"]
+    },
+    {
+      "id": "github-copilot",
+      "label": "GitHub Copilot",
+      "categories": ["workflow"]
+    },
+    {
+      "id": "claude-code",
+      "label": "Claude Code",
+      "categories": ["workflow"]
+    },
+    {
+      "id": "codex",
+      "label": "Codex",
+      "categories": ["workflow"]
+    },
+    {
+      "id": "jira",
+      "label": "Jira",
+      "categories": ["workflow"]
+    },
+    {
+      "id": "confluence",
+      "label": "Confluence",
+      "categories": ["workflow"]
+    },
+    {
+      "id": "angular",
+      "label": "Angular",
+      "categories": ["frontend"]
+    },
+    {
+      "id": "bootstrap",
+      "label": "Bootstrap",
+      "categories": ["frontend"]
+    },
+    {
+      "id": "r",
+      "label": "R",
+      "categories": ["languages", "observability"]
+    }
+  ]
 }

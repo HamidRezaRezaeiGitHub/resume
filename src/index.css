@@ -596,10 +596,6 @@ h3 {
     grid-template-columns: 190px minmax(0, 1fr);
     gap: 18px;
   }
-
-  .footer-credit {
-    display: none;
-  }
 }
 @media (max-width: 540px) {
   .container {

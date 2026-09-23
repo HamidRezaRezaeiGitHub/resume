@@ -7,7 +7,6 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {resume.profile.name}
         </p>
-        <span className="footer-credit">{resume.footer.builtWith}</span>
         <a href="#top" className="text-link">
           Back to top
           <ArrowUp size={15} />

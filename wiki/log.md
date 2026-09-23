@@ -1,5 +1,14 @@
 # Wiki log
 
+## 2026-09-23 — update — Interactive skills network
+
+Added category hubs and unique shared technology nodes, degree-based label sizing,
+selection, pan/zoom, pointer parallax and opt-in phone gestures. Retained a complete
+list/print view, pause and reduced-motion support. Normalized skills into one
+validated JSON source and added selected LinkedIn-verified tools. Removed the
+footer technology credit. Updated architecture, content terminology and interaction
+checks. Release scope is DEV and UAT only; production awaits user approval.
+
 ## 2026-09-23 — update — Website-style hero and contact
 
 Refined the page bookends with a split hero, larger name typography, a soft
