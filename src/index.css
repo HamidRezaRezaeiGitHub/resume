@@ -728,29 +728,12 @@ h1 > span {
   color: var(--category);
 }
 .chapter-story {
-  position: relative;
   padding-block: 28px;
   border-top: 1px solid var(--line);
   scroll-margin-top: calc(var(--nav-height) + 40px);
-  perspective: 1000px;
-  overflow: clip;
-}
-.story-rule {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 2px;
-  background: linear-gradient(90deg, var(--category), transparent);
-  transform-origin: left;
 }
 .story-content {
   width: 100%;
-  transform-origin: left center;
-}
-.story-title-reveal {
-  overflow: clip;
-  /* Leave room for descenders while the heading rises through its mask. */
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
 }
 .story-number {
   display: flex;

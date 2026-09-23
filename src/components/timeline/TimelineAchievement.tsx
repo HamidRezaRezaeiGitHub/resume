@@ -19,36 +19,15 @@ export function TimelineAchievement({
   })
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.28, 0.82, 1],
-    [0.35, 1, 1, 0.5],
+    [0, 0.18, 0.72, 1],
+    [0.3, 1, 1, 0.3],
   )
-  // Separate entrance windows make the heading lead the supporting copy.
-  // The static li owns measurement so animated children cannot shift the range.
-  const x = useTransform(scrollYProgress, [0, 0.3, 0.82, 1], [48, 0, 0, -16])
-  const rotateY = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.82, 1],
-    [-9, 0, 0, 3],
-  )
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.82, 1],
-    [0.94, 1, 1, 0.98],
-  )
-  const headingY = useTransform(scrollYProgress, [0.03, 0.25], [35, 0])
-  const detailY = useTransform(scrollYProgress, [0.08, 0.36], [28, 0])
-  const detailOpacity = useTransform(scrollYProgress, [0.08, 0.34], [0.45, 1])
-  const lineScale = useTransform(scrollYProgress, [0.03, 0.36], [0, 1])
+  const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [18, 0, 0, -12])
   return (
     <li ref={ref} id={item.id} className="chapter-story">
-      <motion.span
-        className="story-rule"
-        aria-hidden="true"
-        style={reduced ? undefined : { scaleX: lineScale }}
-      />
       <motion.div
         className="story-content"
-        style={reduced ? undefined : { opacity, x, rotateY, scale }}
+        style={reduced ? undefined : { opacity, y }}
       >
         <p className="story-number mono">
           <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
@@ -62,25 +41,16 @@ export function TimelineAchievement({
             <span>{item.metric.label}</span>
           </div>
         )}
-        <div className="story-title-reveal">
-          <motion.h4 style={reduced ? undefined : { y: headingY }}>
-            {item.title}
-          </motion.h4>
-        </div>
-        <motion.div
-          className="story-support"
-          style={reduced ? undefined : { y: detailY, opacity: detailOpacity }}
-        >
-          <p className="story-body">{item.body}</p>
-          {item.details && (
-            <ul className="story-details">
-              {item.details.map((detail) => (
-                <li key={detail}>{detail}</li>
-              ))}
-            </ul>
-          )}
-          {item.tags && <TechnologyList items={item.tags} />}
-        </motion.div>
+        <h4>{item.title}</h4>
+        <p className="story-body">{item.body}</p>
+        {item.details && (
+          <ul className="story-details">
+            {item.details.map((detail) => (
+              <li key={detail}>{detail}</li>
+            ))}
+          </ul>
+        )}
+        {item.tags && <TechnologyList items={item.tags} />}
       </motion.div>
     </li>
   )

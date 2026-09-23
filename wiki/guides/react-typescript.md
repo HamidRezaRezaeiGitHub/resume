@@ -3,7 +3,7 @@ title: React and TypeScript guide
 domain: guides
 tags: [react, typescript, accessibility, motion]
 status: current
-last_updated: 2026-09-16
+last_updated: 2026-09-23
 ---
 
 # React and TypeScript
@@ -44,12 +44,12 @@ release at the end of their chapter and remain usable on short screens.
 Use content-driven spacing; do not add viewport-height padding to make effects
 last longer. Scroll motion should not trap navigation or gate access to copy.
 
-On the `codex/timeline-highlight-motion` DEV experiment, highlights slide and
-tilt into place, with the heading leading the supporting text and an accent
-rule drawing across the row. A static list item measures scroll progress;
-only its children transform. All layers settle before the main reading area,
-reverse naturally with scrolling, and become static for reduced motion/print.
-This experiment does not imply approval to merge into the accepted UAT design.
+The accepted design is the original production presentation from `f9d2152`:
+highlights use a subtle vertical reveal and opacity change, with sticky entry
+headings and compact, content-driven spacing. The static list item measures
+scroll progress while its content transforms. Reduced motion and print retain
+readable static content. The slide/tilt and stacked-card experiments were
+declined on September 23 and are not part of the maintained release.
 
 ## Accessibility and phone review
 

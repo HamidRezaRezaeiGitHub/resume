@@ -1,5 +1,12 @@
 # Wiki log
 
+## [2026-09-23] update | Production design retained
+
+The user selected the original production design at `f9d2152` and declined the
+other scroll experiments. Restored its exact highlight component and stylesheet
+on the content-refresh branch. Kept the JSON terminology guide and AI pack.
+The resume update will use this design consistently across DEV, UAT and PROD.
+
 ## [2026-09-16] update | DEV highlight animation and terminology
 
 Documented the feature-branch experiment with staggered slide/tilt reveals,
