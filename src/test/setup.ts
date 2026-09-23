@@ -16,11 +16,10 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 })
 
-// Layout observers are controlled explicitly in graph lifecycle tests.
+// jsdom has no layout engine; visual and resize behavior is checked in-browser.
 class PassiveObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
 }
 vi.stubGlobal('ResizeObserver', PassiveObserver)
-vi.stubGlobal('IntersectionObserver', PassiveObserver)

@@ -116,6 +116,9 @@ export const resumeContentSchema = z
       )
       .min(1),
     skillGroups: z.array(z.strictObject({ id: anchorId, title: text })).min(1),
+    skillCategories: z
+      .array(z.strictObject({ id: anchorId, title: text, groupId: anchorId }))
+      .min(1),
     skills: z
       .array(z.strictObject({ id: anchorId, label: text, categories: texts }))
       .min(1),
@@ -169,8 +172,23 @@ export const resumeContentSchema = z
       })
     const graphIds = new Set<string>()
     const labels = new Set<string>()
-    const categoryIds = new Set(content.skillGroups.map((group) => group.id))
-    for (const key of ['skillGroups', 'skills'] as const) {
+    const categoryIds = new Set(
+      content.skillCategories.map((category) => category.id),
+    )
+    const groupIds = new Set(content.skillGroups.map((group) => group.id))
+    const groupTitles = new Set(
+      content.skillGroups.map((group) => group.title.toLowerCase()),
+    )
+    if (
+      groupIds.size !== content.skillGroups.length ||
+      groupTitles.size !== content.skillGroups.length
+    )
+      context.addIssue({
+        code: 'custom',
+        message: 'Skill groups must have unique IDs and titles',
+        path: ['skillGroups'],
+      })
+    for (const key of ['skillCategories', 'skills'] as const) {
       content[key].forEach((item, i) => {
         const label = 'title' in item ? item.title : item.label
         if (graphIds.has(item.id) || labels.has(label.toLowerCase()))
@@ -193,11 +211,31 @@ export const resumeContentSchema = z
           })
       })
     })
-    content.skillGroups.forEach((group, i) => {
-      if (!content.skills.some((skill) => skill.categories.includes(group.id)))
+    content.skillCategories.forEach((category, i) => {
+      if (!groupIds.has(category.groupId))
+        context.addIssue({
+          code: 'custom',
+          message: 'Unknown skill group',
+          path: ['skillCategories', i, 'groupId'],
+        })
+      if (
+        !content.skills.some((skill) => skill.categories.includes(category.id))
+      )
         context.addIssue({
           code: 'custom',
           message: 'Skill categories must contain a skill',
+          path: ['skillCategories', i],
+        })
+    })
+    content.skillGroups.forEach((group, i) => {
+      if (
+        !content.skillCategories.some(
+          (category) => category.groupId === group.id,
+        )
+      )
+        context.addIssue({
+          code: 'custom',
+          message: 'Skill groups must contain a category',
           path: ['skillGroups', i],
         })
     })

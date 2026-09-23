@@ -10,7 +10,7 @@ import {
 } from './graph'
 
 describe('skills graph', () => {
-  const graph = buildSkillsGraph(resume.skillGroups, resume.skills)
+  const graph = buildSkillsGraph(resume.skillCategories, resume.skills)
   it('represents shared skills once with every category connection and degree-based sizing', () => {
     const ts = graph.nodes.filter((node) => node.id === 'typescript')
     expect(ts).toHaveLength(1)
@@ -37,7 +37,7 @@ describe('skills graph', () => {
   })
   it('is deterministic, preserves input, and keeps label hit areas from overlapping', () => {
     const before = JSON.stringify(resume)
-    const again = buildSkillsGraph(resume.skillGroups, resume.skills)
+    const again = buildSkillsGraph(resume.skillCategories, resume.skills)
     expect(JSON.stringify(resume)).toBe(before)
     expect(again).toEqual(graph)
     for (let i = 0; i < graph.nodes.length; i++)
@@ -52,21 +52,39 @@ describe('skills graph', () => {
         ).toBe(true)
       }
   })
-  it('fits the desktop overview inside its viewport', () => {
-    const camera = fitCamera(graph.nodes, { width: 1180, height: 600 })
+  it('fits a node dragged beyond the manual zoom range', () => {
+    const moved = graph.nodes.map((node, i) =>
+      i === 0 ? { ...node, x: 20000 } : node,
+    )
+    const camera = fitCamera(moved, { width: 278, height: 420 })
+    for (const node of moved) {
+      expect(
+        camera.x + (node.x - node.width / 2) * camera.scale,
+      ).toBeGreaterThanOrEqual(0)
+      expect(
+        camera.x + (node.x + node.width / 2) * camera.scale,
+      ).toBeLessThanOrEqual(278)
+    }
+  })
+  it.each([
+    { width: 960, height: 600 },
+    { width: 278, height: 420 },
+    { width: 354, height: 450 },
+  ])('fits every node in the viewport $width × $height', (size) => {
+    const camera = fitCamera(graph.nodes, size)
     for (const node of graph.nodes) {
       expect(
         camera.x + (node.x - node.width / 2) * camera.scale,
       ).toBeGreaterThanOrEqual(0)
       expect(
         camera.x + (node.x + node.width / 2) * camera.scale,
-      ).toBeLessThanOrEqual(1180)
+      ).toBeLessThanOrEqual(size.width)
       expect(
         camera.y + (node.y - node.height / 2) * camera.scale,
       ).toBeGreaterThanOrEqual(0)
       expect(
         camera.y + (node.y + node.height / 2) * camera.scale,
-      ).toBeLessThanOrEqual(600)
+      ).toBeLessThanOrEqual(size.height)
     }
   })
 })

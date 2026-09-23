@@ -139,4 +139,28 @@ describe('section-based resume content', () => {
       content.skills[0].id = content.skillGroups[0].id
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
+  it.each([
+    'unknown-group',
+    'duplicate-category-id',
+    'duplicate-category-title',
+    'unused-category',
+    'duplicate-group-id',
+  ])('rejects malformed graph/group mapping: %s', (invalid) => {
+    const content = editableCopy()
+    if (invalid === 'unknown-group')
+      content.skillCategories[0].groupId = 'missing'
+    if (invalid === 'duplicate-category-id')
+      content.skillCategories[1].id = content.skillCategories[0].id
+    if (invalid === 'duplicate-category-title')
+      content.skillCategories[1].title = content.skillCategories[0].title
+    if (invalid === 'unused-category')
+      content.skillCategories.push({
+        id: 'unused',
+        title: 'Unused',
+        groupId: 'languages',
+      })
+    if (invalid === 'duplicate-group-id')
+      content.skillGroups[1].id = content.skillGroups[0].id
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
 })

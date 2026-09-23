@@ -28,7 +28,8 @@ through tests; deployment jobs additionally build before uploading assets.
 
 Vitest with Testing Library and jsdom covers content validation, date
 helpers, theme behavior, contact interactions, and graph relationships/camera
-math, selection, gesture boundaries and motion lifecycle. Tests live beside the code;
+math, grouped membership, hover/selection, individual node dragging, gesture
+boundaries and tooltips. Tests live beside the code;
 `src/test/setup.ts` supplies browser/test setup. Use `npm run test` for watch
 mode or `npm run test:ci -- path/to/file.test.ts` for a focused run.
 
@@ -50,12 +51,17 @@ short landscape viewport. Check:
 - Light/dark themes, saved and system preferences, and readable contrast.
 - Every top-bar section link is visible on phones and scrolls up/down to an
   unobscured target, preserving keyboard focus.
-- Skills: select TypeScript and verify Languages, Backend & APIs, and Frontend.
+- Skills: select TypeScript and verify Languages, Backend, and Frontend.
 - Graph zoom limits/reset, mouse pan, modifier-wheel zoom, and ordinary wheel scrolling.
-- Phone: default swipe scrolls the page; Explore graph enables pan/pinch; Done restores scrolling.
-- Keyboard picker, graph arrows/+/-/0, visible focus, and complete List view.
-- Reduced motion and pause stop ambient motion; offscreen/hidden tabs stop the loop.
-- Print shows all nine skill categories instead of the interactive graph; contact still works.
+- Phone: default swipe scrolls the page; Explore graph enables node drag/pan/pinch; Done restores scrolling.
+- Keyboard picker, arrows/+/-/0, Shift+arrows for nodes, visible focus, tooltips and complete List view.
+- Hover highlights a node and its direct edges without changing camera or selection.
+- Node drag moves only that node and its edges; background drag pans without deselecting.
+- A blank click clears selection; Fit includes moved nodes; Reset restores the layout.
+- Initial fit contains every node at 320px and desktop; section container widths match.
+- No idle motion or node dots; reduced motion disables interaction transitions.
+- Tooltip hover/focus, Escape dismissal, contrast and clipping on narrow screens.
+- Print shows all nine skill groups instead of the interactive graph; contact still works.
 - Browser console errors and broken assets.
 
 Use available browser tooling; do not require a script from someone's `/tmp`

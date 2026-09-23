@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import App from '@/App'
 import { resume } from '@/data/resume'
+import { skillsForGroup } from '@/data/skills'
 
 describe('resume sections', () => {
   it('presents the requested sections and keeps the summary about Hamid', () => {
@@ -129,8 +130,7 @@ describe('resume sections', () => {
     for (const group of resume.skillGroups)
       expect(
         within(skills).getByText(
-          resume.skills
-            .filter((skill) => skill.categories.includes(group.id))
+          skillsForGroup(group.id, resume.skillCategories, resume.skills)
             .map((skill) => skill.label)
             .join(', '),
         ),

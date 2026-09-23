@@ -1,5 +1,15 @@
 # Wiki log
 
+## 2026-09-23 — update — Skills graph interaction refinement
+
+Replaced drift/parallax with mouse-hover connection highlighting. Added individual
+node dragging with attached edges, blank-space deselection, accessible control
+tooltips, and a full-graph initial fit on every viewport. Skills now inherits the
+normal section width; category dots are removed. Fifteen separate graph topics
+map to the existing nine PDF/list groups, preserving grouped contents without
+duplicates. Node positions are automatic initially and temporary when dragged.
+DEV/UAT only; no production promotion.
+
 ## 2026-09-23 — update — Interactive skills network
 
 Added category hubs and unique shared technology nodes, degree-based label sizing,

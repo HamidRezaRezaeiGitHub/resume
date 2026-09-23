@@ -39,26 +39,27 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
    `src/components/skills/skills.css`.
 6. `Skills` switches between the network and a derived definition list. The
    graph module builds category/skill nodes and pure camera calculations.
-   `useGraphCamera` owns pan/zoom and touch capture. `useGraphMotion` owns
-   pointer parallax and ambient movement, with pause/reduced-motion/offscreen
-   and hidden-tab handling. It changes one SVG transform without frame-by-frame
-   React renders. All observers, events and animation frames clean up on unmount.
+   `useGraphInteraction` owns node positions, camera gestures and touch capture.
+   Mouse hover is transient presentation state, separate from persistent selection.
+   Graph topics map to PDF/list groups through `skillCategories[].groupId`;
+   `src/data/skills.ts` deduplicates group membership. No ambient motion loop runs.
+   Observers, pointer capture and tooltip listeners clean up appropriately.
 
 The [content guide](../guides/resume-content.md) owns fields and publication rules.
 
 ## Source map
 
-| Path                     | Responsibility                                                       |
-| ------------------------ | -------------------------------------------------------------------- |
-| `src/components/`        | Sections, shared entries, navigation and contact                     |
-| `src/components/skills/` | Graph model, SVG presentation, camera/motion hooks and scoped styles |
-| `src/hooks/`             | Theme preference and browser synchronization                         |
-| `src/data/`              | JSON, schema, typed export and contract tests                        |
-| `src/lib/`               | Pure date formatting and utilities                                   |
-| `src/index.css`          | Theme tokens, responsive layout and print                            |
-| `public/`                | Public assets and pre-paint theme bootstrap                          |
-| `ai/`                    | Agent workflows, scripts, skills and templates                       |
-| `wiki/`                  | Durable project knowledge, never imported into the page              |
+| Path                     | Responsibility                                                    |
+| ------------------------ | ----------------------------------------------------------------- |
+| `src/components/`        | Sections, shared entries, navigation and contact                  |
+| `src/components/skills/` | Graph model, SVG presentation, interaction hook and scoped styles |
+| `src/hooks/`             | Theme preference and browser synchronization                      |
+| `src/data/`              | JSON, schema, typed export and contract tests                     |
+| `src/lib/`               | Pure date formatting and utilities                                |
+| `src/index.css`          | Theme tokens, responsive layout and print                         |
+| `public/`                | Public assets and pre-paint theme bootstrap                       |
+| `ai/`                    | Agent workflows, scripts, skills and templates                    |
+| `wiki/`                  | Durable project knowledge, never imported into the page           |
 
 ## Browser integrations
 

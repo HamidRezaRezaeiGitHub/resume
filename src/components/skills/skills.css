@@ -1,6 +1,3 @@
-.skills-section > .container {
-  width: min(1180px, calc(100% - 72px));
-}
 .skills-intro {
   display: flex;
   align-items: flex-end;
@@ -168,6 +165,9 @@
 .network-svg[data-dragging='true'] .network-camera {
   transition: none;
 }
+.network-edges {
+  pointer-events: none;
+}
 .network-edges line {
   stroke: var(--accent);
   stroke-width: 1;
@@ -180,14 +180,11 @@
   stroke-width: 1.5;
   stroke-dasharray: 5 7;
 }
-.network-svg[data-motion='on'] .network-edges line.is-connected {
-  animation: network-flow 16s linear infinite;
-}
 .network-edges line.is-muted {
   opacity: 0.055;
 }
 .network-node {
-  cursor: pointer;
+  cursor: grab;
   outline: none;
   transition: opacity 0.3s;
 }
@@ -209,9 +206,6 @@
   font-weight: 550;
   fill: var(--ink);
 }
-.network-node.category circle {
-  fill: var(--accent);
-}
 .network-node.is-muted {
   opacity: 0.17;
 }
@@ -223,15 +217,14 @@
 .network-node:focus-visible rect {
   stroke: var(--accent);
 }
-.network-node.is-selected rect {
+.network-node.is-highlighted rect {
   fill: var(--accent);
   stroke: var(--accent);
 }
-.network-node.is-selected text,
-.network-node.is-selected circle {
+.network-node.is-highlighted text {
   fill: var(--paper);
 }
-.network-node.is-selected {
+.network-node.is-highlighted {
   filter: drop-shadow(0 4px 12px #00000018);
 }
 .network-caption {
@@ -308,11 +301,6 @@
 .print-only {
   display: none;
 }
-@keyframes network-flow {
-  to {
-    stroke-dashoffset: -120;
-  }
-}
 @media (pointer: coarse), (max-width: 600px) {
   .network-touch-control {
     display: block;
@@ -345,9 +333,6 @@
   }
 }
 @media (max-width: 600px) {
-  .skills-section > .container {
-    width: calc(100% - 36px);
-  }
   .skills-intro {
     align-items: flex-start;
     flex-direction: column;
@@ -393,9 +378,6 @@
   .network-edges line {
     transition: none;
   }
-  .network-edges line.is-connected {
-    animation: none !important;
-  }
 }
 @media print {
   .skills-network,
@@ -405,7 +387,37 @@
   .skills-list.print-only {
     display: block;
   }
-  .skills-section > .container {
-    width: 100%;
-  }
+}
+
+.network-control {
+  position: relative;
+  display: inline-flex;
+}
+.network-tooltip {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 11px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px #0002;
+}
+.network-control:first-child .network-tooltip {
+  left: 0;
+  transform: none;
+}
+.network-control:last-child .network-tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+.network-svg[data-dragging='true'],
+.network-svg[data-dragging='true'] .network-node {
+  cursor: grabbing;
 }

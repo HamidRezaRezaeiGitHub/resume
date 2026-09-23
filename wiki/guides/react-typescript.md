@@ -42,8 +42,8 @@ Focusable section targets preserve keyboard context; scroll padding keeps them
 below the fixed header. There is no scroll-spy state or scroll event listener.
 
 All content remains readable without animation. Smooth scrolling respects reduced
-motion. Skills has a pause control and respects reduced motion, page visibility,
-and viewport intersection. Print replaces the graph with all skill categories,
+motion. Skills has no ambient animation or mouse-follow transform; interaction
+transitions respect reduced motion. Print replaces the graph with all skill groups,
 using static, light-colored content without navigation. The declined animation experiments
 are historical branches, not maintained presentation variants.
 
@@ -57,15 +57,30 @@ narrow phones and short landscape using the [browser checklist](testing.md).
 
 ## Skills network
 
-Keep graph data/layout, camera gestures, motion lifecycle and presentation separate.
-The static force simulation uses copies of JSON-derived data; D3 must never mutate
-the editable source. Rectangular relaxation prevents long labels from overlapping.
-Size is a shared logarithmic function of connection count, not skill strength.
+Keep graph data/layout, interaction state and presentation separate. The automatic
+layout uses computed category seeds, a bounded force simulation on copied data,
+and rectangular relaxation for label spacing. Size is a shared logarithmic
+function of connection count. No coordinates are manually authored in JSON.
 
-Mouse dragging pans; buttons and Ctrl/Command-wheel zoom. Ordinary wheel input
-scrolls the page. Touch defaults to native vertical page scrolling; Explore graph
-explicitly enables pan/pinch, and Done exploring restores scrolling. Arrow keys
-pan, +/− zoom, 0 resets, and Escape exits touch exploration. A native picker
-reaches every node without tabbing through dozens of SVG elements. List view and
-print derive all memberships from the same JSON. Keep motion subtle, clean up
-observers/listeners/frames, and never require gestures to access resume facts.
+`useGraphInteraction` owns temporary node positions, camera state, pointer capture
+and pinch tracking. Dragging a node moves it and its edges; background dragging
+pans. A second touch switches to pinch, never moving the previously grabbed node.
+A drag release must not trigger click selection or blank-space deselection. Fit
+uses current positions; Reset restores the automatic layout and fits it. Initial
+and resized views fit all nodes on phones and desktops. Only real resize events
+refit the camera, not state updates during node dragging.
+
+Mouse hover previews direct connections without moving the camera or changing
+persistent selection. Clicking pins a selection; blank clicks and Escape clear
+it. Picker/related-node buttons focus a neighborhood. There is no drifting,
+parallax, live force simulation, looping edge animation or pause control.
+
+Buttons and Ctrl/Command-wheel zoom; ordinary wheel input scrolls the page.
+Touch defaults to native page scrolling; Explore graph opts into node dragging,
+pan and pinch. Done or Escape exits capture. Arrows pan; Shift+arrows move the
+focused node; +/− zoom; 0 resets. The native picker reaches every node. Toolbar
+hints appear on mouse hover or focus, dismiss with Escape, and clean up their
+listeners. Skills inherits the same container width as the other sections.
+
+The List/print view derives nine PDF groups from graph category mappings, with
+no repeated skill within one group. Never require gestures to access resume facts.

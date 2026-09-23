@@ -53,14 +53,17 @@ Local adaptations and upgrade rules live in the [pack guide](../guides/ai-pack.m
 
 ## D-006: An explorable Skills network
 
-On September 23 the user requested a graph as the website's playful discovery
-section, while preserving the accepted resume layout. The PDF's nine categories
-become hubs; canonical technology nodes can belong to multiple categories.
-Connection count controls label size uniformly, never indicating proficiency.
-A bounded D3 layout and rectangular collision pass run once per module load;
-SVG renders the result. Native pointer/camera helpers keep gestures testable.
-Pointer parallax and subtle drift stop when paused, offscreen, hidden, or reduced
-motion is requested. Touch capture is opt-in. A complete list and print view
-preserve scanability and accessible alternatives. The footer build credit was
-removed at the user's request. This feature is approved for DEV/UAT review only;
-production promotion requires fresh explicit user approval.
+On September 23 the user requested an explorable graph while preserving the
+accepted resume layout. Fifteen individual topic hubs map to the PDF's nine
+combined groups; a canonical technology can connect to multiple topics.
+Connection count controls label size, never proficiency. A bounded D3 layout and
+rectangular collision pass run once per module load; SVG renders the result.
+No individual node positions are manually authored.
+
+The user refined the initial version to remove ambient drift and pointer parallax.
+Mouse hover now highlights the direct neighborhood without moving it. Node drag,
+background pan, pinch zoom and persistent selection are distinct interactions.
+Initial/resize views fit the complete graph, using the normal section width.
+Toolbar tooltips explain controls. Touch capture stays opt-in; a deduplicated
+list and print view preserve scanning and accessible alternatives. Production
+promotion still requires fresh explicit user approval; changes go to DEV/UAT.

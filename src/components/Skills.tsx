@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { List, Network } from 'lucide-react'
 import { resume } from '@/data/resume'
+import { skillsForGroup } from '@/data/skills'
 import { Section } from '@/components/Section'
 import { SkillsNetwork } from '@/components/skills/SkillsNetwork'
 import '@/components/skills/skills.css'
@@ -47,8 +48,7 @@ export function Skills() {
           <div className="skill-category" key={group.id}>
             <dt>{group.title}</dt>
             <dd>
-              {resume.skills
-                .filter((skill) => skill.categories.includes(group.id))
+              {skillsForGroup(group.id, resume.skillCategories, resume.skills)
                 .map((skill) => skill.label)
                 .join(', ')}
             </dd>

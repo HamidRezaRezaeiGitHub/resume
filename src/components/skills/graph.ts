@@ -39,7 +39,7 @@ export interface Size {
   width: number
   height: number
 }
-export const MIN_ZOOM = 0.25
+export const MIN_ZOOM = 0.08
 export const MAX_ZOOM = 2
 
 // Labels are measured conservatively in world units, before any camera zoom.
@@ -66,7 +66,7 @@ function node(
 }
 
 export function buildSkillsGraph(
-  groups: ResumeContent['skillGroups'],
+  groups: ResumeContent['skillCategories'],
   skills: ResumeContent['skills'],
 ): SkillsGraph {
   const hubs = groups.map((group, i) => {
@@ -169,13 +169,11 @@ export function fitCamera(
   const right = Math.max(...nodes.map((n) => n.x + n.width / 2)) + 35
   const top = Math.min(...nodes.map((n) => n.y - n.height / 2)) - 35
   const bottom = Math.max(...nodes.map((n) => n.y + n.height / 2)) + 35
-  const scale = Math.max(
-    MIN_ZOOM,
-    Math.min(
-      maxScale,
-      size.width / (right - left),
-      size.height / (bottom - top),
-    ),
+  // Fit must include even a node dragged far beyond the original layout.
+  const scale = Math.min(
+    maxScale,
+    size.width / (right - left),
+    size.height / (bottom - top),
   )
   return {
     x: size.width / 2 - ((left + right) / 2) * scale,
@@ -220,21 +218,5 @@ export function pinchCamera(
     ...zoomed,
     x: zoomed.x + after.x - before.x,
     y: zoomed.y + after.y - before.y,
-  }
-}
-
-export function initialCamera(nodes: GraphNode[], size: Size): Camera {
-  if (size.width >= 600) return fitCamera(nodes, size)
-  const tools = nodes.filter((node) => node.kind === 'skill')
-  const center = tools.reduce(
-    (best, node) =>
-      node.connections.length > best.connections.length ? node : best,
-    tools[0] ?? nodes[0],
-  )
-  const scale = 0.8
-  return {
-    scale,
-    x: size.width / 2 - center.x * scale,
-    y: size.height / 2 - center.y * scale,
   }
 }

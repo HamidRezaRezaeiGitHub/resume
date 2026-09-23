@@ -342,17 +342,17 @@
     {
       "id": "sql",
       "label": "SQL",
-      "categories": ["languages", "storage", "observability"]
+      "categories": ["languages", "databases", "analytics"]
     },
     {
       "id": "groovy",
       "label": "Groovy",
-      "categories": ["languages", "delivery"]
+      "categories": ["languages", "build", "delivery"]
     },
     {
       "id": "bash",
       "label": "Bash",
-      "categories": ["languages", "delivery", "cloud"]
+      "categories": ["languages", "delivery", "infrastructure"]
     },
     {
       "id": "dart",
@@ -367,7 +367,7 @@
     {
       "id": "spring-mvc",
       "label": "Spring MVC",
-      "categories": ["backend"]
+      "categories": ["backend", "apis"]
     },
     {
       "id": "spring-batch",
@@ -382,17 +382,17 @@
     {
       "id": "spring-security",
       "label": "Spring Security",
-      "categories": ["backend", "testing"]
+      "categories": ["backend", "security"]
     },
     {
       "id": "spring-data-jdbc",
       "label": "Spring Data JDBC",
-      "categories": ["backend", "storage"]
+      "categories": ["backend", "databases"]
     },
     {
       "id": "spring-data-jpa",
       "label": "Spring Data JPA",
-      "categories": ["backend", "storage"]
+      "categories": ["backend", "databases"]
     },
     {
       "id": "spring-ai",
@@ -402,27 +402,27 @@
     {
       "id": "rest",
       "label": "REST",
-      "categories": ["backend", "frontend"]
+      "categories": ["apis", "frontend"]
     },
     {
       "id": "mcp",
       "label": "MCP",
-      "categories": ["backend", "workflow"]
+      "categories": ["apis", "workflow"]
     },
     {
       "id": "jwt",
       "label": "JWT",
-      "categories": ["backend", "testing"]
+      "categories": ["apis", "security"]
     },
     {
       "id": "ldap",
       "label": "LDAP",
-      "categories": ["backend", "testing"]
+      "categories": ["backend", "security"]
     },
     {
       "id": "hono",
       "label": "Hono",
-      "categories": ["backend"]
+      "categories": ["backend", "apis"]
     },
     {
       "id": "react",
@@ -447,27 +447,27 @@
     {
       "id": "postgresql",
       "label": "PostgreSQL",
-      "categories": ["storage"]
+      "categories": ["databases"]
     },
     {
       "id": "cloud-sql",
       "label": "Cloud SQL",
-      "categories": ["storage", "cloud"]
+      "categories": ["databases", "cloud"]
     },
     {
       "id": "h2",
       "label": "H2",
-      "categories": ["storage", "testing"]
+      "categories": ["databases", "testing"]
     },
     {
       "id": "bigquery",
       "label": "BigQuery",
-      "categories": ["storage", "cloud", "observability"]
+      "categories": ["databases", "cloud", "analytics"]
     },
     {
       "id": "mongodb",
       "label": "MongoDB",
-      "categories": ["storage"]
+      "categories": ["databases"]
     },
     {
       "id": "gcp-cloud-run",
@@ -492,12 +492,12 @@
     {
       "id": "docker",
       "label": "Docker",
-      "categories": ["cloud", "delivery"]
+      "categories": ["infrastructure", "delivery"]
     },
     {
       "id": "solace",
       "label": "Solace",
-      "categories": ["cloud", "backend"]
+      "categories": ["infrastructure", "backend"]
     },
     {
       "id": "git",
@@ -507,17 +507,17 @@
     {
       "id": "maven",
       "label": "Maven",
-      "categories": ["delivery"]
+      "categories": ["build"]
     },
     {
       "id": "npm",
       "label": "NPM",
-      "categories": ["delivery", "frontend"]
+      "categories": ["build", "frontend"]
     },
     {
       "id": "jenkins",
       "label": "Jenkins",
-      "categories": ["delivery"]
+      "categories": ["build", "delivery"]
     },
     {
       "id": "github-actions",
@@ -527,12 +527,12 @@
     {
       "id": "nexus",
       "label": "Nexus",
-      "categories": ["delivery"]
+      "categories": ["build"]
     },
     {
       "id": "ansible",
       "label": "Ansible",
-      "categories": ["delivery", "cloud"]
+      "categories": ["delivery", "infrastructure"]
     },
     {
       "id": "junit",
@@ -552,17 +552,17 @@
     {
       "id": "checkmarx",
       "label": "Checkmarx",
-      "categories": ["testing", "delivery"]
+      "categories": ["security", "delivery"]
     },
     {
       "id": "sonatype",
       "label": "Sonatype",
-      "categories": ["testing", "delivery"]
+      "categories": ["security", "delivery"]
     },
     {
       "id": "looker-studio",
       "label": "Looker Studio",
-      "categories": ["observability"]
+      "categories": ["analytics"]
     },
     {
       "id": "grafana",
@@ -612,7 +612,84 @@
     {
       "id": "r",
       "label": "R",
-      "categories": ["languages", "observability"]
+      "categories": ["languages", "analytics"]
+    }
+  ],
+  "skillCategories": [
+    {
+      "id": "languages",
+      "title": "Languages",
+      "groupId": "languages"
+    },
+    {
+      "id": "backend",
+      "title": "Backend",
+      "groupId": "backend"
+    },
+    {
+      "id": "apis",
+      "title": "APIs",
+      "groupId": "backend"
+    },
+    {
+      "id": "frontend",
+      "title": "Frontend",
+      "groupId": "frontend"
+    },
+    {
+      "id": "databases",
+      "title": "Databases",
+      "groupId": "storage"
+    },
+    {
+      "id": "storage",
+      "title": "Storage",
+      "groupId": "storage"
+    },
+    {
+      "id": "cloud",
+      "title": "Cloud",
+      "groupId": "cloud"
+    },
+    {
+      "id": "infrastructure",
+      "title": "Infrastructure",
+      "groupId": "cloud"
+    },
+    {
+      "id": "build",
+      "title": "Build",
+      "groupId": "delivery"
+    },
+    {
+      "id": "delivery",
+      "title": "Delivery",
+      "groupId": "delivery"
+    },
+    {
+      "id": "testing",
+      "title": "Testing",
+      "groupId": "testing"
+    },
+    {
+      "id": "security",
+      "title": "Security",
+      "groupId": "testing"
+    },
+    {
+      "id": "observability",
+      "title": "Observability",
+      "groupId": "observability"
+    },
+    {
+      "id": "analytics",
+      "title": "Analytics",
+      "groupId": "observability"
+    },
+    {
+      "id": "workflow",
+      "title": "Developer Workflow",
+      "groupId": "workflow"
     }
   ]
 }
