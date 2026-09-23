@@ -4,159 +4,137 @@ import { describe, expect, it, vi } from 'vitest'
 import App from '@/App'
 import { resume } from '@/data/resume'
 
-const heading = (text: string) => (name: string) =>
-  name.replace(/\s+/g, ' ') === text.replace(/\s+/g, ' ')
-
-describe('resume experience', () => {
-  it('makes the identity, headline, and every navigation destination available', () => {
+describe('resume sections', () => {
+  it('presents the requested sections and keeps the summary about Hamid', () => {
     render(<App />)
     expect(
-      screen.getByRole('heading', {
-        name: resume.hero.title.join(' '),
-        level: 1,
-      }),
+      screen.getByRole('heading', { name: resume.profile.name, level: 1 }),
     ).toBeInTheDocument()
     expect(screen.getByText(resume.profile.headline)).toBeInTheDocument()
-    expect(document.querySelector('.hero-intro')).not.toHaveTextContent('HSBC')
-    expect(
-      screen.queryByText(/Joined HSBC through FDM/),
-    ).not.toBeInTheDocument()
-    for (const { sectionId } of resume.navigation)
-      expect(document.getElementById(sectionId)).toBeInTheDocument()
-    for (const section of [resume.sections.timeline, resume.sections.skills])
-      expect(
-        screen.getByRole('heading', { name: heading(section.title), level: 2 }),
-      ).toBeInTheDocument()
-  })
-
-  it('shows each career entry once and preserves date precision', () => {
-    render(<App />)
-    const journey = screen.getByRole('region', {
-      name: heading(resume.sections.timeline.title),
-    })
-    expect(within(journey).getAllByRole('article')).toHaveLength(
-      resume.timeline.length,
+    expect(screen.getByText(resume.profile.summary)).not.toHaveTextContent(
+      'HSBC',
     )
-    expect(document.querySelector('.career-timeline > li')).toHaveAttribute(
-      'id',
-      resume.currentRoleId,
-    )
-    expect(document.querySelector('.chapter-current')).toHaveTextContent(
-      'Current',
-    )
-    expect(document.querySelectorAll('.chapter-current')).toHaveLength(1)
-    expect(
-      document.querySelector(`#${resume.currentRoleId} .chapter-date`),
-    ).toHaveTextContent('Jun 2025 — Present')
-    const education = document.getElementById('edu-western')!
-    expect(
-      within(education).getByText('Jan 2019', { selector: 'time' }),
-    ).toHaveAttribute('datetime', '2019-01')
-    expect(
-      within(education).getByText('Dec 2019', { selector: 'time' }),
-    ).toHaveAttribute('datetime', '2019-12')
-    expect(
-      within(document.getElementById('teaching')!).getByText('2013', {
-        selector: 'time',
-      }),
-    ).toHaveAttribute('datetime', '2013')
-    expect(
-      within(document.getElementById('hsbc-data-service-layer')!).getByText(
-        'Jun 2023',
-        { selector: 'time' },
-      ),
-    ).toBeInTheDocument()
-  })
-
-  it('shows only selected projects and nests platform work under the current role', () => {
-    render(<App />)
-    expect(
-      Array.from(
-        document.querySelectorAll('.timeline-chapter.category-project'),
-      )
-        .map((entry) => entry.id)
-        .sort(),
-    ).toEqual(['buildean', 'buy-or-rent', 'man-agent-ment'])
-    for (const id of ['platform-poc', 'ai-assistant', 'ai-enablement'])
-      expect(document.getElementById(resume.currentRoleId)).toContainElement(
-        document.getElementById(id),
-      )
-    expect(document.getElementById('hsbc-platform-ai')).not.toBeInTheDocument()
-    expect(
-      screen.queryByText('From repository history'),
-    ).not.toBeInTheDocument()
-    expect(screen.queryByText('Date not listed')).not.toBeInTheDocument()
-    for (const chapter of document.querySelectorAll('.timeline-chapter'))
-      expect(chapter.querySelector('.chapter-date time')).toHaveAttribute(
-        'datetime',
-      )
-    expect(
-      within(document.getElementById('buy-or-rent')!).getByText(
-        /The Flutter frontend is in progress/,
-      ),
-    ).toBeInTheDocument()
-  })
-
-  it('keeps every category and all achievements on one timeline', () => {
-    render(<App />)
     expect(
       Array.from(document.querySelectorAll('main > section')).map(
         (section) => section.id,
       ),
-    ).toEqual(['top', 'experience', 'skills', 'contact'])
-    const timeline = document.getElementById('experience')!
-    for (const entry of resume.timeline) {
-      expect(timeline).toContainElement(document.getElementById(entry.id))
-      for (const item of entry.highlights ?? []) {
-        expect(document.getElementById(entry.id)).toContainElement(
-          document.getElementById(item.id),
-        )
-        expect(
-          screen.getByRole('heading', { name: item.title, level: 4 }),
-        ).toBeInTheDocument()
-        if (item.date)
-          expect(document.querySelector(`#${item.id} time`)).toHaveAttribute(
-            'datetime',
-            item.date,
-          )
-      }
+    ).toEqual([
+      'top',
+      'experience',
+      'projects',
+      'skills',
+      'education',
+      'contact',
+    ])
+    expect(
+      screen.queryByText(/Joined HSBC through FDM/),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('From repository history'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('keeps every top-bar link available and moves keyboard focus to its section', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const nav = screen.getByRole('navigation', { name: 'Main navigation' })
+    for (const { label, sectionId } of resume.navigation) {
+      const link = within(nav).getByRole('link', { name: label })
+      expect(link).toHaveAttribute('href', `#${sectionId}`)
+      await user.click(link)
+      expect(
+        screen.getByRole('region', {
+          name: resume.sections[sectionId].title,
+        }),
+      ).toHaveFocus()
     }
-    expect(document.querySelectorAll('details')).toHaveLength(0)
-  })
-
-  it('opens the mobile navigation and restores focus on Escape', async () => {
-    const user = userEvent.setup()
-    render(<App />)
-    const toggle = screen.getByRole('button', { name: 'Open navigation' })
-    await user.click(toggle)
-    expect(toggle).toHaveAttribute('aria-expanded', 'true')
-    await user.keyboard('{Escape}')
-    expect(toggle).toHaveAttribute('aria-expanded', 'false')
-    expect(toggle).toHaveFocus()
-  })
-
-  it('filters the skill field without navigating away', async () => {
-    const user = userEvent.setup()
-    render(<App />)
-    await user.click(screen.getByRole('button', { name: 'Backend & APIs' }))
-    const skills = screen.getByRole('list', { name: 'Backend & APIs skills' })
-    expect(within(skills).getByText('Spring AI')).toBeInTheDocument()
-    expect(within(skills).queryByText('Docker')).not.toBeInTheDocument()
+    await user.click(within(nav).getByRole('link', { name: /home/ }))
     expect(
-      screen.getByRole('button', { name: 'Backend & APIs' }),
-    ).toHaveAttribute('aria-pressed', 'true')
+      screen.getByRole('region', { name: resume.profile.name }),
+    ).toHaveFocus()
   })
 
-  it('lets readers pause decorative motion', async () => {
-    const user = userEvent.setup()
+  it('preserves the PDF role breakdown and dates, with the current job first', () => {
     render(<App />)
-    await user.click(
-      screen.getByRole('button', { name: 'Pause decorative motion' }),
+    const experience = screen.getByRole('region', { name: 'Experiences' })
+    const roles = within(experience).getAllByRole('article')
+    expect(roles[0]).toHaveAttribute('id', 'hsbc-agency-lending')
+    expect(
+      roles.map((role) => within(role).getAllByRole('listitem').length),
+    ).toEqual([7, 6, 5, 1])
+    expect(
+      within(roles[0]).getByText('Jun 2025', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2025-06')
+    expect(
+      within(roles[1]).getByText('Jun 2023', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2023-06')
+    expect(
+      within(roles[3]).getByText('Dec 2013', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2013-12')
+    for (const id of ['platform-poc', 'ai-assistant', 'ai-enablement'])
+      expect(roles[0]).toContainElement(document.getElementById(id))
+    expect(within(roles[0]).getByText(/100% output parity/)).toHaveTextContent(
+      'one selected trade type over a defined evaluation period',
     )
+  })
+
+  it('separates the three selected projects and keeps every bullet readable', () => {
+    render(<App />)
+    const projects = screen.getByRole('region', { name: 'Projects' })
+    const entries = within(projects).getAllByRole('article')
+    expect(entries.map((entry) => entry.id)).toEqual([
+      'buildean',
+      'buy-or-rent',
+      'man-agent-ment',
+    ])
     expect(
-      screen.getByRole('button', { name: 'Resume decorative motion' }),
-    ).toHaveAttribute('aria-pressed', 'true')
-    expect(document.querySelector('.site')).toHaveClass('motion-paused')
+      entries.map((entry) => within(entry).getAllByRole('listitem').length),
+    ).toEqual([3, 3, 2])
+    expect(
+      within(projects).getByText(/Flutter frontend in progress/),
+    ).toBeInTheDocument()
+    for (const entry of [...resume.experiences, ...resume.projects]) {
+      for (const bullet of entry.bullets)
+        expect(screen.getByText(bullet.text)).toBeVisible()
+    }
+  })
+
+  it('shows all nine PDF skill categories without hiding skills behind filters', () => {
+    render(<App />)
+    const skills = screen.getByRole('region', { name: 'Skills' })
+    expect(
+      within(skills)
+        .getAllByRole('term')
+        .map((term) => term.textContent),
+    ).toEqual([
+      'Languages',
+      'Backend & APIs',
+      'Frontend',
+      'Database & Storage',
+      'Cloud & Infrastructure',
+      'Build & Delivery',
+      'Testing & Security',
+      'Observability & Analytics',
+      'Developer Workflow',
+    ])
+    for (const group of resume.skillGroups)
+      expect(within(skills).getByText(group.skills.join(', '))).toBeVisible()
+  })
+
+  it('places degrees in Education and preserves their month precision', () => {
+    render(<App />)
+    const education = screen.getByRole('region', { name: 'Education' })
+    const entries = within(education).getAllByRole('article')
+    expect(entries).toHaveLength(2)
+    expect(
+      within(entries[0]).getByRole('heading', { level: 3 }),
+    ).toHaveTextContent('Water Resources & Environmental Engineering')
+    expect(
+      within(entries[0]).getByText('Jan 2019', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2019-01')
+    expect(
+      within(entries[0]).getByText('Dec 2019', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2019-12')
   })
 
   it('copies the email and announces the result', async () => {

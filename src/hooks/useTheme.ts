@@ -28,7 +28,7 @@ export function useTheme() {
     document.documentElement.style.colorScheme = theme
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'dark' ? '#181c19' : '#f5f5ed')
+      ?.setAttribute('content', theme === 'dark' ? '#191d20' : '#faf9f6')
   }, [theme])
 
   useEffect(() => {

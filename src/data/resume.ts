@@ -1,20 +1,11 @@
 import rawResumeContent from '@/data/resume.json'
-import type { Category, ResumeContent } from '@/data/resume.schema'
+import type { ResumeContent } from '@/data/resume.schema'
 
-/**
- * The content contract runs before local development and production builds,
- * and as part of CI. This cast keeps build-only validation code out of the
- * browser bundle.
- */
+// Validation runs before development and builds; Zod stays out of the browser.
 export const resume = rawResumeContent as ResumeContent
 
-export const categories = Object.fromEntries(
-  resume.categories.map((category) => [category.id, category]),
-) as Record<Category, { id: Category; label: string }>
-
 export type {
-  Category,
   ResumeContent,
-  TimelineEntry,
-  TimelineHighlight,
+  ResumeBullet,
+  CareerPeriod,
 } from '@/data/resume.schema'

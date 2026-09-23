@@ -1,26 +1,28 @@
 ---
 title: Architecture and product decisions
 domain: architecture
-tags: [decisions, timeline, accessibility, agent-pack]
+tags: [decisions, sections, accessibility, agent-pack]
 status: current
-last_updated: 2026-09-16
+last_updated: 2026-09-23
 ---
 
 # Architecture and product decisions
 
-## D-001: One timeline, with the current role first
+## D-001: Separate resume sections (supersedes the unified timeline)
 
-The current professional role is pinned first through `currentRoleId`; every
-other entry sorts by descending start date. Its large rail label says Current
-while its actual date range remains visible. This avoids a misleading 2025
-heading above 2026 projects. Categories use text and icons alongside color.
+On September 23 the user requested a layout close to the long PDF resume.
+Summary, Experiences, Projects, Skills, Education and Let's Talk now render in
+that order. Each entry list preserves JSON order; professional roles remain
+newest first, with the current HSBC role first. Projects follow the PDF order.
+No cross-category sorting or color coding is necessary. The four middle sections
+are directly linked from the fixed top bar, including on phones.
 See the [content contract](../guides/resume-content.md).
 
 ## D-002: Static content with a validation boundary
 
 JSON keeps editing straightforward without a CMS or runtime service. Build-time
-validation catches malformed dates, links, IDs, and skill memberships before
-deployment. Pure helpers own ordering and formatting; components own rendering.
+validation catches malformed dates, links, IDs, and required copy before
+deployment. Pure helpers own date formatting; components own rendering.
 See the [data flow](system-overview.md).
 
 ## D-003: Small React components and local state
@@ -31,13 +33,13 @@ this site. Extract shared behavior when actual callers need it.
 The [application review](../reviews/2026-09-16-application.md) records the
 concrete refactor and regression coverage.
 
-## D-004: Animation supports reading
+## D-004: A stable reading surface (supersedes animated chapters)
 
-Headings stay sticky while achievements pass beneath them, then release for
-the next chapter. Achievements use content-driven spacing, not viewport-sized
-minimum heights. Reduced motion retains readable static content; decorative
-motion has a pause control. Short landscape screens use normal heading flow.
-Phone readability takes priority over theatrical scrolling.
+Ordinary bullets remain visible and entries scroll normally. Compact spacing
+replaces the animated achievement blocks. Smooth anchor navigation respects
+reduced motion; print preserves all content. There are no sticky entry headings,
+reveal effects or decorative loops. This follows the user's request for a more
+minimal and professional resume rather than another animation experiment.
 
 ## D-005: Adapt the agent pack to the site
 

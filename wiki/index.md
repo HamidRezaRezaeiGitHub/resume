@@ -3,8 +3,9 @@
 ## Overview
 
 Hamid Rezaei's personal resume website is a static React application for
-recruiters and hiring managers. It presents an animated, mobile-friendly
-timeline, a toolkit, and contact links in light and dark modes.
+recruiters and hiring managers. It presents a minimal, mobile-friendly
+resume with separate experience, project, skill and education sections, plus
+a personal summary and contact links in light and dark modes.
 This wiki owns durable project knowledge. Local task state lives in ignored
 `requirements/` workspaces; shared agent workflows live in `ai/`.
 
@@ -12,13 +13,13 @@ This wiki owns durable project knowledge. Local task state lives in ignored
 
 - [System overview](architecture/system-overview.md): runtime, stack, source
   layout, content flow, and browser integrations.
-- [Decisions](architecture/decisions.md): timeline ordering, content validation,
+- [Decisions](architecture/decisions.md): section ordering, content validation,
   component boundaries, motion, and pack scope.
 
 ## Working on the site
 
 - [React and TypeScript](guides/react-typescript.md): component design, state,
-  effects, accepted production motion, accessibility, and local development.
+  effects, responsive navigation, accessibility, and local development.
 - [Resume content](guides/resume-content.md): public writing, dates, selected
   projects, latest resume source, schema rules, and a page/component/JSON terminology guide.
 - [Testing](guides/testing.md): CI commands, useful regression coverage, and

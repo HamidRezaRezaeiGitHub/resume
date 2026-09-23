@@ -3,62 +3,55 @@ title: System overview
 domain: architecture
 tags: [react, static-site, content, data-flow]
 status: current
-last_updated: 2026-09-16
+last_updated: 2026-09-23
 ---
 
 # System overview
 
-This is a single-page resume. React renders a hero, one timeline containing
-professional roles, personal projects, education and teaching, a filterable
-toolkit, and contact links. Cloudflare serves the compiled static assets; there
-is no application API, database, authentication service, or MCP server here.
+This static React resume presents Summary, Experiences, Projects, Skills,
+Education and Let's Talk. Cloudflare serves compiled assets; there is no API,
+database, authentication service or MCP server in this repository.
 
-## Stack and runtime
+## Runtime
 
-Vite builds React 19 and strict TypeScript. Styling combines Tailwind v4 with
-custom CSS. Motion handles scroll effects; Lucide provides icons. Vitest and
-Testing Library run in jsdom. ESLint, Prettier, and TypeScript form the quality
-gate. Zod validates the editable content during development/build checks.
-Use the Node version in `.nvmrc` and dependency versions in `package-lock.json`.
+Vite builds React 19 and strict TypeScript. Tailwind v4 and custom CSS provide
+styling; Lucide supplies icons. Vitest/Testing Library run in jsdom. Zod validates
+editable content at build time. Use versions in `.nvmrc` and the lockfile.
+The current design has no Motion runtime imports or scroll-linked animations.
 
-`index.html` loads `public/theme.js` before React for the initial theme.
-`src/main.tsx` mounts the app. The [deployment guide](../operations/ci-cd-and-deployment.md)
-describes the static-assets Worker and environment routes.
+`index.html` loads `public/theme.js` for the initial theme before React mounts
+through `src/main.tsx`. Theme colors in CSS, the bootstrap and `useTheme` agree.
+See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
 
-## Content flow and ownership
+## Content flow
 
-1. `src/data/resume.json` contains public copy, dates, links, skills, and the
-   selected current role. `src/data/resume.schema.ts` defines its contract.
-2. `validate:content` runs the schema checks before `dev` and `build`. The
-   content module exposes typed data; Zod is not shipped to the browser.
-3. `src/lib/dates.ts` and `src/lib/timeline.ts` format and order entries.
-4. `Timeline` resolves data and order. `TimelineItem` composes each chapter;
-   `TimelineHeading` renders its heading and `TimelineAchievement` owns
-   achievement motion. Children receive explicit props.
-5. CSS controls reading density and responsive layout. Motion changes
-   presentation without creating artificial reading distance.
+1. `src/data/resume.json` owns identity, copy, dates, links, entries and skills.
+2. `resume.schema.ts` validates before dev/build and in CI. The typed
+   `resume.ts` export uses a build-validated cast, keeping Zod out of the browser.
+3. `App` composes six sections. Experiences, Projects and Education map their
+   authored lists to a shared `ResumeEntry` with explicit typed props.
+4. `ResumeEntry` renders headings, semantic dates, ordinary bullets and links.
+   `src/lib/dates.ts` preserves date precision. There is no runtime sorting.
+5. `src/index.css` owns compact reading density, responsive layout, themes,
+   reduced-motion scrolling and print.
 
-Use the [content guide](../guides/resume-content.md) before changing the JSON
-contract, publication scope, date precision, or timeline ordering.
+The [content guide](../guides/resume-content.md) owns fields and publication rules.
 
 ## Source map
 
-| Path                       | Responsibility                                                |
-| -------------------------- | ------------------------------------------------------------- |
-| `src/components/`          | Page sections, navigation, and shared presentation            |
-| `src/components/timeline/` | Timeline chapters, headings, and achievements                 |
-| `src/hooks/`               | Browser behavior such as theme preference                     |
-| `src/data/`                | Editable content, schema, typed exports, and validation tests |
-| `src/lib/`                 | Pure date/ordering helpers and utilities                      |
-| `src/index.css`            | Theme tokens, responsive layout, and visual styling           |
-| `public/`                  | Public assets, including the pre-paint theme bootstrap        |
-| `ai/`                      | Shared agent workflows, scripts, skills, and templates        |
-| `wiki/`                    | Durable project knowledge; never imported into the page       |
+| Path              | Responsibility                                          |
+| ----------------- | ------------------------------------------------------- |
+| `src/components/` | Sections, shared entries, navigation and contact        |
+| `src/hooks/`      | Theme preference and browser synchronization            |
+| `src/data/`       | JSON, schema, typed export and contract tests           |
+| `src/lib/`        | Pure date formatting and utilities                      |
+| `src/index.css`   | Theme tokens, responsive layout and print               |
+| `public/`         | Public assets and pre-paint theme bootstrap             |
+| `ai/`             | Agent workflows, scripts, skills and templates          |
+| `wiki/`           | Durable project knowledge, never imported into the page |
 
 ## Browser integrations
 
-Theme preference uses local storage with system preference as the default and
-a fallback when storage is unavailable. Navigation uses an intersection
-observer; effects clean up listeners and observers. Contact copying handles
-clipboard failure. Contact and project links lead to external destinations.
-No secret belongs in browser code or Vite-exposed configuration.
+Theme uses local storage with a system default and graceful storage denial.
+Navigation uses ordinary anchor links and focusable section targets. Contact copying handles clipboard denial. Theme preference listeners clean up. External profile/project links open their public destinations.
+No secrets belong in the client or Vite-exposed configuration.

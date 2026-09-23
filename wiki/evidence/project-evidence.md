@@ -37,8 +37,8 @@ supersede conflicting earlier inferences below; see the
 
 ## How dates are used
 
-The current HSBC role remains first through `currentRoleId`. Other timeline
-entries sort by start date. Date provenance is documented here only, with no
+The current HSBC role remains first in Experiences. The section-based design
+uses the latest resume dates and authored ordering; projects appear separately. Date provenance is documented here only, with no
 research labels or metadata in the website content. These dates describe
 recorded work, not a claimed date of conception. README-only and scaffold commits
 are distinguished from substantive work. A historical end date means the last

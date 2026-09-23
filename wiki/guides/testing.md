@@ -3,7 +3,7 @@ title: Testing and validation
 domain: guides
 tags: [vitest, validation, accessibility, responsive]
 status: current
-last_updated: 2026-09-16
+last_updated: 2026-09-23
 ---
 
 # Testing and validation
@@ -26,29 +26,30 @@ through tests; deployment jobs additionally build before uploading assets.
 
 ## Useful automated coverage
 
-Vitest with Testing Library and jsdom covers content validation, date/order
+Vitest with Testing Library and jsdom covers content validation, date
 helpers, theme behavior, and contact interactions. Tests live beside the code;
 `src/test/setup.ts` supplies browser/test setup. Use `npm run test` for watch
 mode or `npm run test:ci -- path/to/file.test.ts` for a focused run.
 
 Test meaningful behavior and failure boundaries: invalid dates/links/IDs,
-ordering ties, current-role selection, denied clipboard or storage access,
+cross-section anchor collisions, navigation focus, denied clipboard or storage access,
 theme updates, and effect cleanup. Do not add tests that duplicate markup or
 merely verify a library. Follow the shared
 [testing workflow](../../ai/workflows/testing-quality.md).
 
 ## Browser checks for visual changes
 
-jsdom does not verify layout or scroll animation. Review the production build
+jsdom does not verify layout or anchor scrolling. Review the production build
 on phone and desktop, with representative widths from 320px to 1440px and a
 short landscape viewport. Check:
 
 - No horizontal overflow, clipped copy, or fixed-navigation overlap.
-- Current appears only on the selected role; all date ranges stay readable.
-- Headings pin while their achievements scroll and release for the next entry.
+- Roles, projects, skills and degrees appear in their own sections; dates remain readable.
+- Bullets remain visible and compact; no sticky entry headings or hidden content.
 - Light/dark themes, saved and system preferences, and readable contrast.
-- Reduced motion, the pause control, keyboard navigation, mobile menu, section
-  links, skill filters, and contact actions.
+- Every top-bar section link is visible on phones and scrolls up/down to an
+  unobscured target, preserving keyboard focus.
+- Reduced motion, print, all nine visible skill categories and contact actions.
 - Browser console errors and broken assets.
 
 Use available browser tooling; do not require a script from someone's `/tmp`

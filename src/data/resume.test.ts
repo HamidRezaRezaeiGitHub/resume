@@ -1,48 +1,54 @@
 import { describe, expect, it } from 'vitest'
 import rawResumeContent from '@/data/resume.json'
 import { resumeContentSchema } from '@/data/resume.schema'
+
 const editableCopy = () =>
   resumeContentSchema.parse(structuredClone(rawResumeContent))
 
-describe('unified resume content', () => {
-  it('accepts the published resume document', () => {
+describe('section-based resume content', () => {
+  it('accepts the published resume', () => {
     expect(resumeContentSchema.safeParse(rawResumeContent).success).toBe(true)
   })
-  it('rejects duplicate record identifiers', () => {
+  it('rejects obsolete timeline fields rather than silently ignoring content', () => {
+    expect(
+      resumeContentSchema.safeParse({ ...rawResumeContent, timeline: [] })
+        .success,
+    ).toBe(false)
+  })
+  it('keeps record anchors unique across sections', () => {
     const content = editableCopy()
-    content.timeline[1].id = content.timeline[0].id
+    content.projects[0].id = content.experiences[0].id
     const result = resumeContentSchema.safeParse(content)
     expect(result.success).toBe(false)
     if (!result.success)
       expect(result.error.issues).toContainEqual(
         expect.objectContaining({
-          message: `Duplicate id: ${content.timeline[0].id}`,
-          path: ['timeline', 1, 'id'],
+          message: `Duplicate id: ${content.experiences[0].id}`,
+          path: ['projects', 0, 'id'],
         }),
       )
   })
-  it('keeps achievement anchors unique across different roles', () => {
+  it('keeps bullet anchors unique across roles and projects', () => {
     const content = editableCopy()
-    content.timeline[1].highlights![0].id =
-      content.timeline[0].highlights![0].id
+    content.projects[0].bullets[0].id = content.experiences[0].bullets[0].id
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
   it('rejects entry IDs that collide with generated heading anchors', () => {
     const content = editableCopy()
-    content.timeline[1].id = `${content.timeline[0].id}-title`
+    content.education[0].id = `${content.experiences[0].id}-title`
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
-  it.each(['skills-title', 'mobile-navigation', 'skill-cloud'])(
+  it.each(['top', 'main', 'projects', 'education-title', 'contact-title'])(
     'reserves the page anchor %s',
     (id) => {
       const content = editableCopy()
-      content.timeline[0].highlights![0].id = id
+      content.experiences[0].bullets[0].id = id
       expect(resumeContentSchema.safeParse(content).success).toBe(false)
     },
   )
-  it('rejects anchors that cannot be used consistently in fragment selectors', () => {
+  it('rejects anchors unsafe for fragment selectors', () => {
     const content = editableCopy()
-    content.timeline[1].id = 'role with spaces#fragment'
+    content.experiences[1].id = 'role with spaces#fragment'
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
   it.each([
@@ -66,50 +72,25 @@ describe('unified resume content', () => {
     'rejects unsupported date %s',
     (date) => {
       const content = editableCopy()
-      content.timeline[0].startDate = date
+      content.experiences[0].startDate = date
       expect(resumeContentSchema.safeParse(content).success).toBe(false)
     },
   )
-  it.each([undefined, 'present'])(
-    'requires a chapter start date when the end date is %s',
-    (endDate) => {
+  it.each(['experiences', 'projects', 'education'] as const)(
+    'requires dates and validates chronology in %s',
+    (key) => {
       const content = editableCopy()
-      Reflect.deleteProperty(content.timeline[1], 'startDate')
-      content.timeline[1].endDate = endDate
+      content[key][0].endDate = '2000'
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+      content[key][0].endDate = 'present'
+      Reflect.deleteProperty(content[key][0], 'startDate')
       expect(resumeContentSchema.safeParse(content).success).toBe(false)
     },
   )
-  it('rejects periods that end before they start', () => {
+  it('allows year-only dates without inventing a month', () => {
     const content = editableCopy()
-    content.timeline[0].endDate = '2024-06'
-    expect(resumeContentSchema.safeParse(content).success).toBe(false)
-  })
-  it('allows year-only end dates without inventing a month', () => {
-    const content = editableCopy()
-    content.timeline[1].endDate = '2025'
-    expect(resumeContentSchema.safeParse(content).success).toBe(true)
-  })
-  it.each(['missing-role', 'buildean', 'hsbc-data-service-layer'])(
-    'rejects %s as the current professional role',
-    (id) => {
-      const content = editableCopy()
-      content.currentRoleId = id
-      expect(resumeContentSchema.safeParse(content).success).toBe(false)
-    },
-  )
-  it('requires a readable qualification alongside achievement metrics', () => {
-    const content = editableCopy()
-    const metric = content.timeline
-      .flatMap((entry) => entry.highlights ?? [])
-      .find((item) => item.metric)!.metric!
-    metric.label = ''
-    expect(resumeContentSchema.safeParse(content).success).toBe(false)
-  })
-  it('validates milestone dates with the same precision as timeline entries', () => {
-    const content = editableCopy()
-    content.timeline[0].highlights![0].date = '2025-13'
-    expect(resumeContentSchema.safeParse(content).success).toBe(false)
-    content.timeline[0].highlights![0].date = '2025-06'
+    content.education[0].startDate = '2019'
+    content.education[0].endDate = '2019'
     expect(resumeContentSchema.safeParse(content).success).toBe(true)
   })
   it('rejects duplicate navigation destinations', () => {
@@ -117,20 +98,22 @@ describe('unified resume content', () => {
     content.navigation[1].sectionId = content.navigation[0].sectionId
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
-  it('keeps overview skills in the editable skill groups', () => {
+  it('requires all five navigation destinations', () => {
     const content = editableCopy()
-    content.skillOverview[0] = 'Unlisted skill'
+    content.navigation.pop()
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
-  it.each([rawResumeContent.skillGroups[0].title, 'Overview'])(
-    'rejects ambiguous skill filter title %s',
-    (title) => {
-      const content = editableCopy()
-      content.skillGroups[1].title = title
-      expect(resumeContentSchema.safeParse(content).success).toBe(false)
-    },
-  )
-  it('rejects repeated skills within a filter', () => {
+  it('rejects blank resume bullets', () => {
+    const content = editableCopy()
+    content.experiences[0].bullets[0].text = '  '
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it('rejects ambiguous skill categories', () => {
+    const content = editableCopy()
+    content.skillGroups[1].title = content.skillGroups[0].title
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it('rejects repeated skills within a category', () => {
     const content = editableCopy()
     content.skillGroups[0].skills.push(content.skillGroups[0].skills[0])
     expect(resumeContentSchema.safeParse(content).success).toBe(false)

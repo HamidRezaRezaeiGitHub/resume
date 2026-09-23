@@ -1,5 +1,15 @@
 # Wiki log
 
+## 2026-09-23 — update — Resume sections and minimal presentation
+
+Replaced the unified timeline with Summary, Experiences, Projects, Skills,
+Education and Let's Talk following the user's revised direction. Migrated JSON
+to section-specific lists, plain bullets and the PDF's nine skill categories.
+Added visible phone/desktop section navigation; removed sticky chapters,
+floating skills and animation-only components. Kept PDF functional team dates
+and the qualified parity result; confirmed teaching months against LinkedIn.
+Updated architecture, React, testing and the content/JSON terminology guide.
+
 ## [2026-09-23] update | Latest resume content
 
 Updated JSON from the supplied two-page long resume: Data Service Layer title,

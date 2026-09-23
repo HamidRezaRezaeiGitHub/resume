@@ -1,7 +1,7 @@
 # Resume — hamid-rezaei.com
 
-A mobile-first personal resume with light/dark themes, a unified animated
-career timeline, a filterable toolkit, and contact links.
+A mobile-first personal resume with light/dark themes, separate experience,
+project, skill and education sections, and direct section navigation.
 
 Use the Node version in `.nvmrc`, then:
 

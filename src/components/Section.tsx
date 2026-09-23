@@ -1,35 +1,29 @@
 import type { ReactNode } from 'react'
-import { Reveal } from '@/components/Reveal'
 
 export function Section({
   id,
-  eyebrow,
   title,
-  description,
   children,
   className = '',
 }: {
   id: string
-  eyebrow?: string
   title: string
-  description?: string
   children: ReactNode
   className?: string
 }) {
   return (
     <section
       id={id}
+      tabIndex={-1}
       className={`section ${className}`}
       aria-labelledby={`${id}-title`}
     >
       <div className="container">
-        <Reveal className="section-heading">
-          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+        <div className="section-heading">
           <h2 tabIndex={-1} id={`${id}-title`}>
             {title}
           </h2>
-          {description && <p className="section-description">{description}</p>}
-        </Reveal>
+        </div>
         {children}
       </div>
     </section>

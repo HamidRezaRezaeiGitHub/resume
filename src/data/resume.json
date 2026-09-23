@@ -1,24 +1,31 @@
 {
-  "currentRoleId": "hsbc-agency-lending",
   "navigation": [
     {
-      "label": "Experience",
+      "label": "Experiences",
       "sectionId": "experience"
     },
     {
-      "label": "Toolkit",
+      "label": "Projects",
+      "sectionId": "projects"
+    },
+    {
+      "label": "Skills",
       "sectionId": "skills"
     },
     {
-      "label": "Let’s talk",
+      "label": "Education",
+      "sectionId": "education"
+    },
+    {
+      "label": "Let’s Talk",
       "sectionId": "contact"
     }
   ],
   "profile": {
     "name": "Hamid R. Rezaei",
     "headline": "Full-Stack Software Engineer",
-    "tagline": "I build Java/Spring services, secure APIs, and React interfaces. I enjoy working through data-heavy problems and making software easier to test, release, and support.",
-    "location": "Toronto, Ontario, Canada",
+    "summary": "I design and build Java/Spring services, secure APIs, data-intensive applications, and React interfaces. My work spans backend development, CI/CD automation, cloud infrastructure, and observability. I enjoy working through complex problems and making software easier to test, release, and support.",
+    "location": "Toronto, Canada",
     "email": "hamidreza74hrr@yahoo.com",
     "links": [
       {
@@ -31,418 +38,218 @@
       }
     ]
   },
-  "hero": {
-    "technologies": [
-      "Java",
-      "Spring Boot",
-      "React",
-      "TypeScript",
-      "GCP",
-      "MCP"
-    ],
-    "contactLabel": "Let’s talk",
-    "scrollLabel": "See my experience",
-    "title": ["Hamid R.", "Rezaei."],
-    "kicker": "Toronto, Canada"
-  },
   "sections": {
-    "timeline": {
-      "eyebrow": "01 / Experience",
-      "title": "What I’ve worked on.",
-      "description": "My roles, side projects, and education, with a closer look at the work along the way."
+    "experience": {
+      "title": "Experiences"
+    },
+    "projects": {
+      "title": "Projects"
     },
     "skills": {
-      "eyebrow": "02 / Toolkit",
-      "title": "Tools I work with.",
-      "description": "Java and Spring are at the centre of my work. These are the languages, frameworks, and tools I use across the frontend, data, and delivery."
+      "title": "Skills"
+    },
+    "education": {
+      "title": "Education"
     },
     "contact": {
-      "eyebrow": "03 / Contact",
-      "title": "Let’s talk.",
+      "title": "Let’s Talk",
       "description": "I’m interested in backend, full-stack, and senior engineering roles. If you think we could work well together, I’d like to hear from you.",
-      "emailLabel": "Email me"
+      "emailLabel": "Get in touch"
     }
   },
-  "categories": [
-    {
-      "id": "experience",
-      "label": "Professional"
-    },
-    {
-      "id": "project",
-      "label": "Personal project"
-    },
-    {
-      "id": "education",
-      "label": "Education"
-    },
-    {
-      "id": "teaching",
-      "label": "Teaching"
-    }
-  ],
-  "timeline": [
+  "experiences": [
     {
       "id": "hsbc-agency-lending",
-      "category": "experience",
       "title": "Full-Stack Engineer",
-      "organization": "HSBC",
-      "location": "Toronto, ON",
-      "summary": "I build services, analytics, and internal tools for Agency Securities Lending, from secure APIs to React interfaces and AI-assisted workflows.",
-      "tags": [
-        "Java",
-        "Spring Boot",
-        "React",
-        "Spring AI",
-        "Spring Security",
-        "BigQuery",
-        "Jenkins"
-      ],
       "team": "Agency Securities Lending",
+      "organization": "HSBC",
+      "location": "Toronto, Canada",
       "startDate": "2025-06",
       "endDate": "present",
-      "highlights": [
+      "bullets": [
         {
-          "id": "lending-services",
-          "title": "Secure services and integrations",
-          "body": "I develop Java/Spring Boot microservices and REST APIs that integrate with other bank services. I implemented Spring Security and JWT authorization, with JPA for access to a cloud-hosted relational database.",
-          "tags": ["Java", "Spring Boot", "Spring Security", "JWT", "JPA"]
+          "id": "asl-services",
+          "text": "Developing and maintaining Spring Boot (Java) microservices that expose REST APIs and integrate with other services."
+        },
+        {
+          "id": "asl-analytics",
+          "text": "Building SQL-based Looker Studio dashboards over BigQuery data for revenue and balance analysis, in partnership with product and business users."
         },
         {
           "id": "platform-poc",
-          "title": "A multi-service platform proof of concept",
-          "body": "I co-architected a multi-service proof of concept with an Active Directory authentication service, an API gateway, and a React frontend.",
-          "tags": [
-            "React",
-            "Spring Boot",
-            "Spring Security",
-            "Active Directory"
-          ],
-          "details": [
-            "Built configuration-driven APIs for datasets with 100+ columns, with filtering and sorting."
-          ],
-          "metric": {
-            "value": "100% output parity",
-            "label": "One selected trade type · defined evaluation period"
-          }
+          "text": "Co-architected a multi-service proof of concept that achieved 100% output parity with existing platforms for one selected trade type over a defined evaluation period; built an AD-backed authentication service, API gateway, and React frontend."
         },
         {
           "id": "ai-assistant",
-          "title": "An assistant inside the product",
-          "body": "I designed and built a React and Spring AI assistant that uses active filters, table metadata, and displayed results to answer questions in context.",
-          "tags": ["Spring AI", "React", "SSE Streaming", "Enterprise LLM"],
-          "details": [
-            "Supported JSON and streamed SSE responses, then extracted components for reuse by other teams."
-          ]
+          "text": "Designed and implemented a context-aware, in-product AI assistant using React and Spring AI."
         },
         {
           "id": "ai-enablement",
-          "title": "Helping teams use coding agents",
-          "body": "I built shared coding-agent workflows and script-backed skills connecting GitHub, Jira, Confluence, logs, and Jenkins. I helped teams put them to use through hands-on training and knowledge-sharing sessions.",
-          "tags": ["Agent Skills", "MCP", "Developer Tools"]
+          "text": "Drove AI adoption across multiple teams by building an enterprise harness with script-backed skills for GitHub, Jira, Confluence, logs, and Jenkins, supported by training and knowledge-sharing sessions."
         },
         {
-          "id": "lending-analytics",
-          "title": "Revenue and balance analytics",
-          "body": "I build SQL-based Looker Studio dashboards over BigQuery for revenue and balance analysis, working with product and business users.",
-          "tags": ["SQL", "BigQuery", "Looker Studio"]
+          "id": "asl-security",
+          "text": "Implemented Spring Security and JWT authorization, using JPA with a cloud-hosted relational database."
         },
         {
-          "id": "lending-delivery",
-          "title": "Replacing the old release scripts",
-          "body": "I led the migration from legacy scripts to Jenkins/Groovy pipelines covering builds, tests, security scans, artifact versioning, and deployments across environments.",
-          "tags": ["Jenkins", "Groovy", "CI/CD"],
-          "details": [
-            "Integrated Sonatype and Checkmarx security scans, artifact versioning, Jira, and Confluence into the release workflow."
-          ]
+          "id": "asl-delivery",
+          "text": "Designed and led the migration from legacy scripts to Jenkins/Groovy CI/CD pipelines, automating builds, tests, Sonatype and Checkmarx scans, artifact versioning, Jira and Confluence integration, and deployments across environments."
         }
       ]
     },
     {
       "id": "hsbc-data-service-layer",
-      "category": "experience",
       "title": "Full-Stack Engineer",
-      "organization": "HSBC",
-      "location": "Toronto, ON",
-      "summary": "I worked on data synchronization, real-time processing, and internal tools used to support trading systems.",
-      "tags": [
-        "Java 21",
-        "Spring Batch",
-        "Spring Integration",
-        "Solace",
-        "PostgreSQL",
-        "React",
-        "Grafana"
-      ],
       "team": "Data Service Layer",
+      "organization": "HSBC",
+      "location": "Toronto, Canada",
       "startDate": "2023-06",
       "endDate": "2025-06",
-      "highlights": [
+      "bullets": [
         {
-          "id": "sync-product",
-          "title": "A reusable synchronization product",
-          "body": "I owned the architecture, code reviews, and delivery roadmap for a modular Spring Batch product for data transfer and synchronization. New use cases could be configured without duplicating the implementation.",
-          "tags": ["Spring Batch", "Java", "Modular Design", "Architecture"]
+          "id": "dsl-architecture",
+          "text": "Owned architectural design, code reviews, and the delivery roadmap for a scalable data-transfer and synchronization product built on Spring Batch and modular development."
         },
         {
-          "id": "event-etl",
-          "title": "Processing events in the right order",
-          "body": "I contributed to a configurable, event-driven ETL application processing real-time trading data with Java 21, Spring Integration, Solace, and PostgreSQL.",
-          "tags": ["Java 21", "Spring Integration", "Solace", "PostgreSQL"],
-          "details": [
-            "Implemented acknowledgments, retries, exception handling, and transactional controls to preserve lifecycle-event order and reduce the risk of data loss during concurrent processing."
-          ]
+          "id": "dsl-etl",
+          "text": "Contributed to a configurable, event-driven ETL application using Solace, Spring Integration (Java 21), and PostgreSQL, processing high-throughput real-time trading data while preserving lifecycle event order."
         },
         {
-          "id": "file-retrieval",
-          "title": "A secure file-retrieval tool",
-          "body": "I designed and owned a production file-retrieval tool using React, Spring Boot, and Spring Security. It guided authorized users to the files they needed while enforcing access controls on the backend.",
-          "tags": ["Spring Boot", "Spring Security", "React"]
+          "id": "dsl-reliability",
+          "text": "Implemented message acknowledgments, retries, exception handling, and transactional controls to reduce the risk of data loss during concurrent processing."
         },
         {
-          "id": "data-observability",
-          "title": "Seeing what the applications were doing",
-          "body": "I built parameterized Grafana dashboards to make application health and performance easier to monitor.",
-          "tags": ["Grafana", "Observability"]
+          "id": "dsl-observability",
+          "text": "Created parameterized Grafana dashboards to improve visibility into application health and performance."
         },
         {
-          "id": "legacy-migration",
-          "title": "A path off legacy systems",
-          "body": "I evaluated existing functionality and designed scalable alternatives that could be introduced through a phased migration.",
-          "tags": ["Architecture", "Legacy Modernization"]
+          "id": "dsl-file-retrieval",
+          "text": "Designed and owned a secure production file-retrieval application using React, Spring Boot, and Spring Security, guiding authorized users through locating and retrieving files while enforcing backend access controls."
+        },
+        {
+          "id": "dsl-migration",
+          "text": "Evaluated legacy functionality and designed scalable alternatives for phased migration."
         }
       ]
     },
     {
       "id": "hsbc-trade-reporting",
-      "category": "experience",
       "title": "Software Developer & DevOps Engineer",
-      "organization": "HSBC",
-      "location": "Toronto, ON",
-      "summary": "I developed regulatory trade-reporting features for the Americas and built the automation used to test and release them.",
-      "tags": ["Java", "Drools", "Jenkins", "Groovy", "Maven", "Nexus"],
       "team": "Trade Reporting Americas",
+      "organization": "HSBC",
+      "location": "Toronto, Canada",
       "startDate": "2021-04",
       "endDate": "2023-06",
-      "highlights": [
+      "bullets": [
         {
-          "id": "regression-platform",
-          "title": "Regression analysis in three hours",
-          "body": "I built a platform that split large datasets across parallel Jenkins pipelines and brought the results together in a multithreaded Spring Boot application. Analysis that had taken a week could be completed in three hours.",
-          "tags": ["Spring Boot", "Jenkins", "Multithreading", "Automation"],
-          "metric": {
-            "value": "1 week → 3 hours",
-            "label": "Regression-analysis turnaround"
-          }
-        },
-        {
-          "id": "regulatory-reporting",
-          "title": "Reporting across the Americas",
-          "body": "I delivered reporting functionality in Java and Drools for CFTC, SEC, and Canadian regulators.",
-          "tags": ["Java", "Drools"]
+          "id": "trade-regression",
+          "text": "Reduced regression analysis from one week to three hours by parallelizing datasets across Jenkins pipelines and aggregating results in a multithreaded Spring Boot application."
         },
         {
           "id": "trade-delivery",
-          "title": "Build, release, and change management",
-          "body": "I created modular Jenkins/Groovy pipelines connecting GitHub, Maven, Nexus, Jira, Ansible, and ServiceNow for build, deployment, and change-management workflows.",
-          "tags": ["Jenkins", "Groovy", "Maven", "Ansible"]
+          "text": "Created modular Jenkins/Groovy pipelines integrating GitHub, Maven, Nexus, Jira, Ansible, and ServiceNow for build, deployment, and change-management workflows."
         },
         {
-          "id": "trade-production-support",
-          "title": "Keeping production running",
-          "body": "I refactored legacy applications using OOP and SOLID principles and automated production operations with Bash. I also supported L2/L3 incident diagnosis and resolution with an international agile team.",
-          "tags": ["Java", "Bash", "OOP & SOLID", "Production Support"]
+          "id": "trade-regulatory",
+          "text": "Delivered Java and Drools changes for CFTC, SEC, and Canadian regulatory reporting requirements."
+        },
+        {
+          "id": "trade-maintenance",
+          "text": "Refactored legacy applications using OOP and SOLID principles and automated production operations with Bash."
+        },
+        {
+          "id": "trade-support",
+          "text": "Supported L2/L3 incident diagnosis and resolution with an international agile team."
         }
       ]
-    },
-    {
-      "id": "edu-western",
-      "category": "education",
-      "title": "Master of Engineering",
-      "organization": "University of Western Ontario",
-      "location": "London, ON",
-      "summary": "I used mathematical modeling and R to study hydrological and spatial problems, turning domain concepts into equations and statistical analysis.",
-      "tags": ["R", "Statistical Modeling", "Applied Mathematics"],
-      "team": "Water Resources & Environmental Engineering",
-      "startDate": "2019-01",
-      "endDate": "2019-12"
     },
     {
       "id": "teaching",
-      "category": "teaching",
       "title": "Computer Science & Mathematics Teacher",
-      "organization": "High School & Private Tutoring",
-      "summary": "I taught computer science and mathematics at two high schools and through private tutoring. Topics included algorithms, flowcharts, spreadsheets, algebra, and probability.",
-      "tags": ["Teaching", "Mentoring"],
-      "startDate": "2013",
-      "endDate": "2018"
-    },
-    {
-      "id": "edu-tehran",
-      "category": "education",
-      "title": "Bachelor of Science",
-      "organization": "University of Tehran",
+      "organization": "Milad Taha",
       "location": "Tehran, Iran",
-      "summary": "I studied civil engineering, with a strong grounding in mathematics and quantitative analysis.",
-      "tags": ["Engineering", "Mathematics"],
-      "team": "Civil Engineering",
-      "startDate": "2013-09",
-      "endDate": "2017-12"
-    },
+      "startDate": "2013-12",
+      "endDate": "2018-12",
+      "bullets": [
+        {
+          "id": "teaching-subjects",
+          "text": "Taught programming, algorithms, flowcharts, Excel and macros, alongside algebra, combinatorics, probability, and geometry for grades 10–12."
+        }
+      ]
+    }
+  ],
+  "projects": [
     {
-      "id": "man-agent-ment",
-      "category": "project",
-      "title": "man-agent-ment",
-      "organization": "Creator · Developer workflow tools",
-      "summary": "I built an open-source workflow kit for the coding agents I use across projects. It gives them a consistent way to plan changes, check their work, and leave useful context for the next session.",
-      "tags": [
-        "POSIX Shell",
-        "Codex",
-        "Claude Code",
-        "Gemini CLI",
-        "GitHub Copilot"
-      ],
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/HamidRezaRezaeiGitHub/man-agent-ment"
-        }
-      ],
-      "startDate": "2026-04",
-      "stage": "Open source",
-      "highlights": [
-        {
-          "id": "agent-workflow-adapters",
-          "date": "2026-04",
-          "title": "One workflow across coding tools",
-          "body": "Built a portable POSIX-shell toolkit with small adapters for Codex, Claude Code, Gemini CLI, and GitHub Copilot. Shared workflows, skills, templates, and scripts travel with the project.",
-          "metric": {
-            "value": "60+",
-            "label": "Versioned workflows, skills, templates, scripts, and adapters"
-          }
-        },
-        {
-          "id": "agent-workflow-handoff",
-          "date": "2026-05",
-          "title": "Leaving context for the next session",
-          "body": "Standardized planning, project knowledge, and session handoffs. Context-injection hooks keep guidance available, while non-overwriting installation and adoption audits protect existing project files.",
-          "details": [
-            "Added CI smoke tests for the toolkit and its installation workflows."
-          ]
-        }
-      ],
-      "endDate": "present"
-    },
-    {
-      "id": "buy-or-rent",
-      "category": "project",
-      "title": "BuyOrRent",
-      "organization": "Creator · Backend engineer",
-      "summary": "I’m building financial tools for housing-cost comparisons. The TypeScript backend is live, with HTTP APIs and MCP tools sharing the same calculation logic. The Flutter frontend is in progress.",
-      "stage": "Live backend · Frontend in progress",
-      "tags": [
-        "TypeScript",
-        "Hono",
-        "Cloudflare Workers",
-        "MCP",
-        "Zod",
-        "OpenAPI"
-      ],
-      "links": [
-        {
-          "label": "API docs",
-          "url": "https://api.buyorrent.app/api/v1/docs"
-        },
-        {
-          "label": "Backend on GitHub",
-          "url": "https://github.com/HamidRezaRezaeiGitHub/buy-or-rent-backend"
-        }
-      ],
-      "startDate": "2025-09",
+      "id": "buildean",
+      "title": "Buildean",
+      "role": "Co-founder & Backend Engineer",
+      "stage": "Beta",
+      "startDate": "2025-06",
       "endDate": "present",
-      "highlights": [
+      "links": [
         {
-          "id": "buy-or-rent-api",
-          "date": "2026-08",
-          "title": "A shared calculation engine",
-          "body": "Built a TypeScript/Hono backend on Cloudflare Workers for rent, loan, mortgage, property, investment, and expense projections. OpenAPI HTTP endpoints and MCP tools share the same financial-domain logic.",
-          "tags": ["TypeScript", "Hono", "Cloudflare Workers"],
-          "details": [
-            "Used precise decimal arithmetic with explicit rules for accrual, scheduling, and rounding."
-          ]
+          "label": "Visit Buildean",
+          "url": "https://buildean.com/beta/"
+        }
+      ],
+      "bullets": [
+        {
+          "id": "buildean-backend",
+          "text": "Architected the Java 25/Spring Boot 4 backend for a construction-estimation platform, using PostgreSQL, Flyway, and modular REST/OpenAPI services."
         },
         {
-          "id": "buy-or-rent-mcp",
-          "date": "2026-09",
-          "title": "Financial tools for AI assistants",
-          "body": "Exposed the calculations as MCP tools for AI assistants, with structured results and strict Zod contracts. HTTP and MCP share validation and consistent errors.",
-          "tags": ["MCP", "Zod", "Cash-flow Projections"]
+          "id": "buildean-estimation",
+          "text": "Built a transaction-safe estimation engine with hierarchical work scopes, quote resolution, manual overrides, scenario copying, and bidirectional task–estimate synchronization."
         },
         {
-          "id": "buy-or-rent-results",
-          "date": "2026-09",
-          "title": "Results you can inspect",
-          "body": "Added dated cash-flow breakdowns and CSV exports backed by private Cloudflare R2 storage. GitHub Actions handles delivery across DEV, UAT, and PROD.",
-          "details": [
-            "The full buy-versus-rent comparison and Flutter integration are still in progress."
-          ],
-          "tags": ["Cloudflare R2", "CSV", "GitHub Actions"]
+          "id": "buildean-delivery",
+          "text": "Secured APIs with Firebase authentication, RBAC, and ownership controls; automated keyless GitHub Actions delivery to GCP Cloud Run and Cloud SQL across DEV and UAT."
         }
       ]
     },
     {
-      "id": "buildean",
-      "category": "project",
-      "title": "Buildean",
-      "organization": "Co-founder · Backend engineer",
-      "summary": "I co-founded Buildean, a construction-estimation platform in beta. I build the backend and cloud infrastructure, from the estimation engine to secure APIs and delivery pipelines.",
-      "stage": "Beta",
-      "tags": [
-        "Java 25",
-        "Spring Boot 4",
-        "GCP Cloud Run",
-        "PostgreSQL",
-        "Firebase",
-        "Docker"
-      ],
-      "startDate": "2025-06",
+      "id": "buy-or-rent",
+      "title": "BuyOrRent",
+      "role": "Creator & Backend Engineer",
+      "stage": "Live backend · Flutter frontend in progress",
+      "startDate": "2025-09",
       "endDate": "present",
-      "highlights": [
+      "bullets": [
         {
-          "id": "buildean-backend",
-          "title": "The backend behind the estimates",
-          "body": "I architected a Java 25/Spring Boot 4 backend with PostgreSQL, Flyway migrations, and modular REST services documented through OpenAPI.",
-          "tags": [
-            "Java 25",
-            "Spring Boot 4",
-            "PostgreSQL",
-            "Flyway",
-            "OpenAPI"
-          ]
+          "id": "buy-or-rent-backend",
+          "text": "Designed a TypeScript/Hono backend on Cloudflare Workers with shared financial-domain logic exposed through OpenAPI HTTP endpoints and MCP tools."
         },
         {
-          "id": "buildean-estimation",
-          "title": "Keeping estimates useful as plans change",
-          "body": "Built a transaction-safe estimation engine around hierarchical work scopes, quote resolution, and manual price overrides. Scenario copying and bidirectional task–estimate synchronization keep estimates useful as plans change."
+          "id": "buy-or-rent-projections",
+          "text": "Implemented rent, loan, mortgage, property, investment, and expense projections using precise decimal arithmetic and explicit accrual, scheduling, and rounding policies."
         },
         {
-          "id": "buildean-delivery",
-          "date": "2026-05",
-          "title": "A repeatable path to the cloud",
-          "body": "Secured APIs with Firebase authentication, role-based access, and ownership controls. Automated keyless GitHub Actions delivery to GCP Cloud Run and Cloud SQL across DEV and UAT.",
-          "tags": [
-            "Firebase",
-            "RBAC",
-            "GCP Cloud Run",
-            "Cloud SQL",
-            "GitHub Actions"
-          ]
+          "id": "buy-or-rent-delivery",
+          "text": "Built strict Zod contracts, consistent HTTP/MCP errors, and private R2-backed CSV exports, backed by GitHub Actions delivery across DEV, UAT, and PROD."
         }
-      ],
+      ]
+    },
+    {
+      "id": "man-agent-ment",
+      "title": "man-agent-ment",
+      "role": "Creator",
+      "stage": "Open-source developer-workflow kit",
+      "startDate": "2026-04",
+      "endDate": "present",
       "links": [
         {
-          "label": "Beta website",
-          "url": "https://buildean.com/beta/"
+          "label": "View on GitHub",
+          "url": "https://github.com/HamidRezaRezaeiGitHub/man-agent-ment"
+        }
+      ],
+      "bullets": [
+        {
+          "id": "man-agent-ment-toolkit",
+          "text": "Built a portable POSIX-shell toolkit supporting Codex, Claude Code, Gemini CLI, and GitHub Copilot, with 60+ versioned workflows, skills, templates, scripts, and adapters."
+        },
+        {
+          "id": "man-agent-ment-workflows",
+          "text": "Standardized planning, project knowledge, and session handoffs; added context-injection hooks, non-overwriting installation, adoption audits, and CI smoke tests."
         }
       ]
     }
@@ -452,8 +259,7 @@
       "title": "Languages",
       "skills": [
         "Java",
-        "TypeScript",
-        "JavaScript",
+        "TypeScript/JavaScript",
         "SQL",
         "Groovy",
         "Bash",
@@ -463,15 +269,8 @@
     {
       "title": "Backend & APIs",
       "skills": [
-        "Spring Boot",
-        "Spring MVC",
-        "Spring Batch",
-        "Spring Integration",
-        "Spring Security",
-        "Spring Data JDBC",
-        "Spring Data JPA",
-        "Spring AI",
-        "REST APIs",
+        "Spring (Boot, MVC, Batch, Integration, Security, Data JDBC/JPA, AI)",
+        "REST",
         "MCP",
         "JWT",
         "LDAP",
@@ -483,52 +282,61 @@
       "skills": ["React", "HTML", "CSS", "Flutter"]
     },
     {
-      "title": "Data & storage",
-      "skills": ["PostgreSQL", "Cloud SQL", "H2", "BigQuery", "MongoDB"]
+      "title": "Database & Storage",
+      "skills": ["PostgreSQL", "Cloud SQL", "H2", "BigQuery", "MongoDB (NoSQL)"]
     },
     {
-      "title": "Cloud & infrastructure",
+      "title": "Cloud & Infrastructure",
       "skills": [
         "GCP Cloud Run",
         "Firebase",
-        "Cloudflare Workers",
-        "Cloudflare R2",
+        "Cloudflare Workers/R2",
         "Docker",
         "Solace"
       ]
     },
     {
-      "title": "Build & delivery",
+      "title": "Build & Delivery",
       "skills": ["Git", "Maven", "NPM", "Jenkins", "GitHub Actions", "Nexus"]
     },
     {
-      "title": "Testing & security",
+      "title": "Testing & Security",
       "skills": ["JUnit", "Mockito", "Vitest", "Checkmarx", "Sonatype"]
     },
     {
-      "title": "Observability & analytics",
-      "skills": ["Looker Studio", "Grafana", "Geneos"]
+      "title": "Observability & Analytics",
+      "skills": ["Data Studio (Looker)", "Grafana", "Geneos"]
     },
     {
-      "title": "Developer workflow",
-      "skills": ["GitHub Copilot", "Claude Code", "Codex", "Jira", "Confluence"]
+      "title": "Developer Workflow",
+      "skills": [
+        "Coding-agent workflows (Copilot, Claude Code, Codex)",
+        "Jira",
+        "Confluence"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-western",
+      "title": "Master of Engineering",
+      "field": "Water Resources & Environmental Engineering",
+      "organization": "University of Western Ontario",
+      "location": "London, Canada",
+      "startDate": "2019-01",
+      "endDate": "2019-12"
+    },
+    {
+      "id": "edu-tehran",
+      "title": "Bachelor of Science",
+      "field": "Civil Engineering",
+      "organization": "University of Tehran",
+      "location": "Tehran, Iran",
+      "startDate": "2013-09",
+      "endDate": "2017-12"
     }
   ],
   "footer": {
     "builtWith": "React · TypeScript · Motion"
-  },
-  "skillOverview": [
-    "Java",
-    "Spring Boot",
-    "React",
-    "TypeScript",
-    "PostgreSQL",
-    "GCP Cloud Run",
-    "Docker",
-    "Jenkins",
-    "Spring AI",
-    "MCP",
-    "GitHub Actions",
-    "BigQuery"
-  ]
+  }
 }

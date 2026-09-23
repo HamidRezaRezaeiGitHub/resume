@@ -2,12 +2,12 @@ import { ArrowUp } from 'lucide-react'
 import { resume } from '@/data/resume'
 export function Footer() {
   return (
-    <footer className="site-footer dark-section">
+    <footer className="site-footer">
       <div className="container">
         <p>
           © {new Date().getFullYear()} {resume.profile.name}
         </p>
-        <span className="mono">{resume.footer.builtWith.toUpperCase()}</span>
+        <span className="footer-credit">{resume.footer.builtWith}</span>
         <a href="#top" className="text-link">
           Back to top
           <ArrowUp size={15} />
