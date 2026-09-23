@@ -1,5 +1,15 @@
 # Wiki log
 
+## [2026-09-23] update | Latest resume content
+
+Updated JSON from the supplied two-page long resume: Data Service Layer title,
+legacy migration and production support, project implementation details,
+Buildean's June 2025 start and beta link, man-agent-ment's ongoing status and
+60+ versioned assets, the master's field, and nine toolkit groups. Kept the
+current role first, the three selected projects, compatible prior facts, and
+the existing parity qualification. The previous request to omit FDM transition
+prose still applies. No source document or local source path is committed.
+
 ## [2026-09-23] update | Production design retained
 
 The user selected the original production design at `f9d2152` and declined the

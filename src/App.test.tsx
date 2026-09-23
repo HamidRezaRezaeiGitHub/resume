@@ -138,12 +138,12 @@ describe('resume experience', () => {
   it('filters the skill field without navigating away', async () => {
     const user = userEvent.setup()
     render(<App />)
-    await user.click(screen.getByRole('button', { name: 'AI engineering' }))
-    const skills = screen.getByRole('list', { name: 'AI engineering skills' })
+    await user.click(screen.getByRole('button', { name: 'Backend & APIs' }))
+    const skills = screen.getByRole('list', { name: 'Backend & APIs skills' })
     expect(within(skills).getByText('Spring AI')).toBeInTheDocument()
     expect(within(skills).queryByText('Docker')).not.toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: 'AI engineering' }),
+      screen.getByRole('button', { name: 'Backend & APIs' }),
     ).toHaveAttribute('aria-pressed', 'true')
   })
 

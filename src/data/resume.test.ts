@@ -122,7 +122,7 @@ describe('unified resume content', () => {
     content.skillOverview[0] = 'Unlisted skill'
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
-  it.each(['Backend', 'Overview'])(
+  it.each([rawResumeContent.skillGroups[0].title, 'Overview'])(
     'rejects ambiguous skill filter title %s',
     (title) => {
       const content = editableCopy()

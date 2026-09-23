@@ -3,7 +3,7 @@ title: Personal project evidence
 domain: evidence
 tags: [projects, provenance, publication]
 status: current
-last_updated: 2026-09-16
+last_updated: 2026-09-23
 ---
 
 # Personal project evidence
@@ -21,12 +21,19 @@ BuyOrRent's public copy focuses on its new backend and MCP tools, with the
 Flutter frontend explicitly in progress. Its September 2025 project date stays;
 the backend milestones start in August 2026.
 
-The latest user-supplied resume image confirms that the platform proof of
+The September 16 user-supplied resume image confirms that the platform proof of
 concept, in-product assistant, and agent adoption work belong to the current
 Agency Securities Lending role. It supplies January–December 2019 for the
 master's degree and September 2013–December 2017 for the bachelor's degree.
 The website retains the previously established functional-team transitions
 within the earlier HSBC period, which the one-page resume groups together.
+
+The September 23 long resume now supplies the current public facts. It confirms
+the separate Data Service Layer period and title, gives Buildean a **June 2025**
+start, identifies BuyOrRent's backend as live, and lists man-agent-ment as
+April 2026–present. It also supplies Buildean's public beta link. These facts
+supersede conflicting earlier inferences below; see the
+[content guide](../guides/resume-content.md) for source precedence.
 
 ## How dates are used
 
@@ -48,7 +55,9 @@ the current role as the parent for the HSBC platform and AI achievements.
 - Repository: `buildean/buildean-backend`.
 - `f41861f4` (2025-06-28): README and ignore file; `f1493a7e` (2025-07-08): Java
   scaffold. `98fb870c` (2025-07-18): first substantive estimation domain,
-  including projects, estimates, lines, quotes, and work items. Use **Jul 2025**.
+  including projects, estimates, lines, quotes, and work items. This originally
+  supported a July implementation date; the latest resume explicitly supplies
+  **June 2025** for the project start, which the website now uses.
 - `ca40e5bf` (2026-05-19): UAT/cloud delivery milestone. `3e16f1b0` (2026-09-10):
   current-task scenario creation retaining compatible base values. Continued
   implementation through `93d3100a` (2026-09-12) supports ongoing work.
@@ -60,7 +69,8 @@ the current role as the parent for the HSBC platform and AI achievements.
   Cloud Run DEV/UAT. No claim of production deployment.
 - `wiki/architecture/tech-stack.md:14-33`: Java/Spring, PostgreSQL/Flyway.
 - Only the backend was available locally. Do not attribute the separate
-  frontend to Hamid. No verified public product link was added.
+  frontend to Hamid. The September 23 resume supplies the public
+  [beta website](https://buildean.com/beta/) link now used on the page.
 
 ## BuyOrRent
 
