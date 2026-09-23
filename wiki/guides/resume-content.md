@@ -84,7 +84,7 @@ topics must refer to existing groups; no group or topic may be empty. Relationsh
 cannot reference missing IDs, link a node to itself, or repeat an undirected pair,
 including reversed pairs and pairs already supplied by membership.
 These are internal keys, not page fragment anchors. Every node uses the same
-square-root sizing rule based on its total unique neighbors. No expertise weights,
+bounded 22–72 graph-unit sizing rule based on its relative number of unique neighbors. No expertise weights,
 Java-specific size overrides or node coordinates are authored in JSON.
 The automatic layout and temporary drag positions belong to presentation state.
 
@@ -117,8 +117,11 @@ Identity and summary still belong to `profile`. In Let's Talk,
 `sections.contact.eyebrow` is the short invitation above the title;
 `emailLabel` names the email action. These labels remain editable in JSON.
 The previous decorative hero schema is not used. Skills adds
-`sections.skills.eyebrow`, `description`, `legend`, `idleTitle` and
-`idleDescription`; these describe the network and its unselected state.
+`sections.skills.eyebrow`, shared by Network and List. It reads “What I work with”;
+there is no descriptive paragraph beneath it. The user declined the Java/Spring
+summary and wants the network to speak for itself. The former `description`,
+`legend`, `idleTitle` and `idleDescription` were removed with the extra copy and
+explanatory/selection panel.
 The footer has no technology/build credit and no `footer` JSON object.
 
 Experience entries have `title` (job title), `organization`, optional `team`,

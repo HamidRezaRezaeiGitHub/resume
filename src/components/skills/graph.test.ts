@@ -7,6 +7,9 @@ import {
   zoomCamera,
   MAX_ZOOM,
   MIN_ZOOM,
+  MIN_FONT_SIZE,
+  MAX_FONT_SIZE,
+  revealNode,
 } from './graph'
 
 describe('skills graph', () => {
@@ -50,6 +53,15 @@ describe('skills graph', () => {
     expect(byId.get('java')!.fontSize).toBeGreaterThan(
       byId.get('typescript')!.fontSize,
     )
+  })
+  it('bounds the shared font scale while giving highly connected words more contrast', () => {
+    const byId = new Map(graph.nodes.map((n) => [n.id, n]))
+    expect(Math.min(...graph.nodes.map((n) => n.fontSize))).toBe(MIN_FONT_SIZE)
+    expect(Math.max(...graph.nodes.map((n) => n.fontSize))).toBe(MAX_FONT_SIZE)
+    expect(byId.get('java')!.fontSize).toBeGreaterThan(60)
+    expect(
+      byId.get('java')!.fontSize / byId.get('typescript')!.fontSize,
+    ).toBeGreaterThan(1.5)
   })
   it('uses the actual connections to form neighborhoods without fixed topic positions', () => {
     const linked: number[] = [],
@@ -145,6 +157,33 @@ describe('graph camera', () => {
       )
       expect(next.scale).toBeGreaterThanOrEqual(MIN_ZOOM)
       expect(next.scale).toBeLessThanOrEqual(MAX_ZOOM)
+    }
+  })
+  it('reveals offscreen keyboard focus and preserves the camera for visible nodes', () => {
+    const node = buildSkillsGraph(
+      resume.skillCategories,
+      resume.skills,
+      resume.skillRelationships,
+    ).nodes[0]
+    const size = { width: 320, height: 420 }
+    for (const start of [
+      { x: -2000, y: 3000, scale: 0.5 },
+      { x: 2000, y: -3000, scale: 2 },
+    ]) {
+      const shown = revealNode(start, node, size)
+      expect(
+        shown.x + (node.x - node.width / 2) * shown.scale,
+      ).toBeGreaterThanOrEqual(0)
+      expect(
+        shown.x + (node.x + node.width / 2) * shown.scale,
+      ).toBeLessThanOrEqual(size.width)
+      expect(
+        shown.y + (node.y - node.height / 2) * shown.scale,
+      ).toBeGreaterThanOrEqual(0)
+      expect(
+        shown.y + (node.y + node.height / 2) * shown.scale,
+      ).toBeLessThanOrEqual(size.height)
+      expect(revealNode(shown, node, size)).toEqual(shown)
     }
   })
   it('combines pinch zoom with a moving two-finger midpoint', () => {

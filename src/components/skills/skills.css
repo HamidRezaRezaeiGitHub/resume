@@ -16,11 +16,6 @@
   text-transform: uppercase;
   margin-bottom: 12px;
 }
-.skills-intro p:not(.eyebrow) {
-  color: var(--body);
-  font-size: 17px;
-  line-height: 1.65;
-}
 .skills-view-switch {
   display: flex;
   padding: 4px;
@@ -54,39 +49,10 @@
 }
 .network-toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  gap: 16px;
-  padding: 18px 24px;
+  padding: 10px 20px;
   border-bottom: 1px solid var(--line);
-}
-.network-picker {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-.network-picker > span {
-  color: var(--muted);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-.network-picker select {
-  color: var(--ink);
-  background: var(--paper);
-  border: 0;
-  border-radius: 4px;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 5px 26px 5px 0;
-  max-width: 100%;
-  min-height: 32px;
-}
-.network-picker select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
 }
 .network-controls {
   display: flex;
@@ -189,9 +155,9 @@
   transition: opacity 0.3s;
 }
 .network-node rect {
-  fill: var(--paper);
-  stroke: transparent;
-  stroke-width: 1.5;
+  fill: transparent;
+  stroke: none;
+  pointer-events: all;
 }
 .network-node text {
   fill: var(--body);
@@ -205,80 +171,24 @@
 .network-node:focus-visible {
   opacity: 1;
 }
-.network-node:hover rect,
-.network-node:focus-visible rect {
-  stroke: var(--accent);
-}
-.network-node.is-highlighted rect {
+.network-node:hover text,
+.network-node.is-highlighted text,
+.network-node:focus-visible text {
   fill: var(--accent);
-  stroke: var(--accent);
+  font-weight: 600;
 }
-.network-node.is-highlighted text {
-  fill: var(--paper);
-}
-.network-node.is-highlighted {
-  filter: drop-shadow(0 4px 12px #00000018);
-}
-.network-detail {
-  border-top: 1px solid var(--line);
-  padding: 20px 24px 18px;
-}
-.network-selection {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-size: 14px;
-}
-.network-selection strong {
-  font-weight: 550;
-}
-.network-selection > span:last-child {
-  color: var(--muted);
-  font-size: 12px;
-}
-.network-indicator {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 10%, transparent);
-  margin-right: 5px;
-}
-.network-neighbors {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 12px 3px 5px;
-}
-.network-neighbors button {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
-  font-size: 12px;
-  min-height: 38px;
-  padding: 0 13px;
-  border: 1px solid var(--line);
-  border-radius: 25px;
-  color: var(--body);
-  background: transparent;
-}
-.network-neighbors button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.network-neighbors button span {
-  color: var(--accent);
+.network-node:focus-visible text {
+  text-decoration: underline;
 }
 .network-help {
   font-size: 11px;
   line-height: 1.65;
   color: var(--muted);
-  margin-top: 14px;
+  margin: 0;
+  padding: 14px 24px;
+  border-top: 1px solid var(--line);
 }
-.network-touch-control,
-.touch-help {
+.network-touch-control {
   display: none;
 }
 .print-only {
@@ -308,11 +218,8 @@
     background: var(--accent);
     color: var(--paper);
   }
-  .pointer-help {
+  .network-help {
     display: none;
-  }
-  .touch-help {
-    display: inline;
   }
 }
 @media (max-width: 600px) {
@@ -321,30 +228,19 @@
     flex-direction: column;
     gap: 20px;
   }
-  .skills-intro p:not(.eyebrow) {
-    font-size: 16px;
-  }
   .network-toolbar {
-    padding: 15px 16px 8px;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .network-picker select {
-    width: 100%;
-    font-size: 16px;
+    padding: 8px 14px;
+    justify-content: center;
   }
   .network-controls {
     justify-content: space-between;
+    width: 100%;
   }
   .network-controls button {
     width: 42px;
   }
   .network-svg {
     height: clamp(320px, 60svh, 450px);
-  }
-  .network-detail {
-    padding: 18px 16px;
   }
   .network-help {
     font-size: 11px;

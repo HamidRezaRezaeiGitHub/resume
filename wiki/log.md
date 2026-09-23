@@ -1,5 +1,15 @@
 # Wiki log
 
+## 2026-09-23 — update — Minimal Skills graph
+
+Removed node tiles, dropdown, selection/neighbor panel and explanatory legend.
+Text highlighting, transparent hit regions and edge masks keep the graph readable.
+Degree sizing now spans 22–72 graph units with stronger contrast for highly
+connected words. Roving keyboard navigation replaces the dropdown; offscreen
+focus is revealed, and only keyboard tips remain below the graph. Updated the
+shared Network/List eyebrow to “What I work with”; removed the declined
+Java/Spring summary paragraph and obsolete JSON copy fields.
+
 ## 2026-09-23 — update — Connected skills graph
 
 Added explicit undirected ecosystem relationships, including Jenkins–Groovy,

@@ -47,11 +47,7 @@
     },
     "skills": {
       "title": "Skills",
-      "eyebrow": "A connected toolkit",
-      "description": "Explore the tools I use across backend, frontend, and delivery.",
-      "legend": "Larger labels have more connections.",
-      "idleTitle": "Find the connections.",
-      "idleDescription": "Choose a node to explore."
+      "eyebrow": "What I work with"
     },
     "education": {
       "title": "Education"

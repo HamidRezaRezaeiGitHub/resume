@@ -53,12 +53,17 @@ short landscape viewport. Check:
 - Every top-bar section link is visible on phones and scrolls up/down to an
   unobscured target, preserving keyboard focus.
 - Skills: Java connects to Spring/modules; Jenkins to Groovy; Backend to APIs.
-  Trace links in both directions; selecting a neighbor must update the selection.
-- Every node has the same visual treatment and alphabetized picker; no type/count
-  labels. Font size follows all unique neighbors, including explicit relationships.
+  Trace links in both directions; clicking a keyword must update the selection.
+- Every node is text-only (also on hover/selection); no filled tiles, dropdown,
+  selection/neighbor panel, explanation or type/count labels. The only footer copy
+  is keyboard tips. The shared introduction works in Network and List.
+- Font size stays within 22–72 graph units and gives highly connected words more
+  contrast. Edge masks stay aligned with labels while dragging.
 - Graph zoom limits/reset, mouse pan, modifier-wheel zoom, and ordinary wheel scrolling.
 - Phone: default swipe scrolls the page; Explore graph enables node drag/pan/pinch; Done restores scrolling.
-- Keyboard picker, arrows/+/-/0, Shift+arrows for nodes, visible focus, tooltips and complete List view.
+- Keyboard: one node tab stop, arrow browsing, Home/End, Enter/Space selection,
+  +/-/0, Shift+arrows movement, focus underline, offscreen-node reveal and Tab exit.
+  Tooltips and the complete List view remain accessible.
 - Hover highlights a node and its direct edges without changing camera or selection.
 - Node drag moves only that node and its edges; background drag pans without deselecting.
 - A blank click clears selection; Fit includes moved nodes; Reset restores the layout.

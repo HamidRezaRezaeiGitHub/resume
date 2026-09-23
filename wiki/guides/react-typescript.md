@@ -61,12 +61,17 @@ Keep graph data/layout, interaction state and presentation separate. The automat
 layout uses common deterministic seeds, link attraction, charge repulsion and a
 bounded force simulation on copied data, followed by rectangular label spacing.
 There are no fixed topic anchors. Membership and extra ecosystem links form one
-undirected adjacency map before layout. Every node uses the same square-root
-function of its total unique neighbors for label size. Connected nodes tend to
+undirected adjacency map before layout. Every node uses the same normalized degree curve, bounded from 22 to 72 graph
+units (before zoom), with exponent 1.35 to emphasize well-connected words. Connected nodes tend to
 cluster, while spacing keeps long labels readable; not every pair can be adjacent.
 No coordinates, proficiency weights or named-node overrides are authored in JSON.
-The alphabetized picker, labels and styling do not distinguish node kinds or show
-counts. The complete list/print view retains its content groupings.
+Nodes render as text only, including hover/selection; their invisible rectangles
+retain pointer hit areas. An SVG mask cuts gaps in connection lines behind labels
+without painting a tile. Focus is underlined; hover/selection changes text color
+and weight. There is no dropdown, selected-node panel, neighbor list or explanatory
+legend. Only a keyboard hint appears below the graph (hidden for coarse pointers
+and narrow phones). The shared intro suits both Network and List.
+The complete list/print view retains its content groupings.
 
 `useGraphInteraction` owns temporary node positions, camera state, pointer capture
 and pinch tracking. Dragging a node moves it and its edges; background dragging
@@ -78,13 +83,15 @@ refit the camera, not state updates during node dragging.
 
 Mouse hover previews direct connections without moving the camera or changing
 persistent selection. Clicking pins a selection; blank clicks and Escape clear
-it. Picker/related-node buttons focus a neighborhood. There is no drifting,
+it. Keyboard focus reveals an offscreen node without changing selection. There is no drifting,
 parallax, live force simulation, looping edge animation or pause control.
 
 Buttons and Ctrl/Command-wheel zoom; ordinary wheel input scrolls the page.
 Touch defaults to native page scrolling; Explore graph opts into node dragging,
-pan and pinch. Done or Escape exits capture. Arrows pan; Shift+arrows move the
-focused node; +/− zoom; 0 resets. The native picker reaches every node. Toolbar
+pan and pinch. Done or Escape exits capture. Tab enters the canvas and then one
+node; arrows on that node cycle alphabetically, Home/End jump to the first/last,
+and Enter/Space selects. Tab exits without traversing every node. Arrows on the
+canvas pan; Shift+arrows moves a focused node; +/− zoom; 0 resets. Toolbar
 hints appear on mouse hover or focus, dismiss with Escape, and clean up their
 listeners. Skills inherits the same container width as the other sections.
 

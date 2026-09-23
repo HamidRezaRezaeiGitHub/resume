@@ -44,7 +44,9 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
    Graph topics map to PDF/list groups through `skillCategories[].groupId`;
    `src/data/skills.ts` derives group membership and combines membership edges with
    `skillRelationships`. Total degree controls all label sizes; link forces shape
-   neighborhoods without fixed topic anchors. No ambient motion loop runs.
+   neighborhoods without fixed topic anchors. Text-only nodes use masked edges and
+   transparent hit areas; roving focus replaces the former dropdown. No ambient
+   motion loop runs.
    Observers, pointer capture and tooltip listeners clean up appropriately.
 
 The [content guide](../guides/resume-content.md) owns fields and publication rules.

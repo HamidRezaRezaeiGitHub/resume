@@ -42,16 +42,18 @@ export interface Size {
 }
 export const MIN_ZOOM = 0.08
 export const MAX_ZOOM = 2
+export const MIN_FONT_SIZE = 22
+export const MAX_FONT_SIZE = 72
 
 // Labels are measured conservatively in world units, before any camera zoom.
 function node(
   id: string,
   label: string,
   connections: string[],
+  fontSize: number,
   x: number,
   y: number,
 ): GraphNode {
-  const fontSize = 16 + 7 * Math.sqrt(connections.length)
   return {
     id,
     label,
@@ -79,6 +81,9 @@ export function buildSkillsGraph(
     adjacency.get(source)!.add(target)
     adjacency.get(target)!.add(source)
   }
+  const degrees = [...adjacency.values()].map((neighbors) => neighbors.size)
+  const minDegree = Math.min(...degrees)
+  const degreeRange = Math.max(...degrees) - minDegree || 1
   // All nodes start with the same deterministic seed pattern. Relationships,
   // not topic anchors or hand-authored coordinates, shape the neighborhoods.
   const nodes = labels.map(({ id, label }, i) => {
@@ -88,6 +93,9 @@ export function buildSkillsGraph(
       id,
       label,
       [...adjacency.get(id)!],
+      MIN_FONT_SIZE +
+        (MAX_FONT_SIZE - MIN_FONT_SIZE) *
+          ((adjacency.get(id)!.size - minDegree) / degreeRange) ** 1.35,
       Math.cos(angle) * radius,
       Math.sin(angle) * radius,
     )
@@ -138,15 +146,25 @@ export function buildSkillsGraph(
   return { nodes, links }
 }
 
+export function graphBounds(nodes: GraphNode[]) {
+  return {
+    left: Math.min(...nodes.map((n) => n.x - n.width / 2)),
+    right: Math.max(...nodes.map((n) => n.x + n.width / 2)),
+    top: Math.min(...nodes.map((n) => n.y - n.height / 2)),
+    bottom: Math.max(...nodes.map((n) => n.y + n.height / 2)),
+  }
+}
+
 export function fitCamera(
   nodes: GraphNode[],
   size: Size,
   maxScale = 1,
 ): Camera {
-  const left = Math.min(...nodes.map((n) => n.x - n.width / 2)) - 35
-  const right = Math.max(...nodes.map((n) => n.x + n.width / 2)) + 35
-  const top = Math.min(...nodes.map((n) => n.y - n.height / 2)) - 35
-  const bottom = Math.max(...nodes.map((n) => n.y + n.height / 2)) + 35
+  const bounds = graphBounds(nodes)
+  const left = bounds.left - 35,
+    right = bounds.right + 35
+  const top = bounds.top - 35,
+    bottom = bounds.bottom + 35
   // Fit must include even a node dragged far beyond the original layout.
   const scale = Math.min(
     maxScale,
@@ -157,6 +175,28 @@ export function fitCamera(
     x: size.width / 2 - ((left + right) / 2) * scale,
     y: size.height / 2 - ((top + bottom) / 2) * scale,
     scale,
+  }
+}
+
+// Keyboard focus stays visible after panning/zooming without changing selection.
+export function revealNode(
+  camera: Camera,
+  node: GraphNode,
+  size: Size,
+): Camera {
+  const fitted = fitCamera([node], size, camera.scale)
+  if (fitted.scale < camera.scale) return fitted
+  const bounds = graphBounds([node])
+  return {
+    ...camera,
+    x: Math.min(
+      Math.max(camera.x, 16 - bounds.left * camera.scale),
+      size.width - 16 - bounds.right * camera.scale,
+    ),
+    y: Math.min(
+      Math.max(camera.y, 16 - bounds.top * camera.scale),
+      size.height - 16 - bounds.bottom * camera.scale,
+    ),
   }
 }
 

@@ -59,9 +59,9 @@ nine groups, but the network treats every keyword as a peer. Explicit ecosystem
 relationships supplement category membership: Jenkins–Groovy, Backend–APIs,
 Java–Spring and related frameworks, languages, delivery and data/cloud tools.
 
-A single undirected adjacency map drives every edge, highlight, neighbor list and
-font size. The shared square-root degree scale has no proficiency weights or
-named-node overrides. Label types/counts are not displayed. A bounded D3 layout
+A single undirected adjacency map drives every edge, highlight and font size.
+The shared degree scale spans 22–72 graph units using a normalized power curve;
+it has no proficiency weights or named-node overrides. Label types/counts are not displayed. A bounded D3 layout
 uses links and common seeds instead of fixed category anchors, then resolves label
 collisions. No individual positions are manually authored. The simulation runs
 once; it does not introduce idle motion.
@@ -69,6 +69,10 @@ once; it does not introduce idle motion.
 Mouse hover highlights the direct neighborhood without moving it. Node drag,
 background pan, pinch zoom and persistent selection remain distinct interactions.
 Initial/resize views fit the complete graph, using the normal section width.
+Nodes are text-only, with transparent hit regions and edge masks for readability.
+The dropdown and selection/neighbor panel are removed; roving keyboard focus
+reaches every node and reveals it when offscreen. Only keyboard tips remain below
+the canvas. The introductory copy applies equally to Network and List.
 Toolbar tooltips explain controls. Touch capture stays opt-in; a deduplicated
 list and print view preserve scanning and accessible alternatives. The user
 explicitly approved publishing this connected graph to all environments from

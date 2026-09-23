@@ -1,7 +1,13 @@
-import { useId, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { Maximize, Minus, Move, Plus, RotateCcw } from 'lucide-react'
 import { resume } from '@/data/resume'
-import { buildSkillsGraph, MAX_ZOOM, MIN_ZOOM, type GraphNode } from './graph'
+import {
+  buildSkillsGraph,
+  graphBounds,
+  MAX_ZOOM,
+  MIN_ZOOM,
+  type GraphNode,
+} from './graph'
 import { useGraphInteraction } from './useGraphInteraction'
 import { GraphControl } from './GraphControl'
 
@@ -11,15 +17,22 @@ const graph = buildSkillsGraph(
   resume.skillRelationships,
 )
 
+const nodeOrder = [...graph.nodes]
+  .sort((a, b) => a.label.localeCompare(b.label, 'en'))
+  .map((node) => node.id)
+
 export function SkillsNetwork() {
   const [selected, setSelected] = useState<string | null>(null)
+  const [focused, setFocused] = useState('java')
+  const nodeRefs = useRef(new Map<string, SVGGElement>())
   const [hovered, setHovered] = useState<string | null>(null)
   const { surfaceRef, ...controls } = useGraphInteraction(graph.nodes)
   const byId = new Map(controls.nodes.map((node) => [node.id, node]))
   const descriptionId = useId()
+  const maskId = useId()
+  const bounds = graphBounds(controls.nodes)
   const activeId = hovered ?? selected
   const active = activeId ? byId.get(activeId) : undefined
-  const selection = selected ? byId.get(selected) : undefined
   const neighborhood = active
     ? new Set([active.id, ...active.connections])
     : null
@@ -27,9 +40,9 @@ export function SkillsNetwork() {
     setSelected(null)
     setHovered(null)
   }
-  const select = (node: GraphNode, focus = false) => {
+  const select = (node: GraphNode) => {
     setSelected(node.id)
-    if (focus) controls.focus(node)
+    setFocused(node.id)
   }
   const reset = () => {
     clear()
@@ -38,26 +51,6 @@ export function SkillsNetwork() {
   return (
     <div className="skills-network">
       <div className="network-toolbar">
-        <label className="network-picker">
-          <span>Follow a connection</span>
-          <select
-            value={selected ?? ''}
-            onChange={(event) =>
-              event.target.value
-                ? select(byId.get(event.target.value)!, true)
-                : clear()
-            }
-          >
-            <option value="">Explore the toolkit</option>
-            {[...controls.nodes]
-              .sort((a, b) => a.label.localeCompare(b.label, 'en'))
-              .map((node) => (
-                <option key={node.id} value={node.id}>
-                  {node.label}
-                </option>
-              ))}
-          </select>
-        </label>
         <div
           className="network-controls"
           role="group"
@@ -125,7 +118,40 @@ export function SkillsNetwork() {
             transform={`translate(${controls.camera.x} ${controls.camera.y}) scale(${controls.camera.scale})`}
             className="network-camera"
           >
-            <g aria-hidden="true" className="network-edges">
+            {/* Keep edges clear of labels without painting a background. */}
+            <defs>
+              <mask
+                id={maskId}
+                maskUnits="userSpaceOnUse"
+                x={bounds.left}
+                y={bounds.top}
+                width={bounds.right - bounds.left}
+                height={bounds.bottom - bounds.top}
+              >
+                <rect
+                  x={bounds.left}
+                  y={bounds.top}
+                  width={bounds.right - bounds.left}
+                  height={bounds.bottom - bounds.top}
+                  fill="white"
+                />
+                {controls.nodes.map((node) => (
+                  <rect
+                    key={node.id}
+                    x={node.x - node.width / 2}
+                    y={node.y - node.height / 2}
+                    width={node.width}
+                    height={node.height}
+                    fill="black"
+                  />
+                ))}
+              </mask>
+            </defs>
+            <g
+              aria-hidden="true"
+              className="network-edges"
+              mask={`url(#${maskId})`}
+            >
               {graph.links.map((link) => {
                 const from = byId.get(link.source)!,
                   to = byId.get(link.target)!
@@ -150,13 +176,22 @@ export function SkillsNetwork() {
             {controls.nodes.map((node) => (
               <g
                 key={node.id}
+                ref={(element) => {
+                  if (element) nodeRefs.current.set(node.id, element)
+                  else nodeRefs.current.delete(node.id)
+                }}
                 data-node-id={node.id}
                 transform={`translate(${node.x} ${node.y})`}
                 className={`network-node${active?.id === node.id ? ' is-highlighted' : ''}${neighborhood && !neighborhood.has(node.id) ? ' is-muted' : ''}`}
                 role="button"
                 aria-label={node.label}
                 aria-pressed={selected === node.id}
-                tabIndex={node.id === (selected ?? 'java') ? 0 : -1}
+                tabIndex={node.id === focused ? 0 : -1}
+                onFocus={() => {
+                  setFocused(node.id)
+                  setHovered(null)
+                  controls.reveal(node)
+                }}
                 onPointerEnter={(event) => {
                   if (event.pointerType === 'mouse' && !event.buttons)
                     setHovered(node.id)
@@ -171,7 +206,34 @@ export function SkillsNetwork() {
                   if (event.detail === 0 || !controls.wasDragged()) select(node)
                 }}
                 onKeyDown={(event) => {
-                  if (event.key === 'Enter' || event.key === ' ') {
+                  if (
+                    !event.shiftKey &&
+                    !event.ctrlKey &&
+                    !event.metaKey &&
+                    !event.altKey &&
+                    [
+                      'ArrowLeft',
+                      'ArrowRight',
+                      'ArrowUp',
+                      'ArrowDown',
+                      'Home',
+                      'End',
+                    ].includes(event.key)
+                  ) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    const index = nodeOrder.indexOf(node.id)
+                    const backwards =
+                      event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+                    let next =
+                      (index + (backwards ? -1 : 1) + nodeOrder.length) %
+                      nodeOrder.length
+                    if (event.key === 'Home') next = 0
+                    if (event.key === 'End') next = nodeOrder.length - 1
+                    nodeRefs.current
+                      .get(nodeOrder[next])
+                      ?.focus({ preventScroll: true })
+                  } else if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault()
                     select(node)
                   }
@@ -205,42 +267,10 @@ export function SkillsNetwork() {
           </button>
         </div>
       </div>
-      <div className="network-detail">
-        <div className="network-selection" aria-live="polite">
-          <span className="network-indicator" />
-          <strong>
-            {selection?.label ?? resume.sections.skills.idleTitle}
-          </strong>
-          {!selection && <span>{resume.sections.skills.idleDescription}</span>}
-        </div>
-        {selection && (
-          <div
-            className="network-neighbors"
-            aria-label={`Connections for ${selection.label}`}
-          >
-            {selection.connections.map((id) => (
-              <button key={id} onClick={() => select(byId.get(id)!, true)}>
-                {byId.get(id)!.label}
-                <span aria-hidden="true">↗</span>
-              </button>
-            ))}
-          </div>
-        )}
-        <p id={descriptionId} className="network-help">
-          <span className="pointer-help">
-            Hover to trace connections. Drag a node to move it; drag the
-            background to pan. Ctrl/⌘ + scroll to zoom.{' '}
-          </span>
-          <span className="touch-help">
-            Tap Explore graph to move nodes, pan, and pinch to zoom.{' '}
-          </span>
-          <span className="pointer-help">
-            Arrow keys pan · Shift + arrows move a focused node · + / − zoom · 0
-            resets.{' '}
-          </span>
-          {resume.sections.skills.legend}
-        </p>
-      </div>
+      <p id={descriptionId} className="network-help">
+        Arrows browse nodes · Enter selects · Shift + arrows move · + / − zoom ·
+        0 resets · Esc clears
+      </p>
     </div>
   )
 }

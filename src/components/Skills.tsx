@@ -17,7 +17,6 @@ export function Skills() {
       <div className="skills-intro">
         <div>
           <p className="eyebrow">{resume.sections.skills.eyebrow}</p>
-          <p>{resume.sections.skills.description}</p>
         </div>
         <div
           className="skills-view-switch"

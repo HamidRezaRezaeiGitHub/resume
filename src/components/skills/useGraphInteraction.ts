@@ -9,6 +9,7 @@ import {
 import {
   fitCamera,
   pinchCamera,
+  revealNode,
   zoomCamera,
   type Camera,
   type GraphNode,
@@ -193,12 +194,8 @@ export function useGraphInteraction(initialNodes: GraphNode[]) {
     setNodes(initialNodes)
     setCamera(fitCamera(initialNodes, size.current))
   }
-  const focus = (node: GraphNode) => {
-    const neighbors = nodes.filter(
-      (n) => n.id === node.id || node.connections.includes(n.id),
-    )
-    setCamera(fitCamera(neighbors, size.current, 1.1))
-  }
+  const reveal = (node: GraphNode) =>
+    setCamera((current) => revealNode(current, node, size.current))
   const onKeyDown = (event: KeyboardEvent<SVGSVGElement>) => {
     if (event.key === 'Escape') {
       stopExploring()
@@ -248,7 +245,7 @@ export function useGraphInteraction(initialNodes: GraphNode[]) {
     toggleExploring: () => (exploring ? stopExploring() : setExploring(true)),
     wasDragged: () => dragged.current,
     zoom,
-    focus,
+    reveal,
     fit,
     reset,
     handlers: {

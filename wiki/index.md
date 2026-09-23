@@ -7,8 +7,7 @@ recruiters and hiring managers. It presents a minimal, mobile-friendly
 resume with separate experience, project, skill and education sections, plus
 a distinctive hero and contact section in light and dark modes. Skills adds an
 interactive network of related technologies and topics, degree-sized labels,
-hover highlighting, draggable nodes,
-pan/zoom and a readable grouped list.
+text-only nodes, hover highlighting, keyboard navigation, dragging and pan/zoom and a readable grouped list.
 This wiki owns durable project knowledge. Local task state lives in ignored
 `requirements/` workspaces; shared agent workflows live in `ai/`.
 

@@ -80,10 +80,6 @@ export const resumeContentSchema = z
       projects: heading,
       skills: heading.extend({
         eyebrow: text,
-        description: text,
-        legend: text,
-        idleTitle: text,
-        idleDescription: text,
       }),
       education: heading,
       contact: heading.extend({

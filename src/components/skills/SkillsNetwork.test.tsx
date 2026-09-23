@@ -21,65 +21,60 @@ const setup = () => {
 afterEach(() => vi.restoreAllMocks())
 
 describe('skills exploration', () => {
-  it('explores shared connections from an accessible picker and returns to a complete list', async () => {
+  it('selects nodes directly and keeps the same introduction in the complete list', async () => {
     const user = userEvent.setup()
-    setup()
-    await user.selectOptions(
-      screen.getByRole('combobox', { name: 'Follow a connection' }),
-      'typescript',
-    )
-    const connections = screen.getByLabelText('Connections for TypeScript')
+    const graph = setup()
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+    expect(screen.queryByText('Find the connections.')).not.toBeInTheDocument()
+    const introduction = screen.getByText('What I work with')
+    fireEvent.click(within(graph).getByRole('button', { name: 'TypeScript' }))
+    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(9)
     expect(
-      within(connections)
-        .getAllByRole('button')
-        .map((button) => button.textContent),
-    ).toEqual([
-      'Languages↗',
-      'Backend↗',
-      'Frontend↗',
-      'JavaScript↗',
-      'React↗',
-      'Angular↗',
-      'Hono↗',
-      'Cloudflare Workers↗',
-      'Vitest↗',
-    ])
-    await user.click(
-      within(connections).getByRole('button', { name: /Frontend/ }),
-    )
-    expect(screen.getByRole('combobox')).toHaveValue('frontend')
+      within(graph).getByRole('button', { name: 'TypeScript' }),
+    ).toHaveAttribute('aria-pressed', 'true')
+    fireEvent.click(within(graph).getByRole('button', { name: 'Java' }))
+    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(15)
     await user.click(screen.getByRole('button', { name: 'List' }))
+    expect(introduction).toBeVisible()
     expect(screen.getAllByRole('term')).toHaveLength(9)
     expect(screen.getByText(/Java, TypeScript, JavaScript, SQL/)).toBeVisible()
     expect(
       screen.queryByRole('group', { name: 'Interactive skills network' }),
     ).not.toBeInTheDocument()
   })
-  it('presents a single network with direct peer connections and no kind/count labels', async () => {
+  it('lets keyboard users reach every node, select it and leave without traversing 74 tab stops', async () => {
     const user = userEvent.setup()
     const graph = setup()
-    expect(graph.querySelector('.category, .skill')).toBeNull()
-    expect(document.querySelector('optgroup')).toBeNull()
-    expect(document.querySelector('.network-caption')).toBeNull()
-    await user.selectOptions(screen.getByRole('combobox'), 'jenkins')
-    const connections = screen.getByLabelText('Connections for Jenkins')
-    await user.click(
-      within(connections).getByRole('button', { name: /Groovy/ }),
-    )
-    expect(screen.getByRole('combobox')).toHaveValue('groovy')
+    const java = within(graph).getByRole('button', { name: 'Java' })
+    for (let i = 0; i < 12 && document.activeElement !== java; i++)
+      await user.tab()
+    expect(java).toHaveFocus()
+    await user.keyboard('{ArrowRight}')
     expect(
-      within(screen.getByLabelText('Connections for Groovy')).getByRole(
-        'button',
-        { name: /Jenkins/ },
-      ),
-    ).toBeVisible()
-    expect(within(graph).getByRole('button', { name: 'Java' })).toHaveAttribute(
-      'aria-label',
-      'Java',
+      within(graph).getByRole('button', { name: 'JavaScript' }),
+    ).toHaveFocus()
+    await user.keyboard('{Enter}')
+    expect(document.activeElement).toHaveAttribute('aria-pressed', 'true')
+    await user.keyboard('{Home}')
+    expect(
+      within(graph).getByRole('button', { name: 'Analytics' }),
+    ).toHaveFocus()
+    await user.keyboard('{ArrowLeft}')
+    expect(within(graph).getByRole('button', { name: 'Vitest' })).toHaveFocus()
+    const visited = new Set<string | null>()
+    const count = within(graph).getAllByRole('button').length
+    for (let i = 0; i < count; i++) {
+      await user.keyboard('{ArrowRight}')
+      visited.add(document.activeElement!.getAttribute('data-node-id'))
+    }
+    expect(visited.size).toBe(count)
+    expect(graph.querySelectorAll('[data-node-id][tabindex="0"]')).toHaveLength(
+      1,
     )
-    expect(document.querySelector('.network-selection')).not.toHaveTextContent(
-      /\d/,
-    )
+    await user.keyboard('{Escape}')
+    expect(graph.querySelector('[aria-pressed="true"]')).toBeNull()
+    await user.tab()
+    expect(graph.contains(document.activeElement)).toBe(false)
   })
   it('supports keyboard pan, bounded zoom and reset without capturing normal wheel scrolling', async () => {
     const user = userEvent.setup()
@@ -198,7 +193,6 @@ describe('skills exploration', () => {
     pointer(graph, 'pointerup', { clientX: 100, clientY: 100 })
     fireEvent.click(graph, { detail: 1 })
     expect(ts).toHaveAttribute('aria-pressed', 'false')
-    expect(screen.getByRole('combobox')).toHaveValue('')
     expect(graph.querySelectorAll('.is-muted')).toHaveLength(0)
   })
   it('does not move nodes with touch before opt-in, and handles pinch and cancellation after opt-in', async () => {
