@@ -35,7 +35,8 @@ band, large heading, email action and a second résumé download trigger. Their 
 No category colors, sticky entry headings or scroll-linked reveals. Skills is the
 interactive network. Entries with bullet details use independent disclosures.
 
-`ResumeEntry` starts each bullet list collapsed and shows a plus/minus indicator.
+`ResumeEntry` starts each bullet list collapsed and shows a plus/minus indicator
+centered vertically at the right of the entry header on every viewport.
 A real button inside the heading uses a stretched hit area across the header;
 Enter/Space toggles it, `aria-expanded` exposes state and `aria-controls` identifies
 the list. Entries without bullets have no control. Stage and project links remain

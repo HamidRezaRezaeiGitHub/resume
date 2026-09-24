@@ -1,5 +1,11 @@
 # Wiki log
 
+## 2026-09-24 — update — Center entry toggles
+
+Centered the plus/minus indicator vertically alongside each entry header,
+including wrapped phone layouts. Expansion behavior and the full header hit area
+are unchanged. UAT review only; production remains unchanged.
+
 ## 2026-09-24 — update — Expandable entry details
 
 Entries with bullets now start collapsed and expand independently through an
