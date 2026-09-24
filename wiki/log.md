@@ -1,5 +1,13 @@
 # Wiki log
 
+## 2026-09-23 — update — AI and Google Cloud skill connections
+
+Added AI, Agent Instructions and Hooks, connecting the existing coding agents,
+MCP, Spring AI and Bash into an AI workflow neighborhood. Added GCP as a separate
+provider linked to Cloud Run, Cloud SQL, BigQuery, Firebase and Logs Explorer;
+Logs Explorer also connects to Observability and Cloud Run. Preserved the nine
+list groups, shared degree sizing and automatic layout. No PDF or role-copy changes.
+
 ## 2026-09-23 — update — Résumé downloads
 
 Added the shared Compact/Long chooser to Hero and Let's Talk. Desktop uses an

@@ -10,7 +10,7 @@ describe('graph topics and printed groups', () => {
     const analytics = resume.skills
       .filter((skill) => skill.categories.includes('analytics'))
       .map((skill) => skill.label)
-    expect(observability).toEqual(['Grafana', 'Geneos'])
+    expect(observability).toEqual(['Logs Explorer', 'Grafana', 'Geneos'])
     expect(analytics).toEqual(['SQL', 'BigQuery', 'Looker Studio', 'R'])
     expect(
       skillsForGroup(
@@ -18,7 +18,15 @@ describe('graph topics and printed groups', () => {
         resume.skillCategories,
         resume.skills,
       ).map((skill) => skill.label),
-    ).toEqual(['SQL', 'BigQuery', 'Looker Studio', 'Grafana', 'Geneos', 'R'])
+    ).toEqual([
+      'SQL',
+      'BigQuery',
+      'Looker Studio',
+      'Logs Explorer',
+      'Grafana',
+      'Geneos',
+      'R',
+    ])
   })
   it('lists tools just once even when several topics belong to the same PDF group', () => {
     const backend = skillsForGroup(
@@ -28,6 +36,16 @@ describe('graph topics and printed groups', () => {
     )
     expect(backend.filter((skill) => skill.id === 'spring-mvc')).toHaveLength(1)
     expect(backend.map((skill) => skill.id)).toContain('jwt')
+    const workflow = skillsForGroup(
+      'workflow',
+      resume.skillCategories,
+      resume.skills,
+    )
+    for (const id of ['github-copilot', 'claude-code', 'codex', 'mcp'])
+      expect(workflow.filter((skill) => skill.id === id)).toHaveLength(1)
+    expect(workflow.map((skill) => skill.id)).toEqual(
+      expect.arrayContaining(['agent-instructions', 'hooks']),
+    )
     const allListed = new Set(
       resume.skillGroups.flatMap((group) =>
         skillsForGroup(group.id, resume.skillCategories, resume.skills).map(

@@ -27,6 +27,21 @@ describe('skills graph', () => {
       ['java', 'junit'],
       ['spring-integration', 'solace'],
       ['bigquery', 'looker-studio'],
+      ['ai', 'spring-ai'],
+      ['ai', 'mcp'],
+      ['ai', 'github-copilot'],
+      ['ai', 'claude-code'],
+      ['ai', 'codex'],
+      ['agent-instructions', 'codex'],
+      ['hooks', 'claude-code'],
+      ['hooks', 'bash'],
+      ['mcp', 'github-copilot'],
+      ['gcp', 'gcp-cloud-run'],
+      ['gcp', 'cloud-sql'],
+      ['gcp', 'bigquery'],
+      ['gcp', 'firebase'],
+      ['logs-explorer', 'gcp'],
+      ['logs-explorer', 'observability'],
     ]) {
       expect(byId.get(source)!.connections).toContain(target)
       expect(byId.get(target)!.connections).toContain(source)

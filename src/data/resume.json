@@ -397,7 +397,7 @@
     {
       "id": "spring-ai",
       "label": "Spring AI",
-      "categories": ["backend", "workflow"]
+      "categories": ["backend", "workflow", "ai"]
     },
     {
       "id": "rest",
@@ -407,7 +407,7 @@
     {
       "id": "mcp",
       "label": "MCP",
-      "categories": ["apis", "workflow"]
+      "categories": ["apis", "workflow", "ai"]
     },
     {
       "id": "jwt",
@@ -470,8 +470,13 @@
       "categories": ["databases"]
     },
     {
+      "id": "gcp",
+      "label": "GCP",
+      "categories": ["cloud"]
+    },
+    {
       "id": "gcp-cloud-run",
-      "label": "GCP Cloud Run",
+      "label": "Cloud Run",
       "categories": ["cloud"]
     },
     {
@@ -565,6 +570,11 @@
       "categories": ["analytics"]
     },
     {
+      "id": "logs-explorer",
+      "label": "Logs Explorer",
+      "categories": ["observability"]
+    },
+    {
       "id": "grafana",
       "label": "Grafana",
       "categories": ["observability"]
@@ -577,17 +587,27 @@
     {
       "id": "github-copilot",
       "label": "GitHub Copilot",
-      "categories": ["workflow"]
+      "categories": ["workflow", "ai"]
     },
     {
       "id": "claude-code",
       "label": "Claude Code",
-      "categories": ["workflow"]
+      "categories": ["workflow", "ai"]
     },
     {
       "id": "codex",
       "label": "Codex",
-      "categories": ["workflow"]
+      "categories": ["workflow", "ai"]
+    },
+    {
+      "id": "agent-instructions",
+      "label": "Agent Instructions",
+      "categories": ["ai"]
+    },
+    {
+      "id": "hooks",
+      "label": "Hooks",
+      "categories": ["ai"]
     },
     {
       "id": "jira",
@@ -689,6 +709,11 @@
     {
       "id": "workflow",
       "title": "Developer Workflow",
+      "groupId": "workflow"
+    },
+    {
+      "id": "ai",
+      "title": "AI",
       "groupId": "workflow"
     }
   ],
@@ -1032,6 +1057,78 @@
     {
       "source": "jira",
       "target": "confluence"
+    },
+    {
+      "source": "ai",
+      "target": "workflow"
+    },
+    {
+      "source": "agent-instructions",
+      "target": "github-copilot"
+    },
+    {
+      "source": "agent-instructions",
+      "target": "claude-code"
+    },
+    {
+      "source": "agent-instructions",
+      "target": "codex"
+    },
+    {
+      "source": "agent-instructions",
+      "target": "hooks"
+    },
+    {
+      "source": "hooks",
+      "target": "github-copilot"
+    },
+    {
+      "source": "hooks",
+      "target": "claude-code"
+    },
+    {
+      "source": "hooks",
+      "target": "codex"
+    },
+    {
+      "source": "hooks",
+      "target": "bash"
+    },
+    {
+      "source": "mcp",
+      "target": "github-copilot"
+    },
+    {
+      "source": "mcp",
+      "target": "claude-code"
+    },
+    {
+      "source": "mcp",
+      "target": "codex"
+    },
+    {
+      "source": "gcp",
+      "target": "gcp-cloud-run"
+    },
+    {
+      "source": "gcp",
+      "target": "cloud-sql"
+    },
+    {
+      "source": "gcp",
+      "target": "bigquery"
+    },
+    {
+      "source": "gcp",
+      "target": "firebase"
+    },
+    {
+      "source": "gcp",
+      "target": "logs-explorer"
+    },
+    {
+      "source": "logs-explorer",
+      "target": "gcp-cloud-run"
     }
   ],
   "downloads": {

@@ -79,6 +79,15 @@ language, integration or workflow relationships supported by the toolkit; do not
 connect every vaguely compatible technology just to inflate its importance.
 Relationships do not change list membership or claim equal proficiency.
 
+AI is a separate graph topic mapped to Developer Workflow. It connects the coding
+agents, Agent Instructions, Hooks, MCP and Spring AI. Instructions and hooks link
+to the agents that consume them; hooks also connect to Bash. GCP is a provider
+node under Cloud, connected to Cloud Run, Cloud SQL, BigQuery, Firebase and Logs
+Explorer. Logs Explorer also connects to Observability and Cloud Run. Cloud Run
+retains its internal `gcp-cloud-run` ID while its visible label omits the provider.
+These terms reflect the user's AI enablement, man-agent-ment and cloud work;
+the list keeps the same nine headings and deduplicates shared AI memberships.
+
 Graph IDs and labels must be unique; memberships must name an existing topic;
 topics must refer to existing groups; no group or topic may be empty. Relationships
 cannot reference missing IDs, link a node to itself, or repeat an undirected pair,

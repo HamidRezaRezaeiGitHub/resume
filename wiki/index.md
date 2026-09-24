@@ -24,7 +24,8 @@ This wiki owns durable project knowledge. Local task state lives in ignored
 - [React and TypeScript](guides/react-typescript.md): component design, state,
   effects, responsive navigation, accessibility, and local development.
 - [Resume content](guides/resume-content.md): public writing, dates, selected
-  projects, latest resume source, schema rules, and a page/component/JSON terminology guide.
+  projects, latest resume source, schema rules, AI/cloud graph relationships,
+  and a page/component/JSON terminology guide.
 - [Testing](guides/testing.md): CI commands, useful regression coverage, and
   phone/desktop visual checks.
 - [CI and deployment](operations/ci-cd-and-deployment.md): branches,

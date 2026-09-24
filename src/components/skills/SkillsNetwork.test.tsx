@@ -42,7 +42,7 @@ describe('skills exploration', () => {
       screen.queryByRole('group', { name: 'Interactive skills network' }),
     ).not.toBeInTheDocument()
   })
-  it('lets keyboard users reach every node, select it and leave without traversing 74 tab stops', async () => {
+  it('lets keyboard users reach every node, select it and leave without tabbing through every node', async () => {
     const user = userEvent.setup()
     const graph = setup()
     const java = within(graph).getByRole('button', { name: 'Java' })
@@ -57,7 +57,7 @@ describe('skills exploration', () => {
     expect(document.activeElement).toHaveAttribute('aria-pressed', 'true')
     await user.keyboard('{Home}')
     expect(
-      within(graph).getByRole('button', { name: 'Analytics' }),
+      within(graph).getByRole('button', { name: 'Agent Instructions' }),
     ).toHaveFocus()
     await user.keyboard('{ArrowLeft}')
     expect(within(graph).getByRole('button', { name: 'Vitest' })).toHaveFocus()
