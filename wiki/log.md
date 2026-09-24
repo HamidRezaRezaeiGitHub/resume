@@ -1,5 +1,12 @@
 # Wiki log
 
+## 2026-09-24 — update — Wide-screen entry controls
+
+Grouped the date and plus/minus indicator into a right-aligned column above 800px,
+with the indicator below the date. Narrow screens retain their centered icon and
+stacked date/title layout. Kept the heading button, full-header hit area, independent
+expansion, project links and print behavior. Released for UAT review only.
+
 ## 2026-09-24 — update — Center entry toggles
 
 Centered the plus/minus indicator vertically alongside each entry header,

@@ -23,7 +23,7 @@ This wiki owns durable project knowledge. Local task state lives in ignored
 ## Working on the site
 
 - [React and TypeScript](guides/react-typescript.md): component design, state,
-  effects, responsive navigation, accessibility, and local development.
+  effects, responsive navigation and entry controls, accessibility, and local development.
 - [Resume content](guides/resume-content.md): public writing, dates, selected
   projects, latest resume source, schema rules, AI/cloud graph relationships,
   editor hints, an editing recipe, and a page/component/JSON terminology guide.

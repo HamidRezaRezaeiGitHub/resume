@@ -59,6 +59,8 @@ short landscape viewport. Check:
 - Entries with bullets start collapsed with a plus icon; clicking the header or
   pressing Enter/Space toggles only that entry. Several can stay open. No overflow,
   misplaced focus rings or overlap with project links at 320px, desktop or landscape.
+  Above 800px the toggle aligns under the date in one right column; at/below 800px
+  it is centered beside the header. Check both sides of the breakpoint.
 - Entries without bullets (including the current degrees) have no toggle. Skills
   remains available. Opening a bullet fragment URL reveals and scrolls to its text.
 - Print includes all bullets even when every screen entry is collapsed; no toggle icons.

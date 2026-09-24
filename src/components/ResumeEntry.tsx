@@ -70,9 +70,6 @@ export function ResumeEntry({
                 onClick={() => setExpanded((value) => !value)}
               >
                 {title}
-                <span className="entry-toggle-icon" aria-hidden="true">
-                  {expanded ? <Minus size={18} /> : <Plus size={18} />}
-                </span>
               </button>
             ) : (
               title
@@ -81,15 +78,22 @@ export function ResumeEntry({
           <p className="entry-subtitle">{subtitle}</p>
           {location && <p className="entry-location">{location}</p>}
         </div>
-        <p className="entry-date">
-          <time dateTime={startDate}>{formatCareerDate(startDate)}</time>
-          {' — '}
-          {endDate === 'present' ? (
-            'Present'
-          ) : (
-            <time dateTime={endDate}>{formatCareerDate(endDate)}</time>
+        <div className="entry-meta">
+          <p className="entry-date">
+            <time dateTime={startDate}>{formatCareerDate(startDate)}</time>
+            {' — '}
+            {endDate === 'present' ? (
+              'Present'
+            ) : (
+              <time dateTime={endDate}>{formatCareerDate(endDate)}</time>
+            )}
+          </p>
+          {hasDetails && (
+            <span className="entry-toggle-icon" aria-hidden="true">
+              {expanded ? <Minus size={18} /> : <Plus size={18} />}
+            </span>
           )}
-        </p>
+        </div>
       </header>
       {stage && <p className="entry-stage">{stage}</p>}
       {hasDetails && (
