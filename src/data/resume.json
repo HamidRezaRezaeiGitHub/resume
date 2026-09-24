@@ -610,6 +610,16 @@
       "categories": ["ai"]
     },
     {
+      "id": "agent-skills",
+      "label": "Agent Skills",
+      "categories": ["ai"]
+    },
+    {
+      "id": "context-engineering",
+      "label": "Context Engineering",
+      "categories": ["ai"]
+    },
+    {
       "id": "jira",
       "label": "Jira",
       "categories": ["workflow"]
@@ -1129,6 +1139,54 @@
     {
       "source": "logs-explorer",
       "target": "gcp-cloud-run"
+    },
+    {
+      "source": "agent-skills",
+      "target": "github-copilot"
+    },
+    {
+      "source": "agent-skills",
+      "target": "claude-code"
+    },
+    {
+      "source": "agent-skills",
+      "target": "codex"
+    },
+    {
+      "source": "agent-skills",
+      "target": "agent-instructions"
+    },
+    {
+      "source": "agent-skills",
+      "target": "bash"
+    },
+    {
+      "source": "agent-skills",
+      "target": "jenkins"
+    },
+    {
+      "source": "agent-skills",
+      "target": "jira"
+    },
+    {
+      "source": "agent-skills",
+      "target": "confluence"
+    },
+    {
+      "source": "context-engineering",
+      "target": "agent-skills"
+    },
+    {
+      "source": "context-engineering",
+      "target": "agent-instructions"
+    },
+    {
+      "source": "context-engineering",
+      "target": "hooks"
+    },
+    {
+      "source": "context-engineering",
+      "target": "confluence"
     }
   ],
   "downloads": {

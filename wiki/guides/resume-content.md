@@ -80,8 +80,11 @@ connect every vaguely compatible technology just to inflate its importance.
 Relationships do not change list membership or claim equal proficiency.
 
 AI is a separate graph topic mapped to Developer Workflow. It connects the coding
-agents, Agent Instructions, Hooks, MCP and Spring AI. Instructions and hooks link
-to the agents that consume them; hooks also connect to Bash. GCP is a provider
+agents, Agent Instructions, Agent Skills, Context Engineering, Hooks, MCP and
+Spring AI. Instructions, skills and hooks link to the agents that consume them;
+skills connect to Bash, Jenkins, Jira and Confluence from the user's workflow
+integration work. Context Engineering links instructions, skills, hooks and
+Confluence knowledge. Hooks also connect to Bash. GCP is a provider
 node under Cloud, connected to Cloud Run, Cloud SQL, BigQuery, Firebase and Logs
 Explorer. Logs Explorer also connects to Observability and Cloud Run. Cloud Run
 retains its internal `gcp-cloud-run` ID while its visible label omits the provider.

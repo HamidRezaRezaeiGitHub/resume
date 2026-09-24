@@ -1,5 +1,12 @@
 # Wiki log
 
+## 2026-09-23 — update — Agent Skills and Context Engineering
+
+Added the two approved AI keywords. Agent Skills connects the coding agents,
+instructions, Bash and enterprise workflow integrations. Context Engineering
+connects instructions, skills, hooks and Confluence. Existing group mappings and
+degree-driven layout continue to apply.
+
 ## 2026-09-23 — update — AI and Google Cloud skill connections
 
 Added AI, Agent Instructions and Hooks, connecting the existing coding agents,
