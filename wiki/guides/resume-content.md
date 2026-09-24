@@ -100,6 +100,56 @@ bounded 22–72 graph-unit sizing rule based on its relative number of unique ne
 Java-specific size overrides or node coordinates are authored in JSON.
 The automatic layout and temporary drag positions belong to presentation state.
 
+## Editing and extension
+
+All personal facts, role/project/education entries, skills and connections,
+section/navigation copy, hero/contact copy and download choices come from
+`src/data/resume.json`. `profile.monogram` supplies the short navigation brand.
+The HTML title and social title derive from name + headline; both descriptions
+use the summary, and the no-JavaScript fallback uses the same name/email.
+`index.html` contains escaped build-time placeholders, not a second resume.
+
+UI language such as “Network”, “List”, “Copy email address”, keyboard tips,
+“Present” and month abbreviations remains in components/helpers. Layout, the six
+section types and their order, icons, theme tokens and graph behavior remain code.
+The favicon is a separate graphic. Downloaded PDFs are separately authored files;
+editing JSON does not rewrite their contents. Browser print uses the website data.
+
+To add an experience, copy an object in `experiences`, update its facts and dates,
+give it and its bullets unique IDs, and put it at the desired position. For example,
+this fictional entry has the same shape as a real role:
+
+```json
+{
+  "id": "example-role",
+  "title": "Software Engineer",
+  "organization": "Example Company",
+  "team": "Platform",
+  "location": "Toronto, Canada",
+  "startDate": "2026-01",
+  "endDate": "present",
+  "bullets": [{ "id": "example-role-api", "text": "Describe the work here." }]
+}
+```
+
+`team` is optional. Keep existing IDs when changing wording, so deep links remain
+valid. Run `npm run validate:content`, review locally, and run the full gate before
+release. Adding a role, bullet, project, degree or keyword needs no React edits.
+Adding an entirely new section type requires schema, component and navigation work.
+
+The `$schema` field links to `schema/resume.schema.json` for editor completion,
+hover descriptions and structural errors. The generated file is never hand-edited:
+change the Zod contract, then run `npm run generate:content-schema`. A drift test
+keeps the two synchronized. Editor hints cannot express every custom constraint;
+Zod remains authoritative for cross-references, uniqueness, date ordering and safe
+links, and content validation also checks PDF assets. There are no CMS/runtime
+editing services or extra schema dependencies.
+
+The entry arrays are straightforward. The graph is the more advanced part:
+`skillGroups` controls list headings, `skillCategories` controls graph topics,
+`skills` defines keywords and memberships, and `skillRelationships` adds edges.
+Use existing IDs in references; no coordinates or font sizes need editing.
+
 ## JSON terminology
 
 A **section** is a major page region. A **component** renders a section or a
@@ -109,6 +159,7 @@ reusable piece. A **field** is a named JSON property; `[]` means an item in a li
 | ----------------------------- | ------------------- | ------------------------------------------------------------ | ---------------------------- |
 | Fixed top bar                 | Navigation / navbar | `navigation[].label`, `sectionId`                            | `Nav`                        |
 | Name and introduction         | Hero / summary      | `profile.name`, `headline`, `summary`, `location`, `links[]` | `Hero`                       |
+| Short navigation brand        | Monogram            | `profile.monogram`                                           | `Nav`                        |
 | Section name                  | Section heading     | `sections.*.title`                                           | `Section`                    |
 | One job or teaching position  | Experience / role   | `experiences[]`                                              | `Experiences`, `ResumeEntry` |
 | One personal project          | Project entry       | `projects[]`                                                 | `Projects`, `ResumeEntry`    |

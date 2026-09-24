@@ -4,9 +4,23 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import rawResumeContent from '@/data/resume.json'
 import { resumeContentSchema } from '@/data/resume.schema'
+import { careerContent, graphContent } from '@/test/contentFixtures'
 
 const editableCopy = () =>
-  resumeContentSchema.parse(structuredClone(rawResumeContent))
+  resumeContentSchema.parse(
+    structuredClone({
+      ...rawResumeContent,
+      ...careerContent,
+      ...graphContent,
+      profile: {
+        ...rawResumeContent.profile,
+        links: [
+          { label: 'Profile', url: 'https://example.com/profile' },
+          { label: 'Source', url: 'https://example.com/source' },
+        ],
+      },
+    }),
+  )
 
 describe('section-based resume content', () => {
   it('ships a real PDF for every configured download', () => {
@@ -197,8 +211,8 @@ describe('section-based resume content', () => {
     { source: 'java', target: 'missing' },
     { source: 'missing', target: 'java' },
     { source: 'java', target: 'java' },
-    { source: 'java', target: 'spring' },
-    { source: 'spring', target: 'java' },
+    { source: 'typescript', target: 'react' },
+    { source: 'react', target: 'typescript' },
     { source: 'backend', target: 'java' },
     { source: 'java', target: 'backend' },
   ])(

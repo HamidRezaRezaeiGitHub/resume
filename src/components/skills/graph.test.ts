@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { resume } from '@/data/resume'
+import { graphContent } from '@/test/contentFixtures'
 import {
   buildSkillsGraph,
   fitCamera,
@@ -18,37 +19,17 @@ describe('skills graph', () => {
     resume.skills,
     resume.skillRelationships,
   )
-  it('connects tool and topic peers in both directions, counting each neighbor once', () => {
+  it('connects peers in both directions, counting each neighbor once', () => {
+    const graph = buildSkillsGraph(
+      graphContent.skillCategories,
+      graphContent.skills,
+      graphContent.skillRelationships,
+    )
     const byId = new Map(graph.nodes.map((node) => [node.id, node]))
     for (const [source, target] of [
-      ['jenkins', 'groovy'],
-      ['backend', 'apis'],
-      ['java', 'spring'],
-      ['java', 'junit'],
-      ['spring-integration', 'solace'],
-      ['bigquery', 'looker-studio'],
-      ['ai', 'spring-ai'],
-      ['ai', 'mcp'],
-      ['ai', 'github-copilot'],
-      ['ai', 'claude-code'],
-      ['ai', 'codex'],
-      ['agent-instructions', 'codex'],
-      ['hooks', 'claude-code'],
-      ['hooks', 'bash'],
-      ['agent-skills', 'github-copilot'],
-      ['agent-skills', 'claude-code'],
-      ['agent-skills', 'codex'],
-      ['agent-skills', 'jenkins'],
-      ['context-engineering', 'agent-skills'],
-      ['context-engineering', 'agent-instructions'],
-      ['context-engineering', 'hooks'],
-      ['mcp', 'github-copilot'],
-      ['gcp', 'gcp-cloud-run'],
-      ['gcp', 'cloud-sql'],
-      ['gcp', 'bigquery'],
-      ['gcp', 'firebase'],
-      ['logs-explorer', 'gcp'],
-      ['logs-explorer', 'observability'],
+      ['backend', 'typescript'],
+      ['typescript', 'react'],
+      ['react', 'vitest'],
     ]) {
       expect(byId.get(source)!.connections).toContain(target)
       expect(byId.get(target)!.connections).toContain(source)
@@ -56,7 +37,7 @@ describe('skills graph', () => {
     expect(graph.nodes.filter((node) => node.id === 'typescript')).toHaveLength(
       1,
     )
-    expect(byId.get('java')!.connections).toHaveLength(15)
+    expect(byId.get('typescript')!.connections).toHaveLength(4)
     for (const node of graph.nodes) {
       expect(new Set(node.connections).size).toBe(node.connections.length)
       expect(
@@ -72,17 +53,22 @@ describe('skills graph', () => {
           expect(node.fontSize).toBeGreaterThan(other.fontSize)
       }
     }
-    expect(byId.get('java')!.fontSize).toBeGreaterThan(
-      byId.get('typescript')!.fontSize,
+    expect(byId.get('typescript')!.fontSize).toBeGreaterThan(
+      byId.get('java')!.fontSize,
     )
   })
   it('bounds the shared font scale while giving highly connected words more contrast', () => {
+    const graph = buildSkillsGraph(
+      graphContent.skillCategories,
+      graphContent.skills,
+      graphContent.skillRelationships,
+    )
     const byId = new Map(graph.nodes.map((n) => [n.id, n]))
     expect(Math.min(...graph.nodes.map((n) => n.fontSize))).toBe(MIN_FONT_SIZE)
     expect(Math.max(...graph.nodes.map((n) => n.fontSize))).toBe(MAX_FONT_SIZE)
-    expect(byId.get('java')!.fontSize).toBeGreaterThan(60)
+    expect(byId.get('typescript')!.fontSize).toBeGreaterThan(60)
     expect(
-      byId.get('java')!.fontSize / byId.get('typescript')!.fontSize,
+      byId.get('typescript')!.fontSize / byId.get('java')!.fontSize,
     ).toBeGreaterThan(1.5)
   })
   it('uses the actual connections to form neighborhoods without fixed topic positions', () => {
@@ -98,14 +84,21 @@ describe('skills graph', () => {
     const mean = (values: number[]) =>
       values.reduce((sum, n) => sum + n, 0) / values.length
     expect(mean(linked)).toBeLessThan(mean(unrelated) * 0.75)
-    const withoutRelationships = buildSkillsGraph(
-      resume.skillCategories,
-      resume.skills,
+    const connected = buildSkillsGraph(
+      graphContent.skillCategories,
+      graphContent.skills,
+      graphContent.skillRelationships,
+    )
+    const membershipOnly = buildSkillsGraph(
+      graphContent.skillCategories,
+      graphContent.skills,
       [],
     )
     expect(
-      withoutRelationships.nodes.find((node) => node.id === 'java')!.x,
-    ).not.toBe(graph.nodes.find((node) => node.id === 'java')!.x)
+      connected.nodes.some(
+        (node, index) => node.x !== membershipOnly.nodes[index].x,
+      ),
+    ).toBe(true)
   })
   it('is deterministic, preserves input, and keeps label hit areas from overlapping', () => {
     const before = JSON.stringify(resume)

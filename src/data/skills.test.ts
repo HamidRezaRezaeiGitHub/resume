@@ -3,49 +3,35 @@ import { resume } from './resume'
 import { skillsForGroup } from './skills'
 
 describe('graph topics and printed groups', () => {
-  it('keeps Observability and Analytics separate in the graph but together in the list', () => {
-    const observability = resume.skills
-      .filter((skill) => skill.categories.includes('observability'))
-      .map((skill) => skill.label)
-    const analytics = resume.skills
-      .filter((skill) => skill.categories.includes('analytics'))
-      .map((skill) => skill.label)
-    expect(observability).toEqual(['Logs Explorer', 'Grafana', 'Geneos'])
-    expect(analytics).toEqual(['SQL', 'BigQuery', 'Looker Studio', 'R'])
+  it('combines separate topics into one deduplicated list group', () => {
+    const topics = [
+      { id: 'observability', groupId: 'operations' },
+      { id: 'analytics', groupId: 'operations' },
+    ]
+    const skills = [
+      { id: 'logs', label: 'Log tool', categories: ['observability'] },
+      { id: 'reports', label: 'Report tool', categories: ['analytics'] },
+      {
+        id: 'shared',
+        label: 'Shared tool',
+        categories: ['observability', 'analytics'],
+      },
+    ]
     expect(
-      skillsForGroup(
-        'observability',
-        resume.skillCategories,
-        resume.skills,
-      ).map((skill) => skill.label),
-    ).toEqual([
-      'SQL',
-      'BigQuery',
-      'Looker Studio',
-      'Logs Explorer',
-      'Grafana',
-      'Geneos',
-      'R',
-    ])
+      skillsForGroup('operations', topics, skills).map((skill) => skill.label),
+    ).toEqual(['Log tool', 'Report tool', 'Shared tool'])
   })
   it('lists tools just once even when several topics belong to the same PDF group', () => {
-    const backend = skillsForGroup(
-      'backend',
-      resume.skillCategories,
-      resume.skills,
-    )
-    expect(backend.filter((skill) => skill.id === 'spring-mvc')).toHaveLength(1)
-    expect(backend.map((skill) => skill.id)).toContain('jwt')
-    const workflow = skillsForGroup(
-      'workflow',
-      resume.skillCategories,
-      resume.skills,
-    )
-    for (const id of ['github-copilot', 'claude-code', 'codex', 'mcp'])
-      expect(workflow.filter((skill) => skill.id === id)).toHaveLength(1)
-    expect(workflow.map((skill) => skill.id)).toEqual(
-      expect.arrayContaining(['agent-instructions', 'hooks']),
-    )
+    for (const group of resume.skillGroups) {
+      const entries = skillsForGroup(
+        group.id,
+        resume.skillCategories,
+        resume.skills,
+      )
+      expect(new Set(entries.map((skill) => skill.id)).size).toBe(
+        entries.length,
+      )
+    }
     const allListed = new Set(
       resume.skillGroups.flatMap((group) =>
         skillsForGroup(group.id, resume.skillCategories, resume.skills).map(

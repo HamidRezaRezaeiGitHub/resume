@@ -1,4 +1,7 @@
-import type { ResumeContent } from './resume'
+interface SkillMembership {
+  id: string
+  categories: string[]
+}
 
 // Membership and ecosystem relationships share one undirected graph.
 export function skillConnections(
@@ -14,10 +17,10 @@ export function skillConnections(
 }
 
 // A tool can belong to several graph topics within the same printed group.
-export function skillsForGroup(
+export function skillsForGroup<T extends SkillMembership>(
   groupId: string,
-  categories: ResumeContent['skillCategories'],
-  skills: ResumeContent['skills'],
+  categories: { id: string; groupId: string }[],
+  skills: T[],
 ) {
   const topicIds = new Set(
     categories

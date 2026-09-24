@@ -4,7 +4,20 @@ import { resume } from '@/data/resume'
 import { skillsForGroup } from '@/data/skills'
 import { Section } from '@/components/Section'
 import { SkillsNetwork } from '@/components/skills/SkillsNetwork'
+import { buildSkillsGraph } from '@/components/skills/graph'
 import '@/components/skills/skills.css'
+
+const graph = buildSkillsGraph(
+  resume.skillCategories,
+  resume.skills,
+  resume.skillRelationships,
+)
+// Content edits (including hot reload) start a fresh interaction session.
+const graphRevision = JSON.stringify([
+  resume.skillCategories,
+  resume.skills,
+  resume.skillRelationships,
+])
 
 export function Skills() {
   const [view, setView] = useState<'network' | 'list'>('network')
@@ -39,7 +52,9 @@ export function Skills() {
           </button>
         </div>
       </div>
-      {view === 'network' && <SkillsNetwork />}
+      {view === 'network' && (
+        <SkillsNetwork key={graphRevision} graph={graph} />
+      )}
       <dl
         className={`skill-categories skills-list${view === 'network' ? ' print-only' : ''}`}
       >

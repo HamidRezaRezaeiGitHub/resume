@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { skillConnections } from './skills'
+import { skillConnections } from './skills.ts'
 
 const text = z.string().trim().min(1)
 const texts = z
@@ -9,12 +9,21 @@ const texts = z
     (items) => new Set(items).size === items.length,
     'List items must be unique',
   )
-const anchorId = text.regex(/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/, {
-  error: 'Use a lowercase, hyphen-separated anchor ID',
-})
-const careerDate = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, {
-  error: 'Use YYYY or YYYY-MM',
-})
+const anchorId = text
+  .regex(/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/, {
+    error: 'Use a lowercase, hyphen-separated anchor ID',
+  })
+  .describe(
+    'Stable lowercase ID, such as my-new-role. Keep it when editing copy so links continue to work.',
+  )
+const careerDate = z
+  .string()
+  .regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, {
+    error: 'Use YYYY or YYYY-MM',
+  })
+  .describe(
+    'Use YYYY-MM when the month is known, otherwise YYYY. Do not invent date precision.',
+  )
 const links = z
   .array(
     z.strictObject({
@@ -61,15 +70,23 @@ function validatePeriod(entry: CareerPeriod, context: z.RefinementCtx) {
 
 export const resumeContentSchema = z
   .strictObject({
+    $schema: z.literal('../../schema/resume.schema.json').optional(),
     navigation: z.array(z.strictObject({ label: text, sectionId })).length(5),
-    profile: z.strictObject({
-      name: text,
-      headline: text,
-      summary: text,
-      location: text,
-      email: z.email(),
-      links,
-    }),
+    profile: z
+      .strictObject({
+        name: text,
+        monogram: text.describe(
+          'Short navigation brand, without the decorative period. Example: hr',
+        ),
+        headline: text,
+        summary: text,
+        location: text,
+        email: z.email(),
+        links,
+      })
+      .describe(
+        'Personal identity, headline, summary, contact details and profile links. Also supplies HTML metadata and the no-JavaScript contact fallback.',
+      ),
     hero: z.strictObject({
       eyebrow: text,
       experienceLabel: text,
@@ -119,7 +136,10 @@ export const resumeContentSchema = z
           })
           .superRefine(validatePeriod),
       )
-      .min(1),
+      .min(1)
+      .describe(
+        'Professional roles in display order, newest first. Copy an entry and give it and its bullets unique IDs; no React changes needed.',
+      ),
     projects: z
       .array(
         datedEntry
@@ -131,17 +151,31 @@ export const resumeContentSchema = z
           })
           .superRefine(validatePeriod),
       )
-      .min(1),
-    skillGroups: z.array(z.strictObject({ id: anchorId, title: text })).min(1),
+      .min(1)
+      .describe(
+        'Personal projects in display order. Stage describes maturity; links are optional.',
+      ),
+    skillGroups: z
+      .array(z.strictObject({ id: anchorId, title: text }))
+      .min(1)
+      .describe('Headings in the Skills list and printed resume.'),
     skillCategories: z
       .array(z.strictObject({ id: anchorId, title: text, groupId: anchorId }))
-      .min(1),
-    skillRelationships: z.array(
-      z.strictObject({ source: anchorId, target: anchorId }),
-    ),
+      .min(1)
+      .describe(
+        'Graph topic nodes. Each groupId references a skillGroups ID; several topics may share a printed group.',
+      ),
+    skillRelationships: z
+      .array(z.strictObject({ source: anchorId, target: anchorId }))
+      .describe(
+        'Additional undirected edges between existing skill or topic IDs. Do not repeat category membership, reverse pairs or self-links.',
+      ),
     skills: z
       .array(z.strictObject({ id: anchorId, label: text, categories: texts }))
-      .min(1),
+      .min(1)
+      .describe(
+        'One entry per keyword. categories references skillCategories IDs and automatically creates those connections. Relationships and degree determine layout and size.',
+      ),
     education: z
       .array(
         datedEntry
@@ -152,7 +186,10 @@ export const resumeContentSchema = z
           })
           .superRefine(validatePeriod),
       )
-      .min(1),
+      .min(1)
+      .describe(
+        'Degrees in display order. Dates follow the same rules as professional roles.',
+      ),
   })
   .superRefine((content, context) => {
     const ids = new Set([

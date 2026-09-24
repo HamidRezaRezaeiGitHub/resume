@@ -34,6 +34,13 @@ boundaries and tooltips. Tests live beside the code;
 `src/test/setup.ts` supplies browser/test setup. Use `npm run test` for watch
 mode or `npm run test:ci -- path/to/file.test.ts` for a focused run.
 
+Application and interaction tests use small fictional fixtures in
+`src/test/contentFixtures.ts`, so editing real role counts, bullets or graph degrees
+does not require changing behavior tests. Content validation, grouped completeness
+and graph layout/fit checks still run against the published JSON. Editor-schema
+drift and escaped HTML metadata/fallback rendering are covered by
+`src/test/contentTooling.test.ts` and included in `validate:content`.
+
 Test meaningful behavior and failure boundaries: invalid dates/links/IDs,
 cross-section anchor collisions, navigation focus, denied clipboard or storage access,
 theme updates, and effect cleanup. Do not add tests that duplicate markup or

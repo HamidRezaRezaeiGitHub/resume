@@ -90,7 +90,8 @@ Buttons and Ctrl/Command-wheel zoom; ordinary wheel input scrolls the page.
 Touch defaults to native page scrolling; Explore graph opts into node dragging,
 pan and pinch. Done or Escape exits capture. Tab enters the canvas and then one
 node; arrows on that node cycle alphabetically, Home/End jump to the first/last,
-and Enter/Space selects. Tab exits without traversing every node. Arrows on the
+and Enter/Space selects. The first alphabetical node is the initial node tab stop;
+no particular technology must exist. Tab exits without traversing every node. Arrows on the
 canvas pan; Shift+arrows moves a focused node; +/− zoom; 0 resets. Toolbar
 hints appear on mouse hover or focus, dismiss with Escape, and clean up their
 listeners. Skills inherits the same container width as the other sections.

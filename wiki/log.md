@@ -1,5 +1,16 @@
 # Wiki log
 
+## 2026-09-23 — update — Content maintainability
+
+Moved the navigation monogram into profile JSON and derived HTML metadata and
+fallback contact from that profile with safe escaping. Generated an editor JSON
+Schema from Zod, with field descriptions and a drift check. SkillsNetwork now
+accepts a graph model and starts keyboard focus alphabetically; content changes
+reset the interaction session. Behavior tests use fictional fixtures while live
+content retains structural, reference, asset and layout validation. Removed six
+unused template dependencies and the unused class-name helper. Documented the
+JSON editing path and its boundary with UI labels, layout and authored PDFs.
+
 ## 2026-09-23 — update — Agent Skills and Context Engineering
 
 Added the two approved AI keywords. Agent Skills connects the coding agents,

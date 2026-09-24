@@ -1,9 +1,17 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Skills } from '@/components/Skills'
+import { SkillsNetwork } from './SkillsNetwork'
+import { buildSkillsGraph, type SkillsGraph } from './graph'
+import { graphContent } from '@/test/contentFixtures'
 
-const setup = () => {
+const testGraph = buildSkillsGraph(
+  graphContent.skillCategories,
+  graphContent.skills,
+  graphContent.skillRelationships,
+)
+
+const setup = (model: SkillsGraph = testGraph) => {
   vi.spyOn(SVGElement.prototype, 'getBoundingClientRect').mockReturnValue({
     width: 1000,
     height: 600,
@@ -15,50 +23,39 @@ const setup = () => {
     y: 0,
     toJSON() {},
   })
-  render(<Skills />)
+  render(<SkillsNetwork graph={model} />)
   return screen.getByRole('group', { name: 'Interactive skills network' })
 }
 afterEach(() => vi.restoreAllMocks())
 
 describe('skills exploration', () => {
-  it('selects nodes directly and keeps the same introduction in the complete list', async () => {
-    const user = userEvent.setup()
+  it('selects nodes directly and highlights only their connections', () => {
     const graph = setup()
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
     expect(screen.queryByText('Find the connections.')).not.toBeInTheDocument()
-    const introduction = screen.getByText('What I work with')
     fireEvent.click(within(graph).getByRole('button', { name: 'TypeScript' }))
-    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(9)
+    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(4)
     expect(
       within(graph).getByRole('button', { name: 'TypeScript' }),
     ).toHaveAttribute('aria-pressed', 'true')
     fireEvent.click(within(graph).getByRole('button', { name: 'Java' }))
-    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(15)
-    await user.click(screen.getByRole('button', { name: 'List' }))
-    expect(introduction).toBeVisible()
-    expect(screen.getAllByRole('term')).toHaveLength(9)
-    expect(screen.getByText(/Java, TypeScript, JavaScript, SQL/)).toBeVisible()
-    expect(
-      screen.queryByRole('group', { name: 'Interactive skills network' }),
-    ).not.toBeInTheDocument()
+    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(1)
   })
   it('lets keyboard users reach every node, select it and leave without tabbing through every node', async () => {
     const user = userEvent.setup()
     const graph = setup()
-    const java = within(graph).getByRole('button', { name: 'Java' })
-    for (let i = 0; i < 12 && document.activeElement !== java; i++)
+    const first = within(graph).getByRole('button', { name: 'Backend' })
+    for (let i = 0; i < 12 && document.activeElement !== first; i++)
       await user.tab()
-    expect(java).toHaveFocus()
+    expect(first).toHaveFocus()
     await user.keyboard('{ArrowRight}')
     expect(
-      within(graph).getByRole('button', { name: 'JavaScript' }),
+      within(graph).getByRole('button', { name: 'Frontend' }),
     ).toHaveFocus()
     await user.keyboard('{Enter}')
     expect(document.activeElement).toHaveAttribute('aria-pressed', 'true')
     await user.keyboard('{Home}')
-    expect(
-      within(graph).getByRole('button', { name: 'Agent Instructions' }),
-    ).toHaveFocus()
+    expect(within(graph).getByRole('button', { name: 'Backend' })).toHaveFocus()
     await user.keyboard('{ArrowLeft}')
     expect(within(graph).getByRole('button', { name: 'Vitest' })).toHaveFocus()
     const visited = new Set<string | null>()
@@ -75,6 +72,21 @@ describe('skills exploration', () => {
     expect(graph.querySelector('[aria-pressed="true"]')).toBeNull()
     await user.tab()
     expect(graph.contains(document.activeElement)).toBe(false)
+  })
+  it('retains keyboard entry when Java is removed from the content', async () => {
+    const user = userEvent.setup()
+    const model = buildSkillsGraph(
+      graphContent.skillCategories,
+      graphContent.skills.filter((node) => node.id !== 'java'),
+      graphContent.skillRelationships,
+    )
+    const graph = setup(model)
+    const first = within(graph).getByRole('button', { name: 'Backend' })
+    for (let i = 0; i < 12 && document.activeElement !== first; i++)
+      await user.tab()
+    expect(first).toHaveFocus()
+    await user.keyboard('{Enter}')
+    expect(first).toHaveAttribute('aria-pressed', 'true')
   })
   it('supports keyboard pan, bounded zoom and reset without capturing normal wheel scrolling', async () => {
     const user = userEvent.setup()
@@ -130,7 +142,7 @@ describe('skills exploration', () => {
     expect(ts).toHaveClass('is-highlighted')
     expect(ts).toHaveAttribute('aria-pressed', 'false')
     expect(react).toHaveAttribute('aria-pressed', 'true')
-    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(9)
+    expect(graph.querySelectorAll('line.is-connected')).toHaveLength(4)
     expect(graph.querySelector('.network-camera')).toHaveAttribute(
       'transform',
       camera,

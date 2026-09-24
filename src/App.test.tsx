@@ -5,6 +5,15 @@ import App from '@/App'
 import { resume } from '@/data/resume'
 import { skillsForGroup } from '@/data/skills'
 
+vi.mock('@/data/resume', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@/data/resume')>()
+  const { careerContent, graphContent } = await import('@/test/contentFixtures')
+  return {
+    ...original,
+    resume: { ...original.resume, ...careerContent, ...graphContent },
+  }
+})
+
 describe('resume sections', () => {
   it('presents the requested sections and keeps the summary about Hamid', () => {
     render(<App />)
@@ -62,71 +71,70 @@ describe('resume sections', () => {
     ).toHaveFocus()
   })
 
-  it('preserves the PDF role breakdown and dates, with the current job first', () => {
+  it('renders authored role order, optional teams, dates and every bullet', () => {
     render(<App />)
     const experience = screen.getByRole('region', { name: 'Experiences' })
     const roles = within(experience).getAllByRole('article')
-    expect(roles[0]).toHaveAttribute('id', 'hsbc-agency-lending')
+    expect(roles.map((role) => role.id)).toEqual([
+      'example-current-role',
+      'example-earlier-role',
+    ])
     expect(
       roles.map((role) => within(role).getAllByRole('listitem').length),
-    ).toEqual([7, 6, 5, 1])
+    ).toEqual([2, 1])
     expect(
       within(roles[0]).getByText('Jun 2025', { selector: 'time' }),
     ).toHaveAttribute('datetime', '2025-06')
     expect(
-      within(roles[1]).getByText('Jun 2023', { selector: 'time' }),
-    ).toHaveAttribute('datetime', '2023-06')
-    expect(
-      within(roles[3]).getByText('Dec 2013', { selector: 'time' }),
-    ).toHaveAttribute('datetime', '2013-12')
-    for (const id of ['platform-poc', 'ai-assistant', 'ai-enablement'])
+      within(roles[1]).getByText('2021', { selector: 'time' }),
+    ).toHaveAttribute('datetime', '2021')
+    for (const id of ['example-api', 'example-delivery'])
       expect(roles[0]).toContainElement(document.getElementById(id))
-    expect(within(roles[0]).getByText(/100% output parity/)).toHaveTextContent(
-      'one selected trade type over a defined evaluation period',
-    )
+    expect(
+      within(roles[0]).getByText('Platform · Example Company'),
+    ).toBeVisible()
+    expect(within(roles[1]).getByText('Earlier Company')).toBeVisible()
+    expect(
+      within(roles[0]).getByText('Present', { exact: false }),
+    ).toBeVisible()
   })
 
-  it('separates the three selected projects and keeps every bullet readable', () => {
+  it('renders project stages, links and all career bullets from content', () => {
     render(<App />)
     const projects = screen.getByRole('region', { name: 'Projects' })
     const entries = within(projects).getAllByRole('article')
-    expect(entries.map((entry) => entry.id)).toEqual([
-      'buildean',
-      'buy-or-rent',
-      'man-agent-ment',
-    ])
+    expect(entries.map((entry) => entry.id)).toEqual(['example-project'])
     expect(
       entries.map((entry) => within(entry).getAllByRole('listitem').length),
-    ).toEqual([3, 3, 2])
+    ).toEqual([1])
+    expect(within(projects).getByText('In progress')).toBeInTheDocument()
     expect(
-      within(projects).getByText(/Flutter frontend in progress/),
-    ).toBeInTheDocument()
+      within(projects).getByRole('link', { name: 'Project source' }),
+    ).toHaveAttribute('href', 'https://example.com/project')
     for (const entry of [...resume.experiences, ...resume.projects]) {
       for (const bullet of entry.bullets)
         expect(screen.getByText(bullet.text)).toBeVisible()
     }
   })
 
-  it('makes all nine PDF skill categories available in the readable list', async () => {
+  it('makes every configured skill group available in the readable list', async () => {
     const user = userEvent.setup()
     render(<App />)
+    const introduction = screen.getByText(resume.sections.skills.eyebrow)
+    expect(
+      screen.getByRole('group', { name: 'Interactive skills network' }),
+    ).toBeVisible()
     await user.click(screen.getByRole('button', { name: 'List' }))
+    expect(introduction).toBeVisible()
+    expect(
+      screen.queryByRole('group', { name: 'Interactive skills network' }),
+    ).not.toBeInTheDocument()
     const skills = screen.getByRole('region', { name: 'Skills' })
     expect(
       within(skills)
         .getAllByRole('term')
         .map((term) => term.textContent),
-    ).toEqual([
-      'Languages',
-      'Backend & APIs',
-      'Frontend',
-      'Database & Storage',
-      'Cloud & Infrastructure',
-      'Build & Delivery',
-      'Testing & Security',
-      'Observability & Analytics',
-      'Developer Workflow',
-    ])
+    ).toEqual(['Backend & APIs', 'Frontend'])
     for (const group of resume.skillGroups)
       expect(
         within(skills).getByText(
@@ -141,10 +149,10 @@ describe('resume sections', () => {
     render(<App />)
     const education = screen.getByRole('region', { name: 'Education' })
     const entries = within(education).getAllByRole('article')
-    expect(entries).toHaveLength(2)
+    expect(entries).toHaveLength(1)
     expect(
       within(entries[0]).getByRole('heading', { level: 3 }),
-    ).toHaveTextContent('Water Resources & Environmental Engineering')
+    ).toHaveTextContent('Systems Engineering')
     expect(
       within(entries[0]).getByText('Jan 2019', { selector: 'time' }),
     ).toHaveAttribute('datetime', '2019-01')

@@ -17,7 +17,7 @@ database, authentication service or MCP server in this repository.
 Vite builds React 19 and strict TypeScript. Tailwind v4 and custom CSS provide
 styling; Lucide supplies icons. Vitest/Testing Library run in jsdom. Zod validates
 editable content at build time. Use versions in `.nvmrc` and the lockfile.
-The current design has no Motion runtime imports or scroll-linked animations.
+The current design has no Motion dependency or scroll-linked animations.
 Skills uses `d3-force` for a bounded deterministic layout, then SVG and native
 Pointer Events for interaction; no continuously running physics simulation.
 
@@ -30,6 +30,10 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
 1. `src/data/resume.json` owns identity, copy, dates, links, entries and skills.
 2. `resume.schema.ts` validates before dev/build and in CI. The typed
    `resume.ts` export uses a build-validated cast, keeping Zod out of the browser.
+   The editor JSON Schema is generated from the same Zod definition, with a
+   drift check; it is not a second hand-maintained contract. A Vite HTML transform
+   derives title, description, social metadata and fallback contact from `profile`,
+   with HTML escaping. Personal facts do not live in `index.html`.
 3. `App` composes six sections. Experiences, Projects and Education map their
    authored lists to a shared `ResumeEntry` with explicit typed props.
 4. `ResumeEntry` renders headings, semantic dates, ordinary bullets and links.
@@ -39,6 +43,9 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
    `src/components/skills/skills.css`.
 6. `Skills` switches between the network and a derived definition list. The
    graph module builds uniform nodes, undirected adjacency and pure camera calculations.
+   `Skills` owns the content lookup and passes a graph model into `SkillsNetwork`.
+   A content revision key resets interaction state when graph data changes during
+   editing. Keyboard entry uses the first alphabetical node, with no named-skill dependency.
    `useGraphInteraction` owns node positions, camera gestures and touch capture.
    Mouse hover is transient presentation state, separate from persistent selection.
    Graph topics map to PDF/list groups through `skillCategories[].groupId`;
@@ -68,6 +75,7 @@ The [content guide](../guides/resume-content.md) owns fields and publication rul
 | `src/lib/`               | Pure date formatting and utilities                                |
 | `src/index.css`          | Theme tokens, responsive layout and print                         |
 | `public/`                | Public assets and pre-paint theme bootstrap                       |
+| `scripts/`, `schema/`    | HTML content transform and generated JSON editor schema           |
 | `ai/`                    | Agent workflows, scripts, skills and templates                    |
 | `wiki/`                  | Durable project knowledge, never imported into the page           |
 

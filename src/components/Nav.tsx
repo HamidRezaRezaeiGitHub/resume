@@ -15,7 +15,8 @@ export function Nav() {
           aria-label={`${resume.profile.name} — home`}
           onClick={() => focusSection('top')}
         >
-          hr<span>.</span>
+          {resume.profile.monogram}
+          <span>.</span>
         </a>
         <div className="section-links">
           {resume.navigation

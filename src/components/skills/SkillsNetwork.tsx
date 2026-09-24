@@ -1,29 +1,25 @@
-import { useId, useRef, useState } from 'react'
+import { useId, useMemo, useRef, useState } from 'react'
 import { Maximize, Minus, Move, Plus, RotateCcw } from 'lucide-react'
-import { resume } from '@/data/resume'
 import {
-  buildSkillsGraph,
   graphBounds,
   MAX_ZOOM,
   MIN_ZOOM,
   type GraphNode,
+  type SkillsGraph,
 } from './graph'
 import { useGraphInteraction } from './useGraphInteraction'
 import { GraphControl } from './GraphControl'
 
-const graph = buildSkillsGraph(
-  resume.skillCategories,
-  resume.skills,
-  resume.skillRelationships,
-)
-
-const nodeOrder = [...graph.nodes]
-  .sort((a, b) => a.label.localeCompare(b.label, 'en'))
-  .map((node) => node.id)
-
-export function SkillsNetwork() {
+export function SkillsNetwork({ graph }: { graph: SkillsGraph }) {
+  const nodeOrder = useMemo(
+    () =>
+      [...graph.nodes]
+        .sort((a, b) => a.label.localeCompare(b.label, 'en'))
+        .map((node) => node.id),
+    [graph],
+  )
   const [selected, setSelected] = useState<string | null>(null)
-  const [focused, setFocused] = useState('java')
+  const [focused, setFocused] = useState(nodeOrder[0])
   const nodeRefs = useRef(new Map<string, SVGGElement>())
   const [hovered, setHovered] = useState<string | null>(null)
   const { surfaceRef, ...controls } = useGraphInteraction(graph.nodes)

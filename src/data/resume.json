@@ -1,4 +1,5 @@
 {
+  "$schema": "../../schema/resume.schema.json",
   "navigation": [
     {
       "label": "Experiences",
@@ -23,6 +24,7 @@
   ],
   "profile": {
     "name": "Hamid R. Rezaei",
+    "monogram": "hr",
     "headline": "Full-Stack Software Engineer",
     "summary": "I design and build Java/Spring services, secure APIs, data-intensive applications, and React interfaces. My work spans backend development, CI/CD automation, cloud infrastructure, and observability. I enjoy working through complex problems and making software easier to test, release, and support.",
     "location": "Toronto, Canada",
