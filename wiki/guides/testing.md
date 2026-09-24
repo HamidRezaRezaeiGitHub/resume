@@ -3,7 +3,7 @@ title: Testing and validation
 domain: guides
 tags: [vitest, validation, accessibility, responsive]
 status: current
-last_updated: 2026-09-23
+last_updated: 2026-09-24
 ---
 
 # Testing and validation
@@ -27,7 +27,8 @@ through tests; deployment jobs additionally build before uploading assets.
 ## Useful automated coverage
 
 Vitest with Testing Library and jsdom covers content validation, date
-helpers, theme behavior, contact interactions, and graph relationships/camera
+helpers, independent entry disclosures, bullet-fragment reveal, keyboard toggles,
+optional detail validation, theme behavior, contact interactions, and graph relationships/camera
 math, undirected edge validation, shared degree sizing, deterministic clustering,
 grouped membership, hover/selection, individual node dragging, gesture
 boundaries and tooltips. Tests live beside the code;
@@ -55,7 +56,12 @@ short landscape viewport. Check:
 
 - No horizontal overflow, clipped copy, or fixed-navigation overlap.
 - Roles, projects, skills and degrees appear in their own sections; dates remain readable.
-- Bullets remain visible and compact; no sticky entry headings or hidden content.
+- Entries with bullets start collapsed with a plus icon; clicking the header or
+  pressing Enter/Space toggles only that entry. Several can stay open. No overflow,
+  misplaced focus rings or overlap with project links at 320px, desktop or landscape.
+- Entries without bullets (including the current degrees) have no toggle. Skills
+  remains available. Opening a bullet fragment URL reveals and scrolls to its text.
+- Print includes all bullets even when every screen entry is collapsed; no toggle icons.
 - Light/dark themes, saved and system preferences, and readable contrast.
 - Every top-bar section link is visible on phones and scrolls up/down to an
   unobscured target, preserving keyboard focus.

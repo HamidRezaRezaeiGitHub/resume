@@ -1,5 +1,15 @@
 # Wiki log
 
+## 2026-09-24 — update — Expandable entry details
+
+Entries with bullets now start collapsed and expand independently through an
+accessible heading control with a plus/minus icon. Optional bullets work uniformly
+for roles, projects and degrees; missing or empty lists keep a simple entry. Skills,
+entry identity and project links stay visible. Bullet deep links reveal their entry,
+and print includes all details. Removed Spring AI connections to React and Developer
+Workflow. Updated the editor schema and content, interaction and testing guides.
+Release scope is UAT; production awaits the user's review.
+
 ## 2026-09-23 — update — Content maintainability
 
 Moved the navigation monogram into profile JSON and derived HTML metadata and

@@ -175,11 +175,8 @@
               { "type": "string", "const": "present" }
             ]
           },
-          "organization": { "type": "string", "minLength": 1 },
-          "team": { "type": "string", "minLength": 1 },
-          "location": { "type": "string", "minLength": 1 },
           "bullets": {
-            "minItems": 1,
+            "description": "Optional details. A nonempty list makes the entry expandable, initially collapsed. Omit or leave empty for a simple entry.",
             "type": "array",
             "items": {
               "type": "object",
@@ -195,7 +192,10 @@
               "required": ["id", "text"],
               "additionalProperties": false
             }
-          }
+          },
+          "organization": { "type": "string", "minLength": 1 },
+          "team": { "type": "string", "minLength": 1 },
+          "location": { "type": "string", "minLength": 1 }
         },
         "required": [
           "id",
@@ -203,8 +203,7 @@
           "startDate",
           "endDate",
           "organization",
-          "location",
-          "bullets"
+          "location"
         ],
         "additionalProperties": false
       },
@@ -238,23 +237,8 @@
               { "type": "string", "const": "present" }
             ]
           },
-          "role": { "type": "string", "minLength": 1 },
-          "stage": { "type": "string", "minLength": 1 },
-          "links": {
-            "minItems": 1,
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "label": { "type": "string", "minLength": 1 },
-                "url": { "type": "string", "format": "uri" }
-              },
-              "required": ["label", "url"],
-              "additionalProperties": false
-            }
-          },
           "bullets": {
-            "minItems": 1,
+            "description": "Optional details. A nonempty list makes the entry expandable, initially collapsed. Omit or leave empty for a simple entry.",
             "type": "array",
             "items": {
               "type": "object",
@@ -270,17 +254,24 @@
               "required": ["id", "text"],
               "additionalProperties": false
             }
+          },
+          "role": { "type": "string", "minLength": 1 },
+          "stage": { "type": "string", "minLength": 1 },
+          "links": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "minLength": 1 },
+                "url": { "type": "string", "format": "uri" }
+              },
+              "required": ["label", "url"],
+              "additionalProperties": false
+            }
           }
         },
-        "required": [
-          "id",
-          "title",
-          "startDate",
-          "endDate",
-          "role",
-          "stage",
-          "bullets"
-        ],
+        "required": ["id", "title", "startDate", "endDate", "role", "stage"],
         "additionalProperties": false
       },
       "description": "Personal projects in display order. Stage describes maturity; links are optional."
@@ -403,6 +394,24 @@
               },
               { "type": "string", "const": "present" }
             ]
+          },
+          "bullets": {
+            "description": "Optional details. A nonempty list makes the entry expandable, initially collapsed. Omit or leave empty for a simple entry.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+                  "description": "Stable lowercase ID, such as my-new-role. Keep it when editing copy so links continue to work."
+                },
+                "text": { "type": "string", "minLength": 1 }
+              },
+              "required": ["id", "text"],
+              "additionalProperties": false
+            }
           },
           "field": { "type": "string", "minLength": 1 },
           "organization": { "type": "string", "minLength": 1 },

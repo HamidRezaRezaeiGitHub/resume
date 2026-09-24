@@ -3,7 +3,7 @@ title: React and TypeScript development
 domain: guides
 tags: [react, typescript, themes, accessibility]
 status: current
-last_updated: 2026-09-23
+last_updated: 2026-09-24
 ---
 
 # React and TypeScript
@@ -33,7 +33,16 @@ sections. The hero uses larger name typography, a soft background wash and direc
 experience/download calls to action. Let's Talk closes with a contrasting green
 band, large heading, email action and a second résumé download trigger. Their styles are scoped to those sections.
 No category colors, sticky entry headings or scroll-linked reveals. Skills is the
-intentional interactive exception to the otherwise compact reading layout.
+interactive network. Entries with bullet details use independent disclosures.
+
+`ResumeEntry` starts each bullet list collapsed and shows a plus/minus indicator.
+A real button inside the heading uses a stretched hit area across the header;
+Enter/Space toggles it, `aria-expanded` exposes state and `aria-controls` identifies
+the list. Entries without bullets have no control. Stage and project links remain
+visible outside the toggle target. Bullet fragment URLs reveal the matching list
+and scroll below the fixed header; listeners and scheduled frames clean up.
+Print displays all lists and removes toggle decorations without changing screen
+state. There is no exclusive accordion state or persisted expansion.
 
 The fixed navigation exposes all four middle-section links on every viewport.
 On phones the links occupy a second row; there is no hamburger menu. Native

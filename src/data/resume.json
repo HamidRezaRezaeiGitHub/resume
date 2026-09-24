@@ -399,7 +399,7 @@
     {
       "id": "spring-ai",
       "label": "Spring AI",
-      "categories": ["backend", "workflow", "ai"]
+      "categories": ["backend", "ai"]
     },
     {
       "id": "rest",
@@ -889,10 +889,6 @@
     {
       "source": "spring-ai",
       "target": "mcp"
-    },
-    {
-      "source": "spring-ai",
-      "target": "react"
     },
     {
       "source": "junit",

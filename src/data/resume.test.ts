@@ -53,6 +53,22 @@ describe('section-based resume content', () => {
   it('accepts the published resume', () => {
     expect(resumeContentSchema.safeParse(rawResumeContent).success).toBe(true)
   })
+  it.each(['experiences', 'projects', 'education'] as const)(
+    'allows %s with omitted, empty or nonempty details',
+    (key) => {
+      const content = editableCopy()
+      delete content[key][0].bullets
+      expect(resumeContentSchema.safeParse(content).success).toBe(true)
+      content[key][0].bullets = []
+      expect(resumeContentSchema.safeParse(content).success).toBe(true)
+      content[key][0].bullets = [
+        { id: 'optional-detail', text: 'Additional detail.' },
+      ]
+      expect(resumeContentSchema.safeParse(content).success).toBe(true)
+      content[key][0].bullets[0].text = ' '
+      expect(resumeContentSchema.safeParse(content).success).toBe(false)
+    },
+  )
   it('rejects obsolete timeline fields rather than silently ignoring content', () => {
     expect(
       resumeContentSchema.safeParse({ ...rawResumeContent, timeline: [] })
@@ -74,7 +90,14 @@ describe('section-based resume content', () => {
   })
   it('keeps bullet anchors unique across roles and projects', () => {
     const content = editableCopy()
-    content.projects[0].bullets[0].id = content.experiences[0].bullets[0].id
+    content.projects[0].bullets = [
+      { ...careerContent.experiences[0].bullets[0] },
+    ]
+    expect(resumeContentSchema.safeParse(content).success).toBe(false)
+  })
+  it('keeps education bullet anchors unique across all entries', () => {
+    const content = editableCopy()
+    content.education[0].bullets = [{ ...careerContent.projects[0].bullets[0] }]
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
   it('rejects entry IDs that collide with generated heading anchors', () => {
@@ -86,7 +109,7 @@ describe('section-based resume content', () => {
     'reserves the page anchor %s',
     (id) => {
       const content = editableCopy()
-      content.experiences[0].bullets[0].id = id
+      content.experiences[0].bullets = [{ id, text: 'A detail.' }]
       expect(resumeContentSchema.safeParse(content).success).toBe(false)
     },
   )
@@ -149,7 +172,7 @@ describe('section-based resume content', () => {
   })
   it('rejects blank resume bullets', () => {
     const content = editableCopy()
-    content.experiences[0].bullets[0].text = '  '
+    content.experiences[0].bullets = [{ id: 'blank-detail', text: '  ' }]
     expect(resumeContentSchema.safeParse(content).success).toBe(false)
   })
   it('rejects ambiguous skill categories', () => {

@@ -3,7 +3,7 @@ title: System overview
 domain: architecture
 tags: [react, static-site, content, data-flow]
 status: current
-last_updated: 2026-09-23
+last_updated: 2026-09-24
 ---
 
 # System overview
@@ -36,7 +36,9 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
    with HTML escaping. Personal facts do not live in `index.html`.
 3. `App` composes six sections. Experiences, Projects and Education map their
    authored lists to a shared `ResumeEntry` with explicit typed props.
-4. `ResumeEntry` renders headings, semantic dates, ordinary bullets and links.
+4. `ResumeEntry` renders headings, semantic dates and links. Optional nonempty
+   bullets enable independent disclosures, collapsed by default; bullet fragments
+   reveal their entry and print always includes all details.
    `src/lib/dates.ts` preserves date precision. There is no runtime sorting.
 5. `src/index.css` owns compact reading density, responsive layout, themes,
    reduced-motion scrolling and print. Skills-specific CSS stays in

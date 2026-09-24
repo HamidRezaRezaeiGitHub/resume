@@ -46,12 +46,19 @@ const sectionId = z.enum([
   'contact',
 ])
 const heading = z.strictObject({ title: text })
-const bullets = z.array(z.strictObject({ id: anchorId, text })).min(1)
+const bullet = z.strictObject({ id: anchorId, text })
+const bullets = z
+  .array(bullet)
+  .optional()
+  .describe(
+    'Optional details. A nonempty list makes the entry expandable, initially collapsed. Omit or leave empty for a simple entry.',
+  )
 const datedEntry = z.strictObject({
   id: anchorId,
   title: text,
   startDate: careerDate,
   endDate: z.union([careerDate, z.literal('present')]),
+  bullets,
 })
 type CareerPeriod = Pick<z.infer<typeof datedEntry>, 'startDate' | 'endDate'>
 
@@ -132,7 +139,6 @@ export const resumeContentSchema = z
             organization: text,
             team: text.optional(),
             location: text,
-            bullets,
           })
           .superRefine(validatePeriod),
       )
@@ -147,7 +153,6 @@ export const resumeContentSchema = z
             role: text,
             stage: text,
             links: links.optional(),
-            bullets,
           })
           .superRefine(validatePeriod),
       )
@@ -212,10 +217,9 @@ export const resumeContentSchema = z
       content[key].forEach((entry, i) => {
         addId(entry.id, [key, i, 'id'])
         addId(`${entry.id}-title`, [key, i, 'id'])
-        if ('bullets' in entry)
-          entry.bullets.forEach((bullet, j) =>
-            addId(bullet.id, [key, i, 'bullets', j, 'id']),
-          )
+        entry.bullets?.forEach((bullet, j) =>
+          addId(bullet.id, [key, i, 'bullets', j, 'id']),
+        )
       })
     }
     if (
@@ -325,6 +329,5 @@ export const resumeContentSchema = z
   })
 
 export type ResumeContent = z.infer<typeof resumeContentSchema>
-export type ResumeBullet =
-  ResumeContent['experiences'][number]['bullets'][number]
+export type ResumeBullet = z.infer<typeof bullet>
 export type { CareerPeriod }

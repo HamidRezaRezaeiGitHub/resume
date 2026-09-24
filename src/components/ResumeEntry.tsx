@@ -1,4 +1,5 @@
-import { ArrowUpRight } from 'lucide-react'
+import { useEffect, useId, useState } from 'react'
+import { ArrowUpRight, Minus, Plus } from 'lucide-react'
 import { formatCareerDate } from '@/lib/dates'
 import type { CareerPeriod, ResumeBullet } from '@/data/resume'
 
@@ -23,11 +24,60 @@ export function ResumeEntry({
   bullets,
   links,
 }: ResumeEntryProps) {
+  const [expanded, setExpanded] = useState(false)
+  const detailsId = useId()
+  const hasDetails = Boolean(bullets?.length)
+
+  useEffect(() => {
+    if (!bullets?.length) return
+    // Keep existing bullet URLs usable even when their entry starts collapsed.
+    let frame = 0
+    const revealFragment = () => {
+      const bullet = bullets?.find(
+        ({ id: bulletId }) => window.location.hash === `#${bulletId}`,
+      )
+      if (!bullet) return
+      setExpanded(true)
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        document.getElementById(bullet.id)?.scrollIntoView({
+          block: 'start',
+          behavior: 'instant',
+        })
+      })
+    }
+    frame = requestAnimationFrame(revealFragment)
+    window.addEventListener('hashchange', revealFragment)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('hashchange', revealFragment)
+    }
+  }, [bullets])
+
   return (
     <article id={id} className="resume-entry" aria-labelledby={`${id}-title`}>
-      <header className="entry-header">
+      <header
+        className={`entry-header${hasDetails ? ' entry-disclosure' : ''}`}
+      >
         <div className="entry-identity">
-          <h3 id={`${id}-title`}>{title}</h3>
+          <h3 id={`${id}-title`}>
+            {hasDetails ? (
+              <button
+                type="button"
+                className="entry-toggle"
+                aria-expanded={expanded}
+                aria-controls={detailsId}
+                onClick={() => setExpanded((value) => !value)}
+              >
+                {title}
+                <span className="entry-toggle-icon" aria-hidden="true">
+                  {expanded ? <Minus size={18} /> : <Plus size={18} />}
+                </span>
+              </button>
+            ) : (
+              title
+            )}
+          </h3>
           <p className="entry-subtitle">{subtitle}</p>
           {location && <p className="entry-location">{location}</p>}
         </div>
@@ -42,9 +92,9 @@ export function ResumeEntry({
         </p>
       </header>
       {stage && <p className="entry-stage">{stage}</p>}
-      {bullets && (
-        <ul className="entry-bullets">
-          {bullets.map((bullet) => (
+      {hasDetails && (
+        <ul id={detailsId} className="entry-bullets" hidden={!expanded}>
+          {bullets?.map((bullet) => (
             <li key={bullet.id} id={bullet.id}>
               {bullet.text}
             </li>

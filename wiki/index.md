@@ -4,7 +4,8 @@
 
 Hamid Rezaei's personal resume website is a static React application for
 recruiters and hiring managers. It presents a minimal, mobile-friendly
-resume with separate experience, project, skill and education sections, plus
+resume with separate experience, project, skill and education sections, independent
+expandable entry details when bullets are supplied, plus
 a distinctive hero and contact section in light and dark modes, each offering
 Compact and Long PDF downloads. Skills adds an
 interactive network of related technologies and topics, degree-sized labels,

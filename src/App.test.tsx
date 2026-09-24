@@ -71,7 +71,8 @@ describe('resume sections', () => {
     ).toHaveFocus()
   })
 
-  it('renders authored role order, optional teams, dates and every bullet', () => {
+  it('renders authored role order, optional teams, dates and expandable bullets', async () => {
+    const user = userEvent.setup()
     render(<App />)
     const experience = screen.getByRole('region', { name: 'Experiences' })
     const roles = within(experience).getAllByRole('article')
@@ -79,6 +80,10 @@ describe('resume sections', () => {
       'example-current-role',
       'example-earlier-role',
     ])
+    for (const role of roles) {
+      expect(within(role).queryByRole('list')).not.toBeInTheDocument()
+      await user.click(within(role).getByRole('button'))
+    }
     expect(
       roles.map((role) => within(role).getAllByRole('listitem').length),
     ).toEqual([2, 1])
@@ -99,20 +104,26 @@ describe('resume sections', () => {
     ).toBeVisible()
   })
 
-  it('renders project stages, links and all career bullets from content', () => {
+  it('keeps project stages and links visible while career details start collapsed', async () => {
+    const user = userEvent.setup()
     render(<App />)
     const projects = screen.getByRole('region', { name: 'Projects' })
     const entries = within(projects).getAllByRole('article')
     expect(entries.map((entry) => entry.id)).toEqual(['example-project'])
-    expect(
-      entries.map((entry) => within(entry).getAllByRole('listitem').length),
-    ).toEqual([1])
+    expect(within(entries[0]).queryByRole('list')).not.toBeInTheDocument()
     expect(within(projects).getByText('In progress')).toBeInTheDocument()
     expect(
       within(projects).getByRole('link', { name: 'Project source' }),
     ).toHaveAttribute('href', 'https://example.com/project')
     for (const entry of [...resume.experiences, ...resume.projects]) {
-      for (const bullet of entry.bullets)
+      for (const bullet of entry.bullets ?? [])
+        expect(screen.getByText(bullet.text)).not.toBeVisible()
+      await user.click(
+        within(screen.getByRole('article', { name: entry.title })).getByRole(
+          'button',
+        ),
+      )
+      for (const bullet of entry.bullets ?? [])
         expect(screen.getByText(bullet.text)).toBeVisible()
     }
   })
@@ -150,6 +161,7 @@ describe('resume sections', () => {
     const education = screen.getByRole('region', { name: 'Education' })
     const entries = within(education).getAllByRole('article')
     expect(entries).toHaveLength(1)
+    expect(within(education).queryByRole('button')).not.toBeInTheDocument()
     expect(
       within(entries[0]).getByRole('heading', { level: 3 }),
     ).toHaveTextContent('Systems Engineering')

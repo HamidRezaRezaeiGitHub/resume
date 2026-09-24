@@ -3,7 +3,7 @@ title: Resume content and publication
 domain: guides
 tags: [content, sections, dates, publication]
 status: current
-last_updated: 2026-09-23
+last_updated: 2026-09-24
 ---
 
 # Resume content
@@ -81,7 +81,8 @@ Relationships do not change list membership or claim equal proficiency.
 
 AI is a separate graph topic mapped to Developer Workflow. It connects the coding
 agents, Agent Instructions, Agent Skills, Context Engineering, Hooks, MCP and
-Spring AI. Instructions, skills and hooks link to the agents that consume them;
+Spring AI. Spring AI connects to Backend and AI, Java, Spring and MCP; it has
+no direct React or Developer Workflow edge. Instructions, skills and hooks link to the agents that consume them;
 skills connect to Bash, Jenkins, Jira and Confluence from the user's workflow
 integration work. Context Engineering links instructions, skills, hooks and
 Confluence knowledge. Hooks also connect to Bash. GCP is a provider
@@ -131,6 +132,13 @@ this fictional entry has the same shape as a real role:
   "bullets": [{ "id": "example-role-api", "text": "Describe the work here." }]
 }
 ```
+
+`bullets` is optional on experiences, projects and education. Omit it or use `[]`
+for an entry without details. A nonempty list automatically adds an independent
+expand/collapse control: all such entries start collapsed, and several can stay
+open together. Titles, dates, stage and links remain visible. No `expandable` flag
+is needed. Skills stays fully available. Direct bullet URLs reveal their entry,
+and browser print includes all bullets regardless of the screen state.
 
 `team` is optional. Keep existing IDs when changing wording, so deep links remain
 valid. Run `npm run validate:content`, review locally, and run the full gate before
