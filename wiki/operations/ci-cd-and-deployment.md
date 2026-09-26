@@ -3,7 +3,7 @@ title: CI and deployment
 domain: operations
 tags: [github-actions, cloudflare, deployment]
 status: current
-last_updated: 2026-09-23
+last_updated: 2026-09-26
 ---
 
 # CI and deployment
@@ -64,3 +64,24 @@ Vite preview serves the files but does not apply Cloudflare's `_headers` rules.
 Use Wrangler local preview or the deployed environment to verify HTTP headers.
 After release, check both PDF responses and compare their bytes with the source;
 a missing path may otherwise return the SPA HTML fallback with status 200.
+
+## Agent-readable resume assets
+
+The existing build generates `/resume.md` and `/llms.txt` directly into `dist` from
+validated JSON, so all deployment workflows include them without extra jobs.
+Generation errors fail the build. Only converter code and response configuration
+are committed; there are no hand-maintained copies in `public/`.
+
+`public/_headers` sets `text/markdown; charset=utf-8` for the resume and
+`text/plain; charset=utf-8` for the index, cache revalidation and `nosniff`.
+Neither file forces an attachment download. The homepage's HTTP Link header and
+HTML head advertise `/resume.md` as an alternate format and `/llms.txt` as a
+description. The Markdown response also links to the index. The no-JavaScript
+fallback exposes a normal anchor to the full text resume.
+
+Verify both response types and compare deployed bodies with build artifacts;
+check the homepage Link header, HTML discovery links and PDF targets. Do not
+accept an HTML SPA fallback as a successful Markdown response. Vite dev serves
+the generated text, but Cloudflare headers require Wrangler or deployment checks.
+UAT and DEV use their own content revision and relative links. Production still
+requires explicit promotion; adding these files does not change workflow triggers.

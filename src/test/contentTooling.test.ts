@@ -46,6 +46,17 @@ describe('content tooling', () => {
       `mailto:${profile.email}`,
     )
     expect(page.querySelector('img')).toBeNull()
+    expect(
+      page
+        .querySelector('link[rel="alternate"][type="text/markdown"]')
+        ?.getAttribute('href'),
+    ).toBe('/resume.md')
+    expect(
+      page.querySelector('link[rel="describedby"]')?.getAttribute('href'),
+    ).toBe('/llms.txt')
+    expect(
+      page.querySelector('noscript a[href="/resume.md"]')?.textContent,
+    ).toBe('Read the full résumé')
     expect(html).not.toContain('__RESUME_')
   })
 })

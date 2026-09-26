@@ -3,7 +3,7 @@ title: Resume content and publication
 domain: guides
 tags: [content, sections, dates, publication]
 status: current
-last_updated: 2026-09-24
+last_updated: 2026-09-26
 ---
 
 # Resume content
@@ -115,6 +115,33 @@ UI language such as “Network”, “List”, “Copy email address”, keyboar
 section types and their order, icons, theme tokens and graph behavior remain code.
 The favicon is a separate graphic. Downloaded PDFs are separately authored files;
 editing JSON does not rewrite their contents. Browser print uses the website data.
+
+## Generated text resume
+
+`/resume.md` is a complete Markdown representation of the public JSON: profile,
+summary, experiences, projects, grouped skills, education, contact and PDF links.
+All supplied bullets are included even when the website entries start collapsed.
+Authored order, date precision, project stage and team names are preserved. Skills
+use the same deduplicated group membership as List mode; graph edges and font sizes
+are not interpreted as proficiency. Copy is escaped as literal text, not evaluated
+as Markdown or HTML supplied by the editor.
+
+`scripts/resume-markdown.ts` owns formatting; `scripts/resume-content-plugin.ts`
+validates the source and generates `dist/resume.md` and the compact `dist/llms.txt`
+discovery index on every build. Neither output is committed or edited manually.
+The development server also serves both paths and picks up JSON changes on the
+next request. Editing the JSON therefore updates the website and text representation
+together; existing authored PDFs remain independent.
+
+The Markdown omits decorative/UI copy, internal IDs, editor metadata, graph
+geometry and repository documentation. Section headings follow JSON except the
+format-specific Summary and PDF downloads labels. Root-relative download and
+discovery links remain on the environment where the document is served.
+
+HTML metadata, HTTP Link headers and a no-JavaScript fallback link advertise
+the files. `llms.txt` is a discovery proposal, not a guarantee that every research
+tool follows it. There is no bot-specific content or runtime conversion service.
+See [deployment verification](../operations/ci-cd-and-deployment.md).
 
 To add an experience, copy an object in `experiences`, update its facts and dates,
 give it and its bullets unique IDs, and put it at the desired position. For example,

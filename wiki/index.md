@@ -27,6 +27,7 @@ This wiki owns durable project knowledge. Local task state lives in ignored
 - [Resume content](guides/resume-content.md): public writing, dates, selected
   projects, latest resume source, schema rules, AI/cloud graph relationships,
   editor hints, an editing recipe, and a page/component/JSON terminology guide.
+  It also covers the automatically generated Markdown resume and discovery index.
 - [Testing](guides/testing.md): CI commands, useful regression coverage, and
   phone/desktop visual checks.
 - [CI and deployment](operations/ci-cd-and-deployment.md): branches,

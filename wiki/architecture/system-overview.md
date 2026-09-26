@@ -3,7 +3,7 @@ title: System overview
 domain: architecture
 tags: [react, static-site, content, data-flow]
 status: current
-last_updated: 2026-09-24
+last_updated: 2026-09-26
 ---
 
 # System overview
@@ -31,9 +31,15 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
 2. `resume.schema.ts` validates before dev/build and in CI. The typed
    `resume.ts` export uses a build-validated cast, keeping Zod out of the browser.
    The editor JSON Schema is generated from the same Zod definition, with a
-   drift check; it is not a second hand-maintained contract. A Vite HTML transform
+   drift check; it is not a second hand-maintained contract. The Vite content plugin
    derives title, description, social metadata and fallback contact from `profile`,
    with HTML escaping. Personal facts do not live in `index.html`.
+   The same plugin generates `resume.md` and `llms.txt` into `dist` during every
+   build. A pure Markdown renderer reuses date and skill-group helpers; no React
+   state, graph layout, source documents or agent instructions are exported.
+   Development requests use the same renderer and re-read validated JSON.
+   HTML head links, a no-JavaScript anchor and Cloudflare response headers expose
+   the alternate format without changing the interactive interface.
 3. `App` composes six sections. Experiences, Projects and Education map their
    authored lists to a shared `ResumeEntry` with explicit typed props.
 4. `ResumeEntry` renders headings, semantic dates and links. Optional nonempty
@@ -68,18 +74,18 @@ The [content guide](../guides/resume-content.md) owns fields and publication rul
 
 ## Source map
 
-| Path                     | Responsibility                                                    |
-| ------------------------ | ----------------------------------------------------------------- |
-| `src/components/`        | Sections, shared entries, navigation and contact                  |
-| `src/components/skills/` | Graph model, SVG presentation, interaction hook and scoped styles |
-| `src/hooks/`             | Theme preference and browser synchronization                      |
-| `src/data/`              | JSON, schema, typed export and contract tests                     |
-| `src/lib/`               | Pure date formatting and utilities                                |
-| `src/index.css`          | Theme tokens, responsive layout and print                         |
-| `public/`                | Public assets and pre-paint theme bootstrap                       |
-| `scripts/`, `schema/`    | HTML content transform and generated JSON editor schema           |
-| `ai/`                    | Agent workflows, scripts, skills and templates                    |
-| `wiki/`                  | Durable project knowledge, never imported into the page           |
+| Path                     | Responsibility                                                      |
+| ------------------------ | ------------------------------------------------------------------- |
+| `src/components/`        | Sections, shared entries, navigation and contact                    |
+| `src/components/skills/` | Graph model, SVG presentation, interaction hook and scoped styles   |
+| `src/hooks/`             | Theme preference and browser synchronization                        |
+| `src/data/`              | JSON, schema, typed export and contract tests                       |
+| `src/lib/`               | Pure date formatting and utilities                                  |
+| `src/index.css`          | Theme tokens, responsive layout and print                           |
+| `public/`                | Public assets and pre-paint theme bootstrap                         |
+| `scripts/`, `schema/`    | Content plugin, HTML/Markdown renderers and generated editor schema |
+| `ai/`                    | Agent workflows, scripts, skills and templates                      |
+| `wiki/`                  | Durable project knowledge, never imported into the page             |
 
 ## Browser integrations
 

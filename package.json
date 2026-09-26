@@ -15,7 +15,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:ci": "vitest run",
-    "validate:content": "vitest run src/data/resume.test.ts src/test/contentTooling.test.ts",
+    "validate:content": "vitest run src/data/resume.test.ts src/test/contentTooling.test.ts src/test/resumeMarkdown.test.ts",
     "test:coverage": "vitest run --coverage",
     "deploy:dev": "wrangler deploy --env dev",
     "deploy:uat": "wrangler deploy --env uat",

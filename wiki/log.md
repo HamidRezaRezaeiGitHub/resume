@@ -1,5 +1,15 @@
 # Wiki log
 
+## 2026-09-26 — update — Agent-readable resume
+
+Added build-generated `/resume.md` from validated JSON, including all entry details,
+dates, grouped skills and PDF links, plus a compact `/llms.txt` index. Advertised
+the text through initial HTML metadata, HTTP Link headers and the no-JavaScript
+fallback. The Vite plugin also serves current text during development. Added
+renderer and real build/server checks; documented generation and MIME/body
+verification. Human-facing React/CSS and authored PDFs are unchanged. UAT release;
+production requires separate promotion.
+
 ## 2026-09-24 — update — Wide-screen entry controls
 
 Grouped the date and plus/minus indicator into a right-aligned column above 800px,

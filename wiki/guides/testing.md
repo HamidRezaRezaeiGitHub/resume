@@ -3,7 +3,7 @@ title: Testing and validation
 domain: guides
 tags: [vitest, validation, accessibility, responsive]
 status: current
-last_updated: 2026-09-24
+last_updated: 2026-09-26
 ---
 
 # Testing and validation
@@ -41,6 +41,19 @@ does not require changing behavior tests. Content validation, grouped completene
 and graph layout/fit checks still run against the published JSON. Editor-schema
 drift and escaped HTML metadata/fallback rendering are covered by
 `src/test/contentTooling.test.ts` and included in `validate:content`.
+
+`resumeMarkdown.test.ts` verifies full public bullet/skill coverage, authored order,
+dates, optional details, literal-text escaping, grouped deduplication and discovery
+copy. It is also part of `validate:content`. `resumeContentPlugin.test.ts` uses real
+Vite builds and a local development server to check generated assets, rebuilt
+content, invalid-content failure, MIME types and GET/HEAD behavior. Its temporary
+workspace is removed after each test; it never edits the real resume JSON.
+The Node environment for these integration tests skips browser-only matchMedia setup.
+
+For Markdown releases, compare served bodies with generated files, check response
+MIME/cache/Link headers and confirm discovery is present in the initial HTML.
+See the [deployment checks](../operations/ci-cd-and-deployment.md). Text-only build
+changes do not need a new responsive layout sweep when React/CSS are unchanged.
 
 Test meaningful behavior and failure boundaries: invalid dates/links/IDs,
 cross-section anchor collisions, navigation focus, denied clipboard or storage access,
