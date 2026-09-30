@@ -3,7 +3,7 @@ title: System overview
 domain: architecture
 tags: [react, static-site, content, data-flow]
 status: current
-last_updated: 2026-09-26
+last_updated: 2026-09-30
 ---
 
 # System overview
@@ -21,8 +21,18 @@ The current design has no Motion dependency or scroll-linked animations.
 Skills uses `d3-force` for a bounded deterministic layout, then SVG and native
 Pointer Events for interaction; no continuously running physics simulation.
 
-`index.html` loads `public/theme.js` for the initial theme before React mounts
-through `src/main.tsx`. Theme colors in CSS, the bootstrap and `useTheme` agree.
+The client build and a separate Vite SSR bundle render the same `App` from the
+validated JSON. `scripts/prerender.ts` inserts the resulting markup into
+`dist/index.html`; Cloudflare still serves static assets and runs no React
+server. `src/main.tsx` hydrates the populated production root and mounts an
+empty root in Vite development. A failed server render or missing root fails the
+build. The generated `dist-ssr/` bundle is ignored and never deployed.
+
+`index.html` loads `public/theme.js` before paint. The hook uses a stable server
+snapshot and reads the saved/system preference after hydration, avoiding a theme
+markup mismatch while preserving the initial colors. The PDF dialog portal is
+created only when opened. The static HTML carries a canonical production URL;
+the existing metadata and Markdown discovery links remain in the head.
 See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
 
 ## Content flow
@@ -40,7 +50,8 @@ See the [deployment guide](../operations/ci-cd-and-deployment.md) for routes.
    Development requests use the same renderer and re-read validated JSON.
    HTML head links, a no-JavaScript anchor and Cloudflare response headers expose
    the alternate format without changing the interactive interface.
-3. `App` composes six sections. Experiences, Projects and Education map their
+3. The build prerenders `App` into homepage HTML. `App` composes six sections.
+   Experiences, Projects and Education map their
    authored lists to a shared `ResumeEntry` with explicit typed props.
 4. `ResumeEntry` renders headings, semantic dates and links. Optional nonempty
    bullets enable independent disclosures, collapsed by default; bullet fragments
@@ -74,18 +85,18 @@ The [content guide](../guides/resume-content.md) owns fields and publication rul
 
 ## Source map
 
-| Path                     | Responsibility                                                      |
-| ------------------------ | ------------------------------------------------------------------- |
-| `src/components/`        | Sections, shared entries, navigation and contact                    |
-| `src/components/skills/` | Graph model, SVG presentation, interaction hook and scoped styles   |
-| `src/hooks/`             | Theme preference and browser synchronization                        |
-| `src/data/`              | JSON, schema, typed export and contract tests                       |
-| `src/lib/`               | Pure date formatting and utilities                                  |
-| `src/index.css`          | Theme tokens, responsive layout and print                           |
-| `public/`                | Public assets and pre-paint theme bootstrap                         |
-| `scripts/`, `schema/`    | Content plugin, HTML/Markdown renderers and generated editor schema |
-| `ai/`                    | Agent workflows, scripts, skills and templates                      |
-| `wiki/`                  | Durable project knowledge, never imported into the page             |
+| Path                     | Responsibility                                                                           |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| `src/components/`        | Sections, shared entries, navigation and contact                                         |
+| `src/components/skills/` | Graph model, SVG presentation, interaction hook and scoped styles                        |
+| `src/hooks/`             | Theme preference and browser synchronization                                             |
+| `src/data/`              | JSON, schema, typed export and contract tests                                            |
+| `src/lib/`               | Pure date formatting and utilities                                                       |
+| `src/index.css`          | Theme tokens, responsive layout and print                                                |
+| `public/`                | Public assets and pre-paint theme bootstrap                                              |
+| `scripts/`, `schema/`    | Content plugin, prerender insertion, HTML/Markdown renderers and generated editor schema |
+| `ai/`                    | Agent workflows, scripts, skills and templates                                           |
+| `wiki/`                  | Durable project knowledge, never imported into the page                                  |
 
 ## Browser integrations
 

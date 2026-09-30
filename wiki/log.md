@@ -1,5 +1,15 @@
 # Wiki log
 
+## 2026-09-30 — update — Static prerendered homepage
+
+Added build-time React rendering into the deployable homepage so the initial
+HTML contains the résumé, then hydrates for existing interactions. Kept the
+validated JSON and generated Markdown as shared content sources, made theme
+initialization and the PDF dialog server-safe, and added the production canonical
+URL. Verified built content, hydration, interactions and responsive widths.
+Feature branch/DEV and PR review only; documentation committed locally after
+the PR, with no UAT or production promotion.
+
 ## 2026-09-26 — update — Agent-readable resume
 
 Added build-generated `/resume.md` from validated JSON, including all entry details,

@@ -3,7 +3,7 @@ title: Testing and validation
 domain: guides
 tags: [vitest, validation, accessibility, responsive]
 status: current
-last_updated: 2026-09-26
+last_updated: 2026-09-30
 ---
 
 # Testing and validation
@@ -49,6 +49,17 @@ Vite builds and a local development server to check generated assets, rebuilt
 content, invalid-content failure, MIME types and GET/HEAD behavior. Its temporary
 workspace is removed after each test; it never edits the real resume JSON.
 The Node environment for these integration tests skips browser-only matchMedia setup.
+
+Server-render tests run without browser globals and cover initial content. The
+prerender insertion test checks head preservation and missing/duplicate/empty
+root failures; the theme test checks dark-preference hydration parity. The build
+must finish both client and SSR bundles and insert the markup. For prerender
+changes, inspect `dist/index.html` itself: expect one H1, all six sections,
+authored entry bullets and skill labels, canonical URL and Markdown link before
+JavaScript runs. Also load `npm run preview` in a real browser and check for
+hydration console warnings while testing disclosures, theme, skills views and
+the download chooser on phone and desktop. Vite `dev` is client-rendered, so it
+does not verify the production HTML path.
 
 For Markdown releases, compare served bodies with generated files, check response
 MIME/cache/Link headers and confirm discovery is present in the initial HTML.
