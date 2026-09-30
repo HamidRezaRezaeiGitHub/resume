@@ -52,6 +52,9 @@ describe('content tooling', () => {
         ?.getAttribute('href'),
     ).toBe('/resume.md')
     expect(
+      page.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+    ).toBe('https://hamid-rezaei.com/')
+    expect(
       page.querySelector('link[rel="describedby"]')?.getAttribute('href'),
     ).toBe('/llms.txt')
     expect(

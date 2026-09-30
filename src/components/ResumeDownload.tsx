@@ -60,7 +60,7 @@ export function ResumeDownload() {
         className="resume-download-button"
         aria-haspopup="dialog"
         aria-expanded={open}
-        aria-controls={id}
+        aria-controls={open ? id : undefined}
         onClick={() => setOpen(true)}
       >
         <Download size={17} aria-hidden="true" />

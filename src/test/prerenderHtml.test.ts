@@ -17,6 +17,7 @@ describe('homepage prerender insertion', () => {
     expect(html).toContain(resume.profile.name)
     expect(html).toContain(resume.experiences[0]?.bullets?.[0]?.text)
     expect(html).toContain('href="/resume.md"')
+    expect(html).toContain('rel="canonical" href="https://hamid-rezaei.com/"')
     expect(html).toContain('src="/src/main.tsx"')
   })
 
