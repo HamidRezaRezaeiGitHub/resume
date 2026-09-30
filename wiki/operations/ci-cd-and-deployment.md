@@ -94,3 +94,22 @@ accept an HTML SPA fallback as a successful Markdown response. Vite dev serves
 the generated text, but Cloudflare headers require Wrangler or deployment checks.
 UAT and DEV use their own content revision and relative links. Production still
 requires explicit promotion; adding these files does not change workflow triggers.
+
+## Crawler discovery and access checks
+
+`public/robots.txt` allows crawling and points to `/sitemap.xml` on the canonical
+production hostname. `public/sitemap.xml` lists only the canonical homepage;
+the alternate `/resume.md` is already advertised by the homepage and `llms.txt`.
+Vite copies both static files into `dist`. `public/_headers` gives robots plain-text
+and sitemap XML content types, revalidation and `nosniff`. The same files ship to
+DEV and UAT, but the sitemap consistently names the production canonical URL.
+
+After a release, check GET and HEAD for both paths, including the body and
+content type. Under the SPA fallback, a missing file can return homepage HTML
+with status 200. Submit the sitemap in Google Search Console and inspect the
+homepage URL there for crawl allowance, fetch/index status and selected canonical.
+If an agent reader still cannot fetch the site, inspect Cloudflare Security
+Events around a fresh request for the host and path; note Block/Challenge actions
+and their applied rule. Review the separate Search and Agent AI bot policies.
+Do not infer a Cloudflare block from a failed third-party reader alone. These
+dashboard checks are outside the repository and do not require changing routes.

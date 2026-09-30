@@ -28,10 +28,11 @@ This wiki owns durable project knowledge. Local task state lives in ignored
   projects, latest resume source, schema rules, AI/cloud graph relationships,
   editor hints, an editing recipe, and a page/component/JSON terminology guide.
   It also covers the automatically generated Markdown resume and discovery index.
-- [Testing](guides/testing.md): CI commands, prerender/hydration checks, useful
-  regression coverage, and phone/desktop visual checks.
+- [Testing](guides/testing.md): CI commands, prerender/hydration and crawler
+  discovery checks, regression coverage, and phone/desktop visual checks.
 - [CI and deployment](operations/ci-cd-and-deployment.md): branches,
-  environments, GitHub configuration, and release verification.
+  environments, GitHub configuration, crawler access diagnostics, and release
+  verification.
 - [AI pack maintenance](guides/ai-pack.md): native entry points, hooks,
   local requirements, validation, and safe upgrades.
 
