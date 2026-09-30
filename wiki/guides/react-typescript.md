@@ -3,14 +3,16 @@ title: React and TypeScript development
 domain: guides
 tags: [react, typescript, themes, accessibility]
 status: current
-last_updated: 2026-09-24
+last_updated: 2026-09-30
 ---
 
 # React and TypeScript
 
 Use the Node version in `.nvmrc`, then `npm ci` and `npm run dev`.
-`npm run build` validates content, checks types and creates `dist/`;
-`npm run preview` serves it. Follow the [testing guide](testing.md) for the gate.
+`npm run build` validates content, checks types, builds client assets, renders the
+same App under Node and inserts its markup into `dist/index.html`;
+`npm run preview` serves that production output. Vite development still mounts
+the empty template. Follow the [testing guide](testing.md) for the gate.
 
 ## Component boundaries
 
@@ -20,6 +22,10 @@ Use the Node version in `.nvmrc`, then `npm ci` and `npm run dev`.
   order rather than sorting professional roles together with projects.
 - State belongs near its consumers: theme, clipboard status and graph interactions.
   Effects synchronize browser APIs and clean up listeners.
+- Initial component renders must be deterministic without `window`, `document`,
+  storage or portal targets. Read browser preferences after hydration; use the
+  prepaint theme bootstrap for colors. Mount the download dialog portal only
+  when opened. Keep the server and client JSX trees equivalent.
 - Prefer composition and real shared callers over classes, dependency containers
   or speculative abstractions. Maintain strict TypeScript without `any` or
   double casts. Build validation keeps malformed content out of releases.

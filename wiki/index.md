@@ -15,10 +15,10 @@ This wiki owns durable project knowledge. Local task state lives in ignored
 
 ## Architecture
 
-- [System overview](architecture/system-overview.md): runtime, stack, source
-  layout, content flow, and browser integrations.
+- [System overview](architecture/system-overview.md): static prerender/hydration,
+  stack, source layout, content flow, and browser integrations.
 - [Decisions](architecture/decisions.md): section ordering, content validation,
-  component boundaries, motion, and pack scope.
+  component boundaries, motion, prerendering, and pack scope.
 
 ## Working on the site
 
@@ -28,8 +28,8 @@ This wiki owns durable project knowledge. Local task state lives in ignored
   projects, latest resume source, schema rules, AI/cloud graph relationships,
   editor hints, an editing recipe, and a page/component/JSON terminology guide.
   It also covers the automatically generated Markdown resume and discovery index.
-- [Testing](guides/testing.md): CI commands, useful regression coverage, and
-  phone/desktop visual checks.
+- [Testing](guides/testing.md): CI commands, prerender/hydration checks, useful
+  regression coverage, and phone/desktop visual checks.
 - [CI and deployment](operations/ci-cd-and-deployment.md): branches,
   environments, GitHub configuration, and release verification.
 - [AI pack maintenance](guides/ai-pack.md): native entry points, hooks,

@@ -3,7 +3,7 @@ title: Architecture and product decisions
 domain: architecture
 tags: [decisions, sections, accessibility, agent-pack]
 status: current
-last_updated: 2026-09-23
+last_updated: 2026-09-30
 ---
 
 # Architecture and product decisions
@@ -77,3 +77,15 @@ Toolbar tooltips explain controls. Touch capture stays opt-in; a deduplicated
 list and print view preserve scanning and accessible alternatives. The user
 explicitly approved publishing this connected graph to all environments from
 master. Future production changes still need their own authorized release scope.
+
+## D-007: Build-time homepage prerendering
+
+The single-page résumé keeps its static Cloudflare deployment. A second Vite
+build creates a server-renderable bundle from the same React components and
+validated JSON; the build inserts its markup into the client-built homepage.
+React hydrates it in production. This gives crawlers and no-JavaScript readers
+the main content in the HTTP response without a runtime server or duplicate
+content template. `/resume.md` remains the complete plain-text alternative,
+especially for details collapsed in the human interface. The production URL is
+canonical across DEV, UAT, production and www hostnames. Prerendering improves
+content availability but does not guarantee search ranking or indexing.

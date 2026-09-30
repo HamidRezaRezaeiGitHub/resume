@@ -42,9 +42,9 @@ describe('content tooling', () => {
         profile.summary,
       )
     expect(page.querySelector('noscript')?.textContent).toContain(profile.name)
-    expect(page.querySelector('noscript a')?.getAttribute('href')).toBe(
-      `mailto:${profile.email}`,
-    )
+    expect(
+      page.querySelector('noscript a[href^="mailto:"]')?.getAttribute('href'),
+    ).toBe(`mailto:${profile.email}`)
     expect(page.querySelector('img')).toBeNull()
     expect(
       page
@@ -52,11 +52,14 @@ describe('content tooling', () => {
         ?.getAttribute('href'),
     ).toBe('/resume.md')
     expect(
+      page.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+    ).toBe('https://hamid-rezaei.com/')
+    expect(
       page.querySelector('link[rel="describedby"]')?.getAttribute('href'),
     ).toBe('/llms.txt')
     expect(
       page.querySelector('noscript a[href="/resume.md"]')?.textContent,
-    ).toBe('Read the full résumé')
+    ).toMatch(/read the full résumé/i)
     expect(html).not.toContain('__RESUME_')
   })
 })

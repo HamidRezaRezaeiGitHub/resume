@@ -3,7 +3,7 @@ title: CI and deployment
 domain: operations
 tags: [github-actions, cloudflare, deployment]
 status: current
-last_updated: 2026-09-26
+last_updated: 2026-09-30
 ---
 
 # CI and deployment
@@ -33,6 +33,15 @@ deployment from a successful push: inspect the workflow run for that commit.
 fallback and environment-specific names, custom-domain routes, and variables.
 It does not wire a Hono service, MCP endpoint, or database. Runtime Worker
 variables do not automatically become Vite client configuration.
+
+`npm run build` validates content, builds client assets, creates an SSR bundle
+in ignored `dist-ssr/`, then inserts the rendered résumé into `dist/index.html`.
+Only `dist/` deploys. The SSR bundle runs during build, not per request, and a
+failed render aborts deployment. Verify that GET `/` contains the heading,
+sections and résumé text in the response body before JavaScript; do not accept
+an empty `#root` with a successful HTTP status. The HTML canonical link always
+points to `https://hamid-rezaei.com/`, including on DEV/UAT and www. No routing
+or workflow triggers change.
 
 Use `npm run deploy:dev`, `npm run deploy:uat`, or `npm run deploy:prod` only
 when authorized; build first. Never deploy production merely because UAT is
