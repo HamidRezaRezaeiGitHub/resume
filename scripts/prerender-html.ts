@@ -7,5 +7,5 @@ export function injectPrerender(html: string, markup: string): string {
   if (!markup.trim()) {
     throw new Error('The server-rendered homepage is empty')
   }
-  return html.replace(rootMarker, `<div id="root">${markup}</div>`)
+  return html.replace(rootMarker, () => `<div id="root">${markup}</div>`)
 }

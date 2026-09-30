@@ -32,4 +32,11 @@ describe('homepage prerender insertion', () => {
       'The server-rendered homepage is empty',
     )
   })
+
+  it('preserves dollar sequences in authored content verbatim', () => {
+    const markup = "<p>$& $$ $` $'</p>"
+    expect(injectPrerender(template, markup)).toContain(
+      `<div id="root">${markup}</div>`,
+    )
+  })
 })
