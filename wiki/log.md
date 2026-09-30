@@ -1,5 +1,13 @@
 # Wiki log
 
+## 2026-09-30 — update — Crawler discovery files
+
+Added real robots and sitemap static assets for the canonical homepage, with
+explicit Cloudflare response types. Documented body/MIME checks because the SPA
+fallback can return homepage HTML with status 200, plus Search Console and
+Cloudflare diagnostics for access issues. Feature branch and PR only; no UAT or
+production promotion.
+
 ## 2026-09-30 — update — Static prerendered homepage
 
 Added build-time React rendering into the deployable homepage so the initial

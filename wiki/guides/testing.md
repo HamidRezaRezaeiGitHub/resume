@@ -66,6 +66,12 @@ MIME/cache/Link headers and confirm discovery is present in the initial HTML.
 See the [deployment checks](../operations/ci-cd-and-deployment.md). Text-only build
 changes do not need a new responsive layout sweep when React/CSS are unchanged.
 
+For crawler discovery changes, compare `dist/robots.txt` and `dist/sitemap.xml`
+with their `public/` sources and parse the XML. Check GET and HEAD with Wrangler
+or a deployed environment: robots must be `text/plain`, sitemap must be
+`application/xml`, and neither body may be the homepage HTML. Vite preview does
+not apply Cloudflare `_headers` rules. A successful status alone is not enough.
+
 Test meaningful behavior and failure boundaries: invalid dates/links/IDs,
 cross-section anchor collisions, navigation focus, denied clipboard or storage access,
 theme updates, and effect cleanup. Do not add tests that duplicate markup or
