@@ -1,4 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
+import { hydrateRoot } from 'react-dom/client'
+import { renderToString } from 'react-dom/server'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -14,6 +16,28 @@ afterEach(() => {
 })
 
 describe('theme selection', () => {
+  it('hydrates a dark preference without changing the server markup', async () => {
+    localStorage.setItem('resume-theme', 'dark')
+    document.documentElement.dataset.theme = 'dark'
+    const container = document.createElement('div')
+    container.innerHTML = renderToString(<ThemeToggle />)
+    document.body.append(container)
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
+    let root: ReturnType<typeof hydrateRoot> | undefined
+    try {
+      await act(async () => {
+        root = hydrateRoot(container, <ThemeToggle />)
+      })
+      expect(error).not.toHaveBeenCalled()
+      expect(
+        container.querySelector('[aria-label="Dark mode"]'),
+      ).toHaveAttribute('aria-pressed', 'true')
+    } finally {
+      await act(async () => root?.unmount())
+      container.remove()
+    }
+  })
+
   it('switches themes and restores an explicit choice on remount', async () => {
     const user = userEvent.setup()
     const view = render(<ThemeToggle />)

@@ -66,54 +66,55 @@ export function ResumeDownload() {
         <Download size={17} aria-hidden="true" />
         {content.buttonLabel}
       </button>
-      {createPortal(
-        <dialog
-          ref={dialogRef}
-          id={id}
-          className="resume-download-dialog"
-          aria-labelledby={`${id}-title`}
-          onClose={() => setOpen(false)}
-          onPointerDown={(event) => {
-            outsidePress.current = outside(event.clientX, event.clientY)
-          }}
-          onClick={(event) => {
-            if (outsidePress.current && outside(event.clientX, event.clientY))
-              dialogRef.current?.close()
-            outsidePress.current = false
-          }}
-        >
-          <div className="resume-download-heading">
-            <h2 id={`${id}-title`}>{content.title}</h2>
-            <button
-              type="button"
-              className="resume-download-close"
-              aria-label={content.closeLabel}
-              onClick={() => dialogRef.current?.close()}
-            >
-              <X size={19} aria-hidden="true" />
-            </button>
-          </div>
-          <div className="resume-download-options">
-            {content.options.map((option) => (
-              <a
-                key={option.id}
-                href={option.path}
-                download={option.path.split('/').at(-1)}
-                className="resume-download-option"
+      {open &&
+        createPortal(
+          <dialog
+            ref={dialogRef}
+            id={id}
+            className="resume-download-dialog"
+            aria-labelledby={`${id}-title`}
+            onClose={() => setOpen(false)}
+            onPointerDown={(event) => {
+              outsidePress.current = outside(event.clientX, event.clientY)
+            }}
+            onClick={(event) => {
+              if (outsidePress.current && outside(event.clientX, event.clientY))
+                dialogRef.current?.close()
+              outsidePress.current = false
+            }}
+          >
+            <div className="resume-download-heading">
+              <h2 id={`${id}-title`}>{content.title}</h2>
+              <button
+                type="button"
+                className="resume-download-close"
+                aria-label={content.closeLabel}
                 onClick={() => dialogRef.current?.close()}
               >
-                <FileText size={22} aria-hidden="true" />
-                <span>
-                  <strong>{option.label}</strong>{' '}
-                  <span>{option.description}</span>
-                </span>
-                <Download size={17} aria-hidden="true" />
-              </a>
-            ))}
-          </div>
-        </dialog>,
-        document.body,
-      )}
+                <X size={19} aria-hidden="true" />
+              </button>
+            </div>
+            <div className="resume-download-options">
+              {content.options.map((option) => (
+                <a
+                  key={option.id}
+                  href={option.path}
+                  download={option.path.split('/').at(-1)}
+                  className="resume-download-option"
+                  onClick={() => dialogRef.current?.close()}
+                >
+                  <FileText size={22} aria-hidden="true" />
+                  <span>
+                    <strong>{option.label}</strong>{' '}
+                    <span>{option.description}</span>
+                  </span>
+                  <Download size={17} aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </dialog>,
+          document.body,
+        )}
     </>
   )
 }

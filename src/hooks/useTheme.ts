@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 
 export type Theme = 'light' | 'dark'
 export const THEME_KEY = 'resume-theme'
@@ -19,11 +19,17 @@ function systemTheme(): Theme {
 }
 
 export function useTheme() {
-  const explicitlySelected = useRef(storedTheme() !== null)
-  const [theme, setTheme] = useState<Theme>(
-    () => storedTheme() ?? systemTheme(),
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null)
+  // React uses the null server snapshot for hydration, then reads the browser
+  // preference. theme.js already sets the page colors before paint.
+  const preference = useSyncExternalStore(
+    subscribeTheme,
+    browserTheme,
+    serverTheme,
   )
+  const theme = selectedTheme ?? preference
   useEffect(() => {
+    if (!theme) return
     document.documentElement.dataset.theme = theme
     document.documentElement.style.colorScheme = theme
     document
@@ -31,18 +37,8 @@ export function useTheme() {
       ?.setAttribute('content', theme === 'dark' ? '#191d20' : '#faf9f6')
   }, [theme])
 
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-color-scheme: dark)')
-    const followSystem = () => {
-      if (!explicitlySelected.current) setTheme(systemTheme())
-    }
-    query.addEventListener('change', followSystem)
-    return () => query.removeEventListener('change', followSystem)
-  }, [])
-
   function selectTheme(next: Theme) {
-    explicitlySelected.current = true
-    setTheme(next)
+    setSelectedTheme(next)
     try {
       localStorage.setItem(THEME_KEY, next)
     } catch {
@@ -50,4 +46,22 @@ export function useTheme() {
     }
   }
   return { theme, selectTheme }
+}
+
+function browserTheme(): Theme {
+  return storedTheme() ?? systemTheme()
+}
+
+function serverTheme(): null {
+  return null
+}
+
+function subscribeTheme(onChange: () => void) {
+  const query = window.matchMedia('(prefers-color-scheme: dark)')
+  query.addEventListener('change', onChange)
+  window.addEventListener('storage', onChange)
+  return () => {
+    query.removeEventListener('change', onChange)
+    window.removeEventListener('storage', onChange)
+  }
 }
